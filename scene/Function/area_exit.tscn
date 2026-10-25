@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://debs5swvyci4p"]
+
+[ext_resource type="Texture2D" uid="uid://dldprx6wbnt7k" path="res://assets/Untitled_Artwork (2).png" id="1_21kp6"]
+[ext_resource type="Script" uid="uid://c804ob3hyuv5l" path="res://script/area_exit.gd" id="1_y1ob6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 46.0
+
+[node name="AreaExit" type="Area2D" unique_id=678330850]
+script = ExtResource("1_y1ob6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=169232957]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1344718094]
+z_as_relative = false
+texture_filter = 1
+position = Vector2(0, -1)
+scale = Vector2(2.015625, 2.015625)
+texture = ExtResource("1_21kp6")
+
+[node name="Label" type="Label" parent="." unique_id=1055332020]
+visible = false
+offset_left = -10.0
+offset_top = -74.0
+offset_right = 10.0
+offset_bottom = -51.0
+text = "[e]"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

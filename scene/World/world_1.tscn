@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://2wg4h5sgqfwp"]
+
+[ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_7oxer"]
+[ext_resource type="Texture2D" uid="uid://d4gut4cgecdyl" path="res://assets/l2d 2-Sheet.png" id="2_ae8lj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vudg0"]
+atlas = ExtResource("2_ae8lj")
+region = Rect2(0, 0, 1727, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uyvy"]
+atlas = ExtResource("2_ae8lj")
+region = Rect2(1727, 0, 1727, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qbqt"]
+atlas = ExtResource("2_ae8lj")
+region = Rect2(3454, 0, 1727, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfltr"]
+atlas = ExtResource("2_ae8lj")
+region = Rect2(5181, 0, 1727, 540)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vudg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uyvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qbqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfltr")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="World1" unique_id=1697432782 instance=ExtResource("1_7oxer")]
+
+[node name="AnimatedSprite2D" parent="Parallax2D" parent_id_path=PackedInt32Array(1656632802) index="1" unique_id=2105370129]
+visible = false
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Parallax2D" parent_id_path=PackedInt32Array(1656632802) index="2" unique_id=1035981077]
+position = Vector2(396, 49)
+scale = Vector2(0.8590697, 0.96620375)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.08798664
+
+[node name="AreaExit" parent="." index="2" unique_id=678330850]
+position = Vector2(821, 0)
+
+[node name="SpawnPoint" parent="." index="4" unique_id=627443350]
+position = Vector2(821, 2)

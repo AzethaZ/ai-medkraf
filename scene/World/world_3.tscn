@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b7wpa6ffnem3w"]
+
+[ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_wts7t"]
+
+[node name="WorldTemplate" unique_id=1697432782 instance=ExtResource("1_wts7t")]
+
+[node name="AreaExit" parent="." index="2" unique_id=678330850]
+position = Vector2(770, -21)
+
+[node name="SpawnPoint" parent="." index="4" unique_id=627443350]
+position = Vector2(771, -22)
