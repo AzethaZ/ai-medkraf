@@ -58,4 +58,4 @@ frame_progress = 0.08798664
 position = Vector2(821, 0)
 
 [node name="SpawnPoint" parent="." index="4" unique_id=627443350]
-position = Vector2(821, 2)
+position = Vector2(821, 5)

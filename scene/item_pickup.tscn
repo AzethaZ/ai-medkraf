@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bntg5a3ck02it" path="res://script/item_pickup.gd" id="1_75b4b"]
 [ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="1_yxdo8"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_luwgx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
 radius = 20.22375
@@ -17,10 +18,8 @@ texture_filter = 1
 scale = Vector2(0.7083333, 0.7083333)
 texture = ExtResource("1_yxdo8")
 
-[node name="Label" type="Label" parent="." unique_id=1082237402]
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=2090128807]
 visible = false
-offset_left = -10.0
-offset_top = -57.0
-offset_right = 10.0
-offset_bottom = -34.0
-text = "[e]"
+texture_filter = 1
+position = Vector2(0, -41)
+texture = ExtResource("3_luwgx")

@@ -21,7 +21,7 @@ layout_mode = 0
 offset_left = 498.0
 offset_top = 188.0
 offset_right = 754.0
-offset_bottom = 468.0
+offset_bottom = 482.0
 theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=317425138]

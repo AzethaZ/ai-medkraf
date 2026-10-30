@@ -1,124 +1,163 @@
 extends CharacterBody2D
 
-@export var block_size: float = 16.0
-@export var max_blocks: float = 3.0
-@export var speed: float = 30.0
+# --- REFERENSI NODE ---
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var chat_detection: Area2D = $chat_detection
+@onready var interact_icon: Sprite2D = $InteractIcon
 
+# Node UI Dialog
+@onready var dialogue_ui: Control = $DialogueUI
+@onready var dialogue_box: PanelContainer = $DialogueUI/PanelContainer
+@onready var dialogue_label: Label = $DialogueUI/PanelContainer/VBoxContainer/Label
+
+# --- VARIABEL PATROLI / PERGERAKAN ---
+@export var speed: float = 30.0
+@export var move_distance: float = 60.0 # Jarak patroli
 var start_x: float = 0.0
-var move_direction: int = 1
+var direction: int = 1 # 1 = Kanan, -1 = Kiri
+
+# --- DATA DIALOG NPC 1 ---
+var dialogue_lines: Array[String] = [
+	"Hai! Selamat datang di area ini.",
+	"Aku punya beberapa informasi penting untukmu.",
+	"Pastikan kamu berhati-hati saat menjelajahi area hutan di depan.",
+	"Semoga perjalananmu lancar!"
+]
+
+# --- VARIABEL STATE ---
 var is_player_in_chat_zone: bool = false
 var is_chatting: bool = false
-
-# Node UI
-@onready var chat_detection: Area2D = $chat_detection
-@onready var interact_label: Label = $Label
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-
-@onready var dialogue_ui: Control = $DialogueUI
-@onready var dialogue_label: Label = $DialogueUI/NinePatchRect/VBoxContainer/Label
-@onready var choices_container: VBoxContainer = $DialogueUI/NinePatchRect/VBoxContainer/VBoxContainer
-
-# Data Percakapan & Pilihan
-var dialogue_data = {
-	"text": "Hai",
-	"choices": [
-		{"text": "assalamualaikum", "next": "kegiatan"},
-		{"text": "fuck you", "next": "close"}
-	]
-}
-
-var responses = {
-	"kegiatan": "waalaikumsalam",
-	"close": "p maksud"
-}
+var current_line_index: int = 0
+var tween: Tween
+var text_tween: Tween
 
 func _ready() -> void:
 	start_x = global_position.x
-	if interact_label: interact_label.visible = false
-	if dialogue_ui: dialogue_ui.visible = false
+	
+	if interact_icon:
+		interact_icon.visible = false
+		
+	if dialogue_ui:
+		dialogue_ui.visible = false
 	
 	chat_detection.body_entered.connect(_on_chat_detection_body_entered)
 	chat_detection.body_exited.connect(_on_chat_detection_body_exited)
 
 func _physics_process(_delta: float) -> void:
-	# Berhenti jalan jika diajak bicara
+	# Jika sedang mengobrol dengan pemain, NPC berhenti bergerak
 	if is_chatting:
 		velocity.x = 0
 		if sprite and sprite.sprite_frames.has_animation("idle"):
 			sprite.play("idle")
+		move_and_slide()
 		return
 
-	# Logika Patroli
-	var travel_distance = max_blocks * block_size
-	if global_position.x >= start_x + travel_distance:
-		move_direction = -1
-		if sprite: sprite.flip_h = false
-	elif global_position.x <= start_x - travel_distance:
-		move_direction = 1
-		if sprite: sprite.flip_h = true
+	# Logika Pergerakan Patroli
+	velocity.x = direction * speed
+	
+	# Balik arah jika sudah mencapai batas patroli
+	if global_position.x >= start_x + move_distance:
+		direction = -1
+	elif global_position.x <= start_x - move_distance:
+		direction = 1
+		
+	# Flip sprite sesuai arah jalan
+	if sprite:
+		sprite.flip_h = (direction < 0)
+		if sprite.sprite_frames.has_animation("walk"):
+			sprite.play("walk")
 
-	velocity.x = move_direction * speed
 	move_and_slide()
-	if sprite and sprite.sprite_frames.has_animation("walk"):
-		sprite.play("walk")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_player_in_chat_zone and not is_chatting and event.is_action_pressed("interact"):
-		start_dialogue()
+	if is_player_in_chat_zone and event.is_action_pressed("interact"):
+		if not is_chatting:
+			start_dialogue()
+		else:
+			# Skip animasi ketik jika masih berjalan, atau lanjut kalimat jika sudah selesai
+			if text_tween and text_tween.is_running():
+				text_tween.kill()
+				dialogue_label.visible_ratio = 1.0
+			else:
+				advance_dialogue()
 
+# --- LOGIKA DIALOG ---
 func start_dialogue() -> void:
 	is_chatting = true
-	if interact_label: interact_label.visible = false
+	current_line_index = 0
+	
+	if interact_icon:
+		interact_icon.visible = false
+		stop_hover_animation()
+		
 	dialogue_ui.visible = true
-	
-	# Tampilkan teks utama NPC
-	dialogue_label.text = dialogue_data["text"]
-	
-	# Bersihkan tombol pilihan lama jika ada
-	for child in choices_container.get_children():
-		child.queue_free()
-		
-	# Buat tombol pilihan secara dinamis
-	for choice in dialogue_data["choices"]:
-		var btn = Button.new()
-		btn.text = choice["text"]
-		btn.pressed.connect(_on_choice_selected.bind(choice["next"]))
-		choices_container.add_child(btn)
+	show_current_line()
 
-func _on_choice_selected(next_key: String) -> void:
-	# Bersihkan tombol pilihan setelah dipilih
-	for child in choices_container.get_children():
-		child.queue_free()
+func show_current_line() -> void:
+	if text_tween and text_tween.is_running():
+		text_tween.kill()
 
-	if next_key == "close":
-		dialogue_label.text = responses["close"]
-		await get_tree().create_timer(1.2).timeout
-		end_dialogue()
+	# Set teks
+	dialogue_label.text = dialogue_lines[current_line_index]
+	
+	# Reset ukuran & pertahankan posisi titik tengah di atas NPC
+	dialogue_box.reset_size()
+	dialogue_box.position.x = -dialogue_box.size.x / 2.0
+	
+	# Animasi typewriter dari kiri
+	dialogue_label.visible_ratio = 0.0
+	var text_length = dialogue_lines[current_line_index].length()
+	var duration = text_length * 0.03
+	
+	text_tween = create_tween()
+	text_tween.tween_property(dialogue_label, "visible_ratio", 1.0, duration)
+
+func advance_dialogue() -> void:
+	current_line_index += 1
+	if current_line_index < dialogue_lines.size():
+		show_current_line()
 	else:
-		# Tampilkan respon dari pilihan
-		dialogue_label.text = responses[next_key]
-		
-		# Tambahkan tombol untuk menutup/kembali
-		var back_btn = Button.new()
-		back_btn.text = "[Tutup]"
-		back_btn.pressed.connect(end_dialogue)
-		choices_container.add_child(back_btn)
+		end_dialogue()
 
 func end_dialogue() -> void:
 	is_chatting = false
 	dialogue_ui.visible = false
-	if is_player_in_chat_zone and interact_label:
-		interact_label.visible = true
+	
+	if is_player_in_chat_zone and interact_icon:
+		interact_icon.visible = true
+		start_hover_animation()
 
+# --- DETEKSI PLAYER ---
 func _on_chat_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
 		is_player_in_chat_zone = true
-		if interact_label and not is_chatting:
-			interact_label.visible = true
+		if interact_icon and not is_chatting:
+			interact_icon.visible = true
+			start_hover_animation()
 
 func _on_chat_detection_body_exited(body: Node2D) -> void:
 	if body is Player:
 		is_player_in_chat_zone = false
-		if interact_label:
-			interact_label.visible = false
-		end_dialogue() # Otomatis tutup dialog jika player jalan menjauh
+		if interact_icon:
+			interact_icon.visible = false
+			stop_hover_animation()
+		end_dialogue()
+
+# --- EFEK HOVER IKON E ---
+func start_hover_animation() -> void:
+	if tween and tween.is_running():
+		tween.kill()
+		
+	tween = create_tween().set_loops()
+	tween.tween_property(interact_icon, "position:y", -4.0, 0.6)\
+		.as_relative()\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(interact_icon, "position:y", 4.0, 0.6)\
+		.as_relative()\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN_OUT)
+
+func stop_hover_animation() -> void:
+	if tween and tween.is_running():
+		tween.kill()

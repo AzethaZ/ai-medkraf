@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_swm4i"]
 [ext_resource type="PackedScene" uid="uid://8wtswah0g4hv" path="res://scene/npc1.tscn" id="2_638ig"]
 [ext_resource type="PackedScene" uid="uid://bmmg1yjffdl04" path="res://scene/item_pickup.tscn" id="3_y1erl"]
+[ext_resource type="PackedScene" uid="uid://drdktrlhbigqb" path="res://scene/npc2.tscn" id="4_3lax0"]
 
 [node name="World2" unique_id=1697432782 instance=ExtResource("1_swm4i")]
 
@@ -20,7 +21,7 @@ position = Vector2(-165, 2)
 is_back_door = true
 
 [node name="SpawnPoint" parent="." index="4" unique_id=627443350]
-position = Vector2(-165, 3)
+position = Vector2(-165, 5)
 
 [node name="CharacterBody2D" parent="." index="5" unique_id=1643254683 instance=ExtResource("2_638ig")]
 position = Vector2(329, 8)
@@ -37,5 +38,5 @@ position = Vector2(955, 14)
 [node name="Area2D4" parent="." index="9" unique_id=181901135 instance=ExtResource("3_y1erl")]
 position = Vector2(1111, 14)
 
-[node name="Area2D5" parent="." index="10" unique_id=1298452722 instance=ExtResource("3_y1erl")]
-position = Vector2(431, 18)
+[node name="CharacterBody2D2" parent="." index="10" unique_id=1198646282 instance=ExtResource("4_3lax0")]
+position = Vector2(-347, 6)

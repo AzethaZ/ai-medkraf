@@ -18,13 +18,18 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 
 GameManager="*uid://dbmg6a0sul7sj"
 inventory="*uid://cqlaovdm5sjkk"
+SceneTransition="*uid://c0o4lcu46wt8t"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1080
+window/size/viewport_height=520
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom_font="uid://et6uankrpx2j"
 
 [input]
 

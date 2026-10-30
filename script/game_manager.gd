@@ -20,9 +20,18 @@ func previous_level():
 		call_deferred("_change_world")
 
 func _change_world():
+	# 1. Layar perlahan menjadi hitam
+	await SceneTransition.fade_out()
+	
+	# 2. Ganti scene di belakang layar hitam
 	var full_path = area_path + "world_" + str(current_area) + ".tscn"
 	get_tree().change_scene_to_file(full_path)
-	_teleport_player_to_spawn()
+	
+	# 3. Teleport player ke spawn point
+	await _teleport_player_to_spawn()
+	
+	# 4. Layar perlahan kembali terang
+	await SceneTransition.fade_in()
 
 func _teleport_player_to_spawn():
 	# Tunggu sampai scene baru benar-benar selesai dimuat ke tree

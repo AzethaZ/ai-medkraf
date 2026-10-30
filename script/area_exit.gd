@@ -4,12 +4,13 @@ extends Area2D
 var is_player_inside: bool = false
 
 # Ambil node Label yang baru dibuat
-@onready var label: Label = $Label
+@onready var interact_icon: Sprite2D = $InteractIcon
+var tween: Tween
 
 func _ready() -> void:
 	# Pastikan label tersembunyi saat awal game
-	if label:
-		label.visible = false
+	if interact_icon:
+		interact_icon.visible = false
 	
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
@@ -24,11 +25,36 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		is_player_inside = true
-		if label:
-			label.visible = true # Tampilkan label saat Player masuk area
+		if interact_icon:
+			interact_icon.visible = true
+			start_hover_animation() # Panggil animasi melayang
 
 func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
 		is_player_inside = false
-		if label:
-			label.visible = false # Sembunyikan label saat Player keluar area
+		if interact_icon:
+			interact_icon.visible = false
+			stop_hover_animation() # Hentikan animasi
+
+# --- FUNGSI EFEK NAIK TURUN (TWEEN) ---
+func start_hover_animation() -> void:
+	if tween and tween.is_running():
+		tween.kill()
+		
+	tween = create_tween().set_loops()
+	
+	# Naik 4 piksel relatif
+	tween.tween_property(interact_icon, "position:y", -4.0, 0.6)\
+		.as_relative()\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN_OUT)
+		
+	# Turun 4 piksel relatif kembali
+	tween.tween_property(interact_icon, "position:y", 4.0, 0.6)\
+		.as_relative()\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN_OUT)
+
+func stop_hover_animation() -> void:
+	if tween and tween.is_running():
+		tween.kill()
