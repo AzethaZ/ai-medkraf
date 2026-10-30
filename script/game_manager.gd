@@ -1,5 +1,11 @@
 extends Node
 
+var inventory: Array = []
+
+func add_item(item_data: Dictionary) -> void:
+	inventory.append(item_data)
+	print("Inventaris saat ini: ", inventory)
+
 var current_area = 1
 var area_path = "res://scene/World/"
 

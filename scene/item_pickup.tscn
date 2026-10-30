@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bmmg1yjffdl04"]
+
+[ext_resource type="Script" uid="uid://bntg5a3ck02it" path="res://script/item_pickup.gd" id="1_75b4b"]
+[ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="1_yxdo8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 20.22375
+
+[node name="Area2D" type="Area2D" unique_id=574157516]
+script = ExtResource("1_75b4b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=840786093]
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1622085727]
+texture_filter = 1
+scale = Vector2(0.7083333, 0.7083333)
+texture = ExtResource("1_yxdo8")
+
+[node name="Label" type="Label" parent="." unique_id=1082237402]
+visible = false
+offset_left = -10.0
+offset_top = -57.0
+offset_right = 10.0
+offset_bottom = -34.0
+text = "[e]"

@@ -258,6 +258,7 @@ animations = [{
 size = Vector2(31, 50)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1312877385]
+z_index = 1
 script = ExtResource("1_hjaqi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1861784974]
@@ -270,4 +271,5 @@ position = Vector2(5.5, 15)
 shape = SubResource("RectangleShape2D_1vivr")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=971091246]
-zoom = Vector2(1.2, 1.2)
+position = Vector2(0, -86)
+zoom = Vector2(1.4, 1.4)

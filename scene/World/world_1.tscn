@@ -41,11 +41,14 @@ animations = [{
 
 [node name="World1" unique_id=1697432782 instance=ExtResource("1_7oxer")]
 
+[node name="Sprite2D" parent="Parallax2D" parent_id_path=PackedInt32Array(1656632802) index="0" unique_id=656463049]
+visible = false
+
 [node name="AnimatedSprite2D" parent="Parallax2D" parent_id_path=PackedInt32Array(1656632802) index="1" unique_id=2105370129]
 visible = false
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Parallax2D" parent_id_path=PackedInt32Array(1656632802) index="2" unique_id=1035981077]
-position = Vector2(396, 49)
+position = Vector2(396, 100)
 scale = Vector2(0.8590697, 0.96620375)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"

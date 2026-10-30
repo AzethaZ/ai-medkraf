@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://8wtswah0g4hv"]
+
+[ext_resource type="Script" uid="uid://c14ky4k7pda0k" path="res://script/npc_1.gd" id="1_4dbx6"]
+[ext_resource type="Texture2D" uid="uid://bhwp2nddgqvf3" path="res://assets/api-Sheet.png" id="1_kcewe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dbx6"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hgyg"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcji2"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jctpc"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ipmk"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmc75"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ved4w"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmjog"]
+atlas = ExtResource("1_kcewe")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dbx6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hgyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcji2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jctpc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ipmk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmc75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ved4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmjog")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
+radius = 21.167583
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1643254683]
+script = ExtResource("1_4dbx6")
+speed = 50.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2093253478]
+texture_filter = 1
+position = Vector2(-1.0000019, -7.999998)
+scale = Vector2(1.9375, 1.9375)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.5418835
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1012726449]
+position = Vector2(-2, -3)
+shape = SubResource("CircleShape2D_1vivr")
+disabled = true
+
+[node name="chat_detection" type="Area2D" parent="." unique_id=906098131]
+position = Vector2(-1.0000019, -7.999998)
+scale = Vector2(1.9375, 1.9375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=551280606]
+position = Vector2(9.844381e-07, 4.1290317)
+shape = SubResource("CircleShape2D_8vrlf")
+
+[node name="DialogueUI" type="Control" parent="." unique_id=1571324028]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -42.0
+offset_top = -143.0
+offset_right = 210.0
+offset_bottom = -103.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="DialogueUI" unique_id=791948169]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueUI/NinePatchRect" unique_id=792801558]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DialogueUI/NinePatchRect/VBoxContainer" unique_id=2123055125]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueUI/NinePatchRect/VBoxContainer" unique_id=1227260807]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="." unique_id=1818433820]
+offset_left = -12.0
+offset_top = -71.0
+offset_right = 8.0
+offset_bottom = -48.0
+text = "[e]"
