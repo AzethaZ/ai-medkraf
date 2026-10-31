@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bwfr3056ydgub"]
+
+[ext_resource type="Script" uid="uid://d34vn4loopbeu" path="res://script/intro_cutscene.gd" id="1_fncm2"]
+
+[node name="IntroCutscene" type="CanvasLayer" unique_id=482992285]
+script = ExtResource("1_fncm2")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1999530980]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CutsceneImage" type="TextureRect" parent="." unique_id=1891577956]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SkipLabel" type="Label" parent="." unique_id=1020437598]
+offset_left = 842.0
+offset_top = 445.0
+offset_right = 907.0
+offset_bottom = 485.0
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=700338022]
+modulate = Color(0, 0, 0, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

@@ -9,23 +9,18 @@ func add_item(item_data: Dictionary) -> void:
 var current_area = 1
 var area_path = "res://scene/World/"
 
-func next_level():
-	current_area += 1
-	# Gunakan call_deferred agar scene berganti setelah proses fisika selesai
-	call_deferred("_change_world")
+func next_level(target_scene_path: String = "res://scene/World/world_2.tscn") -> void:
+	call_deferred("_change_world", target_scene_path)
 
-func previous_level():
-	if current_area > 1:
-		current_area -= 1
-		call_deferred("_change_world")
+func previous_level(target_scene_path: String = "res://scene/World/world_1.tscn") -> void:
+	call_deferred("_change_world", target_scene_path)
 
-func _change_world():
+func _change_world(target_scene_path: String) -> void:
 	# 1. Layar perlahan menjadi hitam
 	await SceneTransition.fade_out()
 	
-	# 2. Ganti scene di belakang layar hitam
-	var full_path = area_path + "world_" + str(current_area) + ".tscn"
-	get_tree().change_scene_to_file(full_path)
+	# 2. Ganti scene sesuai path yang dikirim
+	get_tree().change_scene_to_file(target_scene_path)
 	
 	# 3. Teleport player ke spawn point
 	await _teleport_player_to_spawn()

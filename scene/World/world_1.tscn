@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_7oxer"]
 [ext_resource type="Texture2D" uid="uid://d4gut4cgecdyl" path="res://assets/l2d 2-Sheet.png" id="2_ae8lj"]
+[ext_resource type="Script" uid="uid://d0s07qklyeyjx" path="res://script/world_1.gd" id="2_vudg0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vudg0"]
 atlas = ExtResource("2_ae8lj")
@@ -40,6 +41,7 @@ animations = [{
 }]
 
 [node name="World1" unique_id=1697432782 instance=ExtResource("1_7oxer")]
+script = ExtResource("2_vudg0")
 
 [node name="Sprite2D" parent="Parallax2D" parent_id_path=PackedInt32Array(1656632802) index="0" unique_id=656463049]
 visible = false
@@ -57,5 +59,18 @@ frame_progress = 0.08798664
 [node name="AreaExit" parent="." index="2" unique_id=678330850]
 position = Vector2(821, 0)
 
+[node name="Player" parent="." index="3" unique_id=1312877385]
+position = Vector2(-3, 7)
+
 [node name="SpawnPoint" parent="." index="4" unique_id=627443350]
 position = Vector2(821, 5)
+
+[node name="FadeLayer" type="CanvasLayer" parent="." index="5" unique_id=526516753]
+
+[node name="FadeOverlay" type="ColorRect" parent="FadeLayer" index="0" unique_id=1050733195]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
