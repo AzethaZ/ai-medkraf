@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b3vivtn7hgjel"]
+
+[ext_resource type="Script" uid="uid://c0kukf3foixir" path="res://script/quest_popup_ui.gd" id="1_syqku"]
+[ext_resource type="Texture2D" uid="uid://cbcopcw2acdh8" path="res://assets/questbox.png" id="2_6qrq0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_syqku"]
+texture = ExtResource("2_6qrq0")
+texture_margin_left = 8.0
+texture_margin_top = 12.0
+texture_margin_bottom = 12.0
+
+[node name="QuestPopupUI" type="CanvasLayer" unique_id=1289541161]
+script = ExtResource("1_syqku")
+
+[node name="NotificationBox" type="PanelContainer" parent="." unique_id=1334114743]
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -197.93549
+offset_top = 68.0
+offset_bottom = 120.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_syqku")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NotificationBox" unique_id=798404055]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="NotificationBox/HBoxContainer" unique_id=11126072]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="NotificationBox/HBoxContainer" unique_id=1529895518]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12

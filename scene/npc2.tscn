@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_udvkr"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="3_173el"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="5_173el"]
+[ext_resource type="Texture2D" uid="uid://b874tjv5y24y8" path="res://assets/l2d map awan.png" id="6_tvcat"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tvcat"]
 atlas = ExtResource("1_gjkm4")
@@ -83,6 +84,70 @@ texture_margin_top = 12.0
 texture_margin_right = 12.0
 texture_margin_bottom = 12.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jirua"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(0, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quhwl"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(960, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g10wf"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(1920, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s6an"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(2880, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc1ms"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(3840, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jh28d"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(4800, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nwnd"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(5760, 0, 960, 540)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_385r8"]
+atlas = ExtResource("6_tvcat")
+region = Rect2(6720, 0, 960, 540)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8vrlf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jirua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quhwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g10wf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s6an")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pc1ms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jh28d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nwnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_385r8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1198646282]
 script = ExtResource("1_udvkr")
 
@@ -148,3 +213,14 @@ texture_filter = 1
 position = Vector2(0, -48)
 scale = Vector2(0.91406256, 0.91406256)
 texture = ExtResource("5_173el")
+
+[node name="Campfire" type="AnimatedSprite2D" parent="." unique_id=2133259228]
+visible = false
+position = Vector2(-69.00001, 0)
+scale = Vector2(0.11851851, 0.11851852)
+sprite_frames = SubResource("SpriteFrames_8vrlf")
+autoplay = "default"
+frame_progress = 0.07524617
+
+[connection signal="body_entered" from="chat_detection" to="." method="_on_chat_detection_body_entered"]
+[connection signal="body_exited" from="chat_detection" to="." method="_on_chat_detection_body_exited"]

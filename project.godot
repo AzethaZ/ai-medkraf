@@ -17,8 +17,10 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 [autoload]
 
 GameManager="*uid://dbmg6a0sul7sj"
-inventory="*uid://cqlaovdm5sjkk"
+InventoryManager="*uid://cqlaovdm5sjkk"
 SceneTransition="*uid://c0o4lcu46wt8t"
+QuestManager="*uid://bsxe4dmheg516"
+QuestPopupUi="*uid://b3vivtn7hgjel"
 
 [display]
 

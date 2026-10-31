@@ -27,16 +27,20 @@ position = Vector2(-165, 5)
 position = Vector2(329, 8)
 
 [node name="Area2D" parent="." index="6" unique_id=574157516 instance=ExtResource("3_y1erl")]
-position = Vector2(567, 15)
+position = Vector2(-478, 15)
+item_name = "wood"
 
 [node name="Area2D2" parent="." index="7" unique_id=857353623 instance=ExtResource("3_y1erl")]
-position = Vector2(762, 13)
+position = Vector2(-586, 13)
+item_name = "wood"
 
 [node name="Area2D3" parent="." index="8" unique_id=1714089640 instance=ExtResource("3_y1erl")]
-position = Vector2(955, 14)
+position = Vector2(114, 14)
+item_name = "wood"
 
 [node name="Area2D4" parent="." index="9" unique_id=181901135 instance=ExtResource("3_y1erl")]
-position = Vector2(1111, 14)
+position = Vector2(479, 14)
+item_name = "wood"
 
 [node name="CharacterBody2D2" parent="." index="10" unique_id=1198646282 instance=ExtResource("4_3lax0")]
 position = Vector2(-347, 6)

@@ -1,16 +1,16 @@
+# scene_transition.gd (atau script SceneTransition kamu)
 extends CanvasLayer
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var color_rect: ColorRect = $ColorRect
+@onready var color_rect: ColorRect = $ColorRect # Sesuaikan nama node ColorRect hitam kamu
 
-func _ready() -> void:
-	# Pastikan saat game mulai, layar hitam transparan
-	color_rect.color.a = 0.0
+# Animasi Layar Menjadi Hitam (Fade Out)
+func fade_out(duration: float = 0.5) -> void:
+	color_rect.visible = true
+	var tween = create_tween()
+	await tween.tween_property(color_rect, "modulate:a", 1.0, duration).finished
 
-func fade_out() -> void:
-	animation_player.play("fade_to_black")
-	await animation_player.animation_finished
-
-func fade_in() -> void:
-	animation_player.play("fade_from_black")
-	await animation_player.animation_finished
+# Animasi Layar Terang Kembali (Fade In)
+func fade_in(duration: float = 0.5) -> void:
+	var tween = create_tween()
+	await tween.tween_property(color_rect, "modulate:a", 0.0, duration).finished
+	color_rect.visible = false

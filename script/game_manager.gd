@@ -45,3 +45,25 @@ func _teleport_player_to_spawn():
 		
 		if player and spawn_point:
 			player.global_position = spawn_point.global_position
+			
+# --- FUNGSI MANAJEMEN INVENTORY ---
+
+# 1. Menghitung jumlah item berdasarkan nama
+func get_item_count(item_name: String) -> int:
+	var count = 0
+	for item in inventory:
+		# Sesuaikan key "name" dengan struktur data item di GameManager-mu
+		if item.has("name") and item["name"] == item_name:
+			count += 1
+	return count
+
+# 2. Menghapus item sejumlah 'amount' dari inventory
+func remove_item(item_name: String, amount: int) -> void:
+	var removed_count = 0
+	# Looping dari belakang ke depan agar aman saat menghapus element Array
+	for i in range(inventory.size() - 1, -1, -1):
+		if inventory[i].has("name") and inventory[i]["name"] == item_name:
+			inventory.remove_at(i)
+			removed_count += 1
+			if removed_count >= amount:
+				break
