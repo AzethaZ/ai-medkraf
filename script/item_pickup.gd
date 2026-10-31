@@ -1,5 +1,7 @@
 extends Area2D
 
+# 1. TAMBAHKAN baris export item_id ini di bagian paling atas
+@export var item_id: String = "" 
 @export var item_name: String = "Coin"
 @export var item_icon: Texture2D
 
@@ -11,13 +13,18 @@ var tween: Tween
 var initial_icon_y: float
 
 func _ready() -> void:
+	# 2. TAMBAHKAN pengecekan di _ready: jika item_id sudah tercatat di GameManager, hapus node ini
+	if item_id != "" and GameManager.is_item_collected(item_id):
+		queue_free()
+		return
+
 	if interact_icon:
 		interact_icon.visible = false
-		initial_icon_y = interact_icon.position.y # Simpan posisi awal Y ikon
-	
+		initial_icon_y = interact_icon.position.y
+
 	if item_icon and sprite_2d:
 		sprite_2d.texture = item_icon
-		
+
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -25,6 +32,22 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_player_inside and event.is_action_pressed("interact"):
 		pick_up()
 
+# 3. SESUAIKAN fungsi pick_up() kamu untuk mencatat item_id sebelum queue_free()
+func pick_up() -> void:
+	# 1. Catat bahwa item dengan ID ini sudah pernah diambil (biar gak respawn)
+	if item_id != "":
+		GameManager.mark_item_collected(item_id)
+	
+	# 2. Bungkus ke dalam Dictionary lalu masukkan ke inventaris
+	var item_data = {
+		"name": item_name,
+		"icon": item_icon
+	}
+	GameManager.add_item(item_data)
+	
+	# 3. Hapus item dari map
+	queue_free()
+	
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		is_player_inside = true
@@ -63,11 +86,3 @@ func stop_hover_animation() -> void:
 	# Kembalikan posisi Y ke semula
 	if interact_icon:
 		interact_icon.position.y = initial_icon_y
-
-func pick_up() -> void:
-	if GameManager.has_method("add_item"):
-		GameManager.add_item({
-			"name": item_name,
-			"icon": sprite_2d.texture
-		})
-	queue_free()

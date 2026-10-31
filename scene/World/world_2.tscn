@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://8wtswah0g4hv" path="res://scene/npc1.tscn" id="2_638ig"]
 [ext_resource type="PackedScene" uid="uid://bmmg1yjffdl04" path="res://scene/item_pickup.tscn" id="3_y1erl"]
 [ext_resource type="PackedScene" uid="uid://drdktrlhbigqb" path="res://scene/npc2.tscn" id="4_3lax0"]
+[ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="4_ospyl"]
 
 [node name="World2" unique_id=1697432782 instance=ExtResource("1_swm4i")]
 
@@ -28,19 +29,27 @@ position = Vector2(329, 8)
 
 [node name="Area2D" parent="." index="6" unique_id=574157516 instance=ExtResource("3_y1erl")]
 position = Vector2(-478, 15)
+item_id = "wood_1"
 item_name = "wood"
+item_icon = ExtResource("4_ospyl")
 
 [node name="Area2D2" parent="." index="7" unique_id=857353623 instance=ExtResource("3_y1erl")]
 position = Vector2(-586, 13)
+item_id = "wood_2"
 item_name = "wood"
+item_icon = ExtResource("4_ospyl")
 
 [node name="Area2D3" parent="." index="8" unique_id=1714089640 instance=ExtResource("3_y1erl")]
 position = Vector2(114, 14)
+item_id = "wood_3"
 item_name = "wood"
+item_icon = ExtResource("4_ospyl")
 
 [node name="Area2D4" parent="." index="9" unique_id=181901135 instance=ExtResource("3_y1erl")]
 position = Vector2(479, 14)
+item_id = "wood_4"
 item_name = "wood"
+item_icon = ExtResource("4_ospyl")
 
 [node name="CharacterBody2D2" parent="." index="10" unique_id=1198646282 instance=ExtResource("4_3lax0")]
 position = Vector2(-347, 6)

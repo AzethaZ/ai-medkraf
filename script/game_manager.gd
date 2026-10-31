@@ -62,3 +62,13 @@ func remove_item(item_name: String, amount: int) -> void:
 			removed_count += 1
 			if removed_count >= amount:
 				break
+
+# Array untuk menyimpan ID item yang sudah diambil pemain secara global
+var collected_items: Array[String] = []
+
+func mark_item_collected(item_id: String) -> void:
+	if not collected_items.has(item_id):
+		collected_items.append(item_id)
+
+func is_item_collected(item_id: String) -> bool:
+	return collected_items.has(item_id)
