@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c8bss2gd0hso"]
+
+[ext_resource type="Script" uid="uid://mfftaciuuc3g" path="res://script/cutscene_hutan_1.gd" id="1_g10qx"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_jqca4"]
+
+[node name="CutsceneHutan1" type="CanvasLayer" unique_id=1107625452]
+script = ExtResource("1_g10qx")
+
+[node name="CutsceneImage" type="TextureRect" parent="." unique_id=670573281]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=83581648]
+texture_filter = 1
+position = Vector2(591, 318)
+texture = ExtResource("2_jqca4")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=110728102]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

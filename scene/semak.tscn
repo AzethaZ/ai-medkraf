@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dbo5jtf3frcm5"]
+
+[ext_resource type="Script" uid="uid://cwnyfif384uau" path="res://script/semak.gd" id="1_2n3m8"]
+[ext_resource type="Texture2D" uid="uid://b3osoak7hv8r2" path="res://assets/semak.png" id="2_darcu"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_44o0v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 23.194826
+
+[node name="Area2D" type="Area2D" unique_id=457487167]
+script = ExtResource("1_2n3m8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=359345647]
+texture_filter = 1
+position = Vector2(1, -9)
+scale = Vector2(1.3863636, 1.3863636)
+texture = ExtResource("2_darcu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2086153273]
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1805863368]
+texture_filter = 1
+position = Vector2(0, -73)
+texture = ExtResource("3_44o0v")

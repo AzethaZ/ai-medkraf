@@ -1,5 +1,21 @@
 extends Node
 
+# --- TAMBAHKAN DI SINI ---
+enum StoryStep {
+	CUTSCENE_AWAL,
+	GAMEPLAY_1_HUTAN,
+	CUTSCENE_HUTAN_1,
+	GAMEPLAY_2_DIKEJAR,
+	CUTSCENE_HUTAN_2
+}
+
+var current_step: StoryStep = StoryStep.CUTSCENE_AWAL
+
+func advance_story(next_step: StoryStep) -> void:
+	current_step = next_step
+	print("Progres cerita diperbarui ke: ", current_step)
+# ---------------------------
+
 var inventory: Array = []
 
 func add_item(item_data: Dictionary) -> void:
@@ -17,16 +33,19 @@ func previous_level(target_scene_path: String = "res://scene/World/world_1.tscn"
 
 func _change_world(target_scene_path: String) -> void:
 	# 1. Layar perlahan menjadi hitam
-	await SceneTransition.fade_out()
+	if SceneTransition and SceneTransition.has_method("fade_out"):
+		await SceneTransition.fade_out()
 	
 	# 2. Ganti scene sesuai path yang dikirim
 	get_tree().change_scene_to_file(target_scene_path)
 	
-	# 3. Teleport player ke spawn point
-	await _teleport_player_to_spawn()
-	
-	# 4. Layar perlahan kembali terang
-	await SceneTransition.fade_in()
+	# 3. Teleport player ke spawn point (jika ada)
+	if has_method("_teleport_player_to_spawn"):
+		await _teleport_player_to_spawn()
+		
+	# 4. TAMBAHKAN INI: Layar perlahan kembali terang
+	if SceneTransition and SceneTransition.has_method("fade_in"):
+		await SceneTransition.fade_in()
 
 func _teleport_player_to_spawn():
 	# Tunggu sampai scene baru benar-benar selesai dimuat ke tree

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://bxp0avbn6xmqt"]
+
+[ext_resource type="Texture2D" uid="uid://0migff2cb6st" path="res://assets/chaser.png" id="1_yw6qt"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_bhokx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhokx"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjh28"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t85a7"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k64l8"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jmcj"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lo6ys"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxeqv"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i14m1"]
+atlas = ExtResource("1_yw6qt")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhokx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjh28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t85a7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k64l8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jmcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lo6ys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxeqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i14m1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
+radius = 18.027756
+
+[node name="NPC_Chaser" type="CharacterBody2D" unique_id=1370154020]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=423341096]
+scale = Vector2(1.53125, 1.53125)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.7261129
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748679855]
+shape = SubResource("CircleShape2D_8vrlf")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1194047087]
+visible = false
+texture_filter = 1
+position = Vector2(0, -56)
+texture = ExtResource("2_bhokx")

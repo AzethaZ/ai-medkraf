@@ -1,58 +1,46 @@
 [gd_scene format=3 uid="uid://8wtswah0g4hv"]
 
 [ext_resource type="Script" uid="uid://c14ky4k7pda0k" path="res://script/npc_1.gd" id="1_4dbx6"]
-[ext_resource type="Texture2D" uid="uid://bhwp2nddgqvf3" path="res://assets/api-Sheet.png" id="1_kcewe"]
+[ext_resource type="Texture2D" uid="uid://dh0iipjof4otj" path="res://assets/idel_template_cowok-Sheet.png" id="2_jctpc"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_4hgyg"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="3_hcji2"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="4_jctpc"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4dbx6"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4hgyg"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hcji2"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jctpc"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(96, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ipmk"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(128, 0, 32, 32)
+atlas = ExtResource("2_jctpc")
+region = Rect2(0, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmc75"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(160, 0, 32, 32)
+atlas = ExtResource("2_jctpc")
+region = Rect2(60, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ved4w"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(192, 0, 32, 32)
+atlas = ExtResource("2_jctpc")
+region = Rect2(120, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vmjog"]
-atlas = ExtResource("1_kcewe")
-region = Rect2(224, 0, 32, 32)
+atlas = ExtResource("2_jctpc")
+region = Rect2(180, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5tsc"]
+atlas = ExtResource("2_jctpc")
+region = Rect2(240, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crhes"]
+atlas = ExtResource("2_jctpc")
+region = Rect2(300, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xp5b8"]
+atlas = ExtResource("2_jctpc")
+region = Rect2(360, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfn7w"]
+atlas = ExtResource("2_jctpc")
+region = Rect2(420, 0, 60, 120)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4dbx6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4hgyg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hcji2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jctpc")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4ipmk")
 }, {
@@ -64,17 +52,29 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vmjog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5tsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crhes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xp5b8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfn7w")
 }],
 "loop": 1,
 "name": &"default",
-"speed": 8.0
+"speed": 6.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
-radius = 18.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvcat"]
+size = Vector2(40, 119)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
-radius = 21.167583
+radius = 30.490955
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qbdty"]
 texture = ExtResource("3_hcji2")
@@ -88,15 +88,15 @@ script = ExtResource("1_4dbx6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2093253478]
 texture_filter = 1
-position = Vector2(-1.0000019, -7.999998)
-scale = Vector2(1.9375, 1.9375)
+position = Vector2(-1.364242e-12, -8.000001)
+scale = Vector2(1.0854167, 1.0854167)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
 frame_progress = 0.5418835
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1012726449]
-position = Vector2(-2, -3)
-shape = SubResource("CircleShape2D_1vivr")
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_tvcat")
 disabled = true
 
 [node name="chat_detection" type="Area2D" parent="." unique_id=906098131]
@@ -118,9 +118,9 @@ mouse_filter = 1
 [node name="PanelContainer" type="PanelContainer" parent="DialogueUI" unique_id=1989336789]
 texture_filter = 1
 layout_mode = 1
-offset_top = -129.0
-offset_right = 224.0
-offset_bottom = -93.0
+offset_top = -120.0
+offset_right = 264.0
+offset_bottom = -84.0
 offset_transform_enabled = true
 offset_transform_pivot_ratio = Vector2(0.5, 1)
 mouse_filter = 1
@@ -150,5 +150,5 @@ theme_override_constants/separation = 2
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=678861667]
 texture_filter = 1
-position = Vector2(0, -60)
+position = Vector2(0, -93)
 texture = ExtResource("3_4hgyg")

@@ -1,45 +1,7 @@
 [gd_scene format=3 uid="uid://ccgfsgubup5on"]
 
-[ext_resource type="Texture2D" uid="uid://xxxr2tnjacrw" path="res://assets/l2d 5 bg1.png" id="1_0uxwb"]
-[ext_resource type="Texture2D" uid="uid://croew68kh0w4k" path="res://assets/l2d 5 bg-Sheet.png" id="2_nhk5q"]
 [ext_resource type="PackedScene" uid="uid://cekrvnyqckkb5" path="res://scene/player.tscn" id="3_qj5ym"]
 [ext_resource type="PackedScene" uid="uid://debs5swvyci4p" path="res://scene/Function/area_exit.tscn" id="4_nhk5q"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tlwt5"]
-atlas = ExtResource("2_nhk5q")
-region = Rect2(0, 0, 1727, 540)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aqk2v"]
-atlas = ExtResource("2_nhk5q")
-region = Rect2(1727, 0, 1727, 540)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_036b0"]
-atlas = ExtResource("2_nhk5q")
-region = Rect2(3454, 0, 1727, 540)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dwbse"]
-atlas = ExtResource("2_nhk5q")
-region = Rect2(5181, 0, 1727, 540)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tlwt5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aqk2v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_036b0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dwbse")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fj7yv"]
 load_path = "res://.godot/imported/tiles_rumput_hitam__border_.png-d3ae16f765de851907f982072745d353.ctex"
@@ -90,23 +52,6 @@ physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_tlwt5")
 
 [node name="WorldTemplate" type="Node2D" unique_id=1697432782]
-
-[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1656632802]
-scroll_scale = Vector2(0.5, 0.5)
-repeat_times = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=656463049]
-position = Vector2(322.6134, 105.749985)
-scale = Vector2(0.7731481, 0.7731481)
-texture = ExtResource("1_0uxwb")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Parallax2D" unique_id=2105370129]
-position = Vector2(322.6134, 105.749985)
-scale = Vector2(0.7731481, 0.7731481)
-sprite_frames = SubResource("SpriteFrames_1vivr")
-autoplay = "default"
-frame = 2
-frame_progress = 0.9325482
 
 [node name="TileMap" type="TileMap" parent="." unique_id=2046423767]
 tile_set = SubResource("TileSet_qucqc")

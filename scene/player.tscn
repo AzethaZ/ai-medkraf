@@ -271,4 +271,6 @@ position = Vector2(5.5, 15)
 shape = SubResource("RectangleShape2D_1vivr")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=971091246]
+texture_filter = 1
 position = Vector2(0, -86)
+limit_smoothed = true

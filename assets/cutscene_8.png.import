@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhgedck8dwymp"
-path="res://.godot/imported/Inventorytes2.png-777c0854cea8f6015f6db859b4f96e8d.ctex"
+uid="uid://cycdf5jore811"
+path="res://.godot/imported/cutscene_8.png-18a8c6363bd248db310967840ad87ca0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Inventorytes2.png"
-dest_files=["res://.godot/imported/Inventorytes2.png-777c0854cea8f6015f6db859b4f96e8d.ctex"]
+source_file="res://assets/cutscene_8.png"
+dest_files=["res://.godot/imported/cutscene_8.png-18a8c6363bd248db310967840ad87ca0.ctex"]
 
 [params]
 

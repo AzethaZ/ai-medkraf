@@ -1,50 +1,47 @@
 [gd_scene format=3 uid="uid://drdktrlhbigqb"]
 
-[ext_resource type="Texture2D" uid="uid://d07yosaqey4x6" path="res://assets/burung level 1-Sheet.png" id="1_gjkm4"]
 [ext_resource type="Script" uid="uid://c0gvyam7bu8cp" path="res://script/npc_2.gd" id="1_udvkr"]
+[ext_resource type="Texture2D" uid="uid://cb4frmo4b1h0o" path="res://assets/idle_template_cewek-Sheet.png" id="2_tvcat"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_udvkr"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="3_173el"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="5_173el"]
 [ext_resource type="Texture2D" uid="uid://b874tjv5y24y8" path="res://assets/l2d map awan.png" id="6_tvcat"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tvcat"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(0, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ob3r"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(32, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(0, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2cpvo"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(60, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w6ohr"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(96, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(120, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1c027"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(128, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(180, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_imqsb"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(160, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(240, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aa7li"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(192, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(300, 0, 60, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cno7"]
-atlas = ExtResource("1_gjkm4")
-region = Rect2(224, 0, 32, 32)
+atlas = ExtResource("2_tvcat")
+region = Rect2(360, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sails"]
+atlas = ExtResource("2_tvcat")
+region = Rect2(420, 0, 60, 120)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tvcat")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4ob3r")
 }, {
@@ -65,17 +62,20 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3cno7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sails")
 }],
 "loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
-radius = 11.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uegy2"]
+size = Vector2(43, 124)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jirua"]
-radius = 13.973665
+radius = 36.14378
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_quhwl"]
 texture = ExtResource("2_udvkr")
@@ -153,16 +153,15 @@ script = ExtResource("1_udvkr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=593655250]
 texture_filter = 1
-position = Vector2(4.7683716e-07, -4.7683716e-07)
-scale = Vector2(1.6562499, 1.6562499)
+position = Vector2(0.9999981, -9.999996)
+scale = Vector2(1.0781249, 1.0781249)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame = 7
 frame_progress = 0.7544182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=480670820]
-position = Vector2(0, -2)
-shape = SubResource("CircleShape2D_8vrlf")
+position = Vector2(2.5, -7)
+shape = SubResource("RectangleShape2D_uegy2")
 disabled = true
 
 [node name="chat_detection" type="Area2D" parent="." unique_id=1232250454]
@@ -170,7 +169,7 @@ position = Vector2(-1.0000019, -9.999998)
 scale = Vector2(1.9375, 1.9375)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=1508404906]
-position = Vector2(9.844381e-07, 4.1290317)
+position = Vector2(1.0322591, -1.4305115e-06)
 shape = SubResource("CircleShape2D_jirua")
 
 [node name="DialogueUI" type="Control" parent="." unique_id=1065598722]
@@ -186,9 +185,9 @@ mouse_filter = 1
 [node name="PanelContainer" type="PanelContainer" parent="DialogueUI" unique_id=1635810333]
 texture_filter = 1
 layout_mode = 1
-offset_top = -109.0
+offset_top = -117.0
 offset_right = 284.0
-offset_bottom = -73.0
+offset_bottom = -81.0
 offset_transform_enabled = true
 offset_transform_pivot_ratio = Vector2(0.5, 1)
 mouse_filter = 1
@@ -210,8 +209,8 @@ autowrap_mode = 3
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=295217037]
 texture_filter = 1
-position = Vector2(0, -48)
-scale = Vector2(0.91406256, 0.91406256)
+position = Vector2(1, -92)
+scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("5_173el")
 
 [node name="Campfire" type="AnimatedSprite2D" parent="." unique_id=2133259228]

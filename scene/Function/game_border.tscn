@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c14vokpg8r5sb"]
 
-[ext_resource type="Texture2D" uid="uid://be3s6uvkqiqv6" path="res://assets/border.png" id="1_gn35n"]
+[ext_resource type="Texture2D" uid="uid://bvokbegafqmm0" path="res://assets/border.png" id="1_gn35n"]
 
 [node name="GameBorder" type="CanvasLayer" unique_id=1435046413]
 layer = 101
@@ -12,5 +12,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("1_gn35n")
 expand_mode = 2
