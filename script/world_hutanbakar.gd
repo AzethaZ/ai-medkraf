@@ -2,66 +2,100 @@ extends Node2D
 
 @export var qte_target_count: int = 5       # Target sukses 5x QTE
 @export var max_miss_allowed: int = 2        # Maksimal 2x gagal -> Game Over
-@export var scroll_speed: float = 260.0       # Kecepatan lari background (Parallax)
+@export var scroll_speed: float = 200.0       # Kecepatan lari background (Parallax)
 
 @onready var parallax_2d: Parallax2D = $Parallax2D
 @onready var player: Player = $Player
 @onready var npc_chaser: Node2D = find_child("NPC_Chaser", true, false)
 @onready var camera_2d: Camera2D = find_child("Camera2D", true, false)
+@onready var interact_icon: Sprite2D = npc_chaser.find_child("InteractIcon", true, false) if npc_chaser else null
 
 # UI Node
-@onready var qte_icon: Control = $ChaseUI/QTECircle  # TextureRect/Control penanda visual QTE
+@onready var qte_icon: Control = $ChaseUI/QTECircle
 @onready var game_over_panel: Control = $ChaseUI/GameOverPanel
 @onready var retry_button: Button = find_child("RetryButton", true, false) as Button
 
 var current_qte_success: int = 0
 var current_miss_count: int = 0
-var is_chasing: bool = true
-
-# State melacak status QTE aktif
+var is_chasing: bool = false
 var is_qte_active: bool = false
 var qte_pressed_in_time: bool = false
 
-# Mengambil reference InteractIcon di dalam NPC_Chaser
-@onready var interact_icon: Sprite2D = npc_chaser.find_child("InteractIcon", true, false) if npc_chaser else null
+# ID unik untuk mencegah bentrokan timer QTE lama
+var current_qte_id: int = 0
+
+# Variabel posisi X asli dari Editor
+var player_start_x: float = 0.0
+var npc_start_x: float = 0.0
+var is_scene_initialized: bool = false
 
 func _ready() -> void:
-	# 1. SEMBUNYIKAN UI & ICON DI AWAL
+	# 1. SEMBUNYIKAN UI & IKON DI AWAL
 	if game_over_panel:
 		game_over_panel.visible = false
 	if qte_icon:
 		qte_icon.visible = false
 	if interact_icon:
-		interact_icon.visible = false  # Sembunyikan ikon tanda seru bawaan NPC
+		interact_icon.visible = false
 		
 	if retry_button and not retry_button.pressed.is_connected(_on_retry_button_pressed):
 		retry_button.pressed.connect(_on_retry_button_pressed)
 
-	# 2. SETUP KAMERA STILL & POSISI AWAL (BACKGROUND MASIH DIAM)
+	# 2. SET KONTROL KAMERA DI TENGAH ARENA
 	if camera_2d:
 		camera_2d.top_level = true
 		camera_2d.global_position = Vector2(0, -85)
 
+	# 3. AMBIL POSISI DARI EDITOR & KUNCI KOORDINATNYA
 	if player:
-		player.global_position.x = 130.0
-
+		player_start_x = player.global_position.x
+		player.global_position.x = player_start_x
 	if npc_chaser:
-		npc_chaser.global_position.x = -130.0
+		npc_start_x = npc_chaser.global_position.x
+		npc_chaser.global_position.x = npc_start_x
+
+	is_scene_initialized = true
 
 	if parallax_2d:
-		parallax_2d.autoscroll.x = 0  # Background belum jalan
+		parallax_2d.autoscroll.x = 0 # Background belum jalan
 
-	# 3. FADE IN TRANSISI MASUK SCENE
+	# 4. FADE IN TRANSISI MASUK SCENE
 	if SceneTransition and SceneTransition.has_method("fade_in"):
 		await SceneTransition.fade_in()
 
-	# 4. MUNCULKAN INTERACT ICON (!) SELAMA 0.8 DETIK
+	# 5. MUNCULKAN INTERACT ICON (!) SEBENTAR DI ATAS NPC
 	if interact_icon:
 		interact_icon.visible = true
-		await get_tree().create_timer(0.8).timeout
+		await get_tree().create_timer(0.6).timeout
 		interact_icon.visible = false
 
-	# 5. MULAI KEJAR-KEJARAN (BACKGROUND JALAN & ANIMASI LARI)
+	# 6. PANGGIL DIALOG PRA-KEJAR
+	await start_pre_chase_dialogue()
+
+	# 7. MULAI KEJAR-KEJARAN
+	start_chase_sequence()
+
+func _process(_delta: float) -> void:
+	# Menjaga posisi X karakter tetap konsisten sesuai Editor
+	if is_scene_initialized:
+		if player:
+			player.global_position.x = player_start_x
+		if npc_chaser:
+			npc_chaser.global_position.x = npc_start_x
+
+# --- ALUR DIALOG PRE-CHASE ---
+
+func start_pre_chase_dialogue() -> void:
+	if npc_chaser and npc_chaser.has_method("show_chase_dialogue"):
+		await npc_chaser.show_chase_dialogue("Kau tidak akan bisa lari, Danum!")
+	else:
+		await get_tree().create_timer(1.0).timeout
+
+# --- MEKANIK KEJAR-KEJARAN & QTE ---
+
+func start_chase_sequence() -> void:
+	is_chasing = true
+	
 	if parallax_2d:
 		parallax_2d.autoscroll.x = -scroll_speed
 
@@ -71,42 +105,31 @@ func _ready() -> void:
 	if npc_chaser and npc_chaser.has_method("start_chase"):
 		npc_chaser.start_chase()
 
-	# 6. JEDA 0.5 DETIK LALU SPAWN QTE PERTAMA
 	await get_tree().create_timer(0.5).timeout
 	spawn_next_qte()
 
-func _process(_delta: float) -> void:
-	# Menjaga posisi X karakter tetap konsisten di posisinya masing-masing saat animasi lari
-	if is_chasing:
-		if player:
-			player.global_position.x = 130.0
-		if npc_chaser:
-			npc_chaser.global_position.x = -130.0
-
-# --- INPUT LISTENER UNTUK TOMBOL INTERAKSI (E) ---
-
 func _unhandled_input(event: InputEvent) -> void:
-	# Cek apakah pemain menekan tombol "interact" (tombol E) saat QTE aktif
 	if is_chasing and is_qte_active and event.is_action_pressed("interact"):
 		qte_pressed_in_time = true
 		is_qte_active = false
 		if qte_icon:
 			qte_icon.visible = false
 		
+		get_viewport().set_input_as_handled() # Mencegah input ganda
 		on_qte_success()
-
-# --- MEKANIK SPANNER QTE LINGKARAN ---
 
 func spawn_next_qte() -> void:
 	if not is_chasing or not qte_icon:
 		return
 		
-	# Cek apakah target 5x sukses sudah tercapai
 	if current_qte_success >= qte_target_count:
 		finish_chase_sequence()
 		return
+
+	# Buat ID unik untuk QTE saat ini
+	current_qte_id += 1
+	var this_qte_id = current_qte_id
 		
-	# Acak posisi visual ikon QTE di area layar UI
 	var viewport_size = get_viewport_rect().size
 	var random_x = randf_range(150, viewport_size.x - 150)
 	var random_y = randf_range(150, viewport_size.y - 150)
@@ -114,41 +137,32 @@ func spawn_next_qte() -> void:
 	qte_icon.position = Vector2(random_x, random_y)
 	qte_icon.visible = true
 	
-	# Reset state QTE
 	is_qte_active = true
 	qte_pressed_in_time = false
 	
-	# Waktu toleransi 2.0 detik bagi pemain untuk menekan tombol 'E'
-	var qte_timer = get_tree().create_timer(2.0)
-	await qte_timer.timeout
+	# Batas waktu 2.0 detik
+	await get_tree().create_timer(2.0).timeout
 	
-	# Jika timer habis dan pemain BELUM menekan 'E'
-	if is_qte_active and not qte_pressed_in_time:
+	# Pastikan ini masih QTE yang sama dan belum ditekan
+	if is_qte_active and not qte_pressed_in_time and current_qte_id == this_qte_id:
 		is_qte_active = false
 		qte_icon.visible = false
 		on_qte_missed()
 
 func on_qte_success() -> void:
 	current_qte_success += 1
-	print("QTE Berhasil! Progres: ", current_qte_success, "/", qte_target_count)
-	
-	# Jeda santai 0.8 detik sebelum lingkaran berikutnya muncul
 	await get_tree().create_timer(0.8).timeout
 	spawn_next_qte()
 
 func on_qte_missed() -> void:
 	current_miss_count += 1
-	print("QTE Miss! Total Miss: ", current_miss_count)
-	
-	# Jika sudah 2x miss -> GAME OVER
 	if current_miss_count >= max_miss_allowed:
 		trigger_game_over()
 	else:
-		# Jeda sebelum QTE berikutnya muncul
 		await get_tree().create_timer(0.8).timeout
 		spawn_next_qte()
 
-# --- HANDLER GAME OVER, RETRY & FINISH SCENE ---
+# --- GAME OVER, RETRY & TRANSISI SCENE ---
 
 func trigger_game_over() -> void:
 	is_chasing = false
@@ -156,20 +170,18 @@ func trigger_game_over() -> void:
 	if qte_icon:
 		qte_icon.visible = false
 	
-	# Hentikan autoscroll background & lari player
 	if parallax_2d:
 		parallax_2d.autoscroll.x = 0
 	if player and player.has_method("stop_auto_walk"):
 		player.stop_auto_walk()
 		
-	# Tampilkan UI Game Over
 	if game_over_panel:
 		game_over_panel.visible = true
 
 func _on_retry_button_pressed() -> void:
-	# Mengulang scene kejar-kejaran dari awal
+	var current_scene_path = "res://scene/World/world_hutanbakar.tscn"
 	if SceneTransition and SceneTransition.has_method("change_scene"):
-		SceneTransition.change_scene("res://scene/World/world_hutanbakar.tscn")
+		SceneTransition.change_scene(current_scene_path)
 	else:
 		get_tree().reload_current_scene()
 
@@ -184,7 +196,6 @@ func finish_chase_sequence() -> void:
 	
 	var target_scene_path = "res://scene/World/world_sembunyi.tscn"
 	
-	# Transisi me-fade out layar lalu berpindah ke world_sembunyi.tscn
 	if SceneTransition and SceneTransition.has_method("change_scene"):
 		SceneTransition.change_scene(target_scene_path)
 	elif SceneTransition and SceneTransition.has_method("fade_out"):
