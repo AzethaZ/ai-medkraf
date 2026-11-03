@@ -5,7 +5,8 @@
 [ext_resource type="Script" uid="uid://cbgnte3ea67qp" path="res://script/world_hutanbakar.gd" id="2_a0gq0"]
 [ext_resource type="Texture2D" uid="uid://croew68kh0w4k" path="res://assets/l2d 5 bg-Sheet.png" id="3_nmtv5"]
 [ext_resource type="PackedScene" uid="uid://bxp0avbn6xmqt" path="res://scene/npc_chaser.tscn" id="5_3bv0e"]
-[ext_resource type="Texture2D" uid="uid://d2kvuhfesg5w0" path="res://assets/Volume roll.png" id="6_l5113"]
+[ext_resource type="Texture2D" uid="uid://bjtx0jb5bntdp" path="res://assets/lingkaran dalem.png" id="6_3bv0e"]
+[ext_resource type="Texture2D" uid="uid://i2kklrtp7r2" path="res://assets/lingkaran luar.png" id="7_l5113"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k41iu"]
 atlas = ExtResource("3_nmtv5")
@@ -66,13 +67,13 @@ layer_0/tile_data = PackedInt32Array(131061, 65538, 2, 196597, 65538, 2, 262133,
 position = Vector2(-502, -19)
 
 [node name="Player" parent="." index="3" unique_id=1312877385]
-position = Vector2(201, -1)
+position = Vector2(0, -1)
 
 [node name="SpawnPoint" parent="." index="4" unique_id=627443350]
 position = Vector2(-1, 0)
 
 [node name="NPC_Chaser" parent="." index="5" unique_id=1370154020 instance=ExtResource("5_3bv0e")]
-position = Vector2(-227, 0)
+position = Vector2(-227, -15)
 
 [node name="Camera2D" type="Camera2D" parent="." index="6" unique_id=1921903845]
 
@@ -83,7 +84,26 @@ offset_left = 138.0
 offset_top = -107.0
 offset_right = 178.0
 offset_bottom = -67.0
-texture = ExtResource("6_l5113")
+
+[node name="BaseCircle" type="TextureRect" parent="ChaseUI/QTECircle" index="0" unique_id=2097610271]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_3bv0e")
+
+[node name="ApproachCircle" type="TextureRect" parent="ChaseUI/QTECircle" index="1" unique_id=1214201101]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_l5113")
+
+[node name="Label" type="Label" parent="ChaseUI/QTECircle" index="2" unique_id=1146205693]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 17.0
+offset_right = 33.0
+offset_bottom = 31.0
+text = "E"
 
 [node name="GameOverPanel" type="Control" parent="ChaseUI" index="1" unique_id=1671048186]
 layout_mode = 3

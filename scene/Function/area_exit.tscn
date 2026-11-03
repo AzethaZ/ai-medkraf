@@ -15,6 +15,7 @@ position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_1vivr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1344718094]
+visible = false
 z_as_relative = false
 texture_filter = 1
 position = Vector2(0, -1)

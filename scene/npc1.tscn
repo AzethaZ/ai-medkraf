@@ -74,7 +74,7 @@ animations = [{
 size = Vector2(40, 119)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
-radius = 30.490955
+radius = 19.619694
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qbdty"]
 texture = ExtResource("3_hcji2")

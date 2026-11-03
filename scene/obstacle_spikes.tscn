@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ddf65m8npkxk3"]
+
+[ext_resource type="Script" uid="uid://cocdhwtqx7rfg" path="res://script/obstacle_spikes.gd" id="1_nclnc"]
+[ext_resource type="Texture2D" uid="uid://bi8whltvh1kgx" path="res://assets/duri.png" id="2_nclnc"]
+
+[node name="ObstacleSpikes" type="Node2D" unique_id=327491784]
+script = ExtResource("1_nclnc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1509144959]
+position = Vector2(0, 24)
+texture = ExtResource("2_nclnc")

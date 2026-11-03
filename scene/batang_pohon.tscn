@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d0jr5ilrur6yh"]
+
+[ext_resource type="Script" uid="uid://dxgww083t18wu" path="res://script/batang_pohon.gd" id="1_nsvem"]
+[ext_resource type="Texture2D" uid="uid://djwhp6t87m7kr" path="res://assets/map button.png" id="1_w8n4t"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_nsvem"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 38.118237
+
+[node name="BatangPohon" type="Area2D" unique_id=933575158]
+script = ExtResource("1_nsvem")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1217090914]
+texture = ExtResource("1_w8n4t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=892298531]
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1975404399]
+texture_filter = 1
+position = Vector2(0, -71)
+texture = ExtResource("2_nsvem")

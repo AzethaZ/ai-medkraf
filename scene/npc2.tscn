@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_udvkr"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="3_173el"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="5_173el"]
-[ext_resource type="Texture2D" uid="uid://b874tjv5y24y8" path="res://assets/l2d map awan.png" id="6_tvcat"]
+[ext_resource type="Texture2D" uid="uid://407j8gewuenu" path="res://assets/hantubaik-Sheet.png" id="6_tvcat"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ob3r"]
 atlas = ExtResource("2_tvcat")
@@ -86,35 +86,35 @@ texture_margin_bottom = 12.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jirua"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(0, 0, 960, 540)
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_quhwl"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(960, 0, 960, 540)
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g10wf"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(1920, 0, 960, 540)
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5s6an"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(2880, 0, 960, 540)
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pc1ms"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(3840, 0, 960, 540)
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jh28d"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(4800, 0, 960, 540)
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2nwnd"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(5760, 0, 960, 540)
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_385r8"]
 atlas = ExtResource("6_tvcat")
-region = Rect2(6720, 0, 960, 540)
+region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8vrlf"]
 animations = [{
@@ -215,11 +215,11 @@ texture = ExtResource("5_173el")
 
 [node name="Campfire" type="AnimatedSprite2D" parent="." unique_id=2133259228]
 visible = false
-position = Vector2(-69.00001, 0)
-scale = Vector2(0.11851851, 0.11851852)
+position = Vector2(-73, -7)
+scale = Vector2(1.9030095, 1.9030097)
 sprite_frames = SubResource("SpriteFrames_8vrlf")
 autoplay = "default"
-frame_progress = 0.07524617
+frame_progress = 0.9032131
 
 [connection signal="body_entered" from="chat_detection" to="." method="_on_chat_detection_body_entered"]
 [connection signal="body_exited" from="chat_detection" to="." method="_on_chat_detection_body_exited"]
