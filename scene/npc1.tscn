@@ -92,7 +92,7 @@ position = Vector2(-1.364242e-12, -8.000001)
 scale = Vector2(1.0854167, 1.0854167)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.5418835
+frame_progress = 0.08571852
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1012726449]
 position = Vector2(0, -2.5)
@@ -108,6 +108,7 @@ position = Vector2(9.844381e-07, 4.1290317)
 shape = SubResource("CircleShape2D_8vrlf")
 
 [node name="DialogueUI" type="Control" parent="." unique_id=1571324028]
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3

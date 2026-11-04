@@ -173,6 +173,7 @@ position = Vector2(1.0322591, -1.4305115e-06)
 shape = SubResource("CircleShape2D_jirua")
 
 [node name="DialogueUI" type="Control" parent="." unique_id=1065598722]
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 offset_top = -2.0

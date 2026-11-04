@@ -62,13 +62,15 @@ func _on_tree_interacted() -> void:
 	if player and player.has_method("disable_movement"):
 		player.disable_movement()
 
-	var target_scene = "res://scene/World/world_hutanbakar2.tscn"
+	# Arahkan target scene ke scene Cutscene
+	var target_scene = "res://scene/Function/cutscene_pohon.tscn"
 	if not ResourceLoader.exists(target_scene):
-		target_scene = "res://scene/world/world_hutanbakar2.tscn"
+		target_scene = "res://scene/cutscene_pohon.tscn"
 
 	if SceneTransition and SceneTransition.has_method("change_scene"):
 		SceneTransition.change_scene(target_scene)
+	elif SceneTransition and SceneTransition.has_method("fade_out"):
+		await SceneTransition.fade_out()
+		get_tree().change_scene_to_file(target_scene)
 	else:
-		if SceneTransition and SceneTransition.has_method("fade_out"):
-			await SceneTransition.fade_out()
 		get_tree().change_scene_to_file(target_scene)

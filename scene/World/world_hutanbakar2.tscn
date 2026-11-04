@@ -27,7 +27,7 @@ position = Vector2(140, -9)
 target_scene_path = "uid://babllqgm2lbtd"
 
 [node name="Player" parent="." index="3" unique_id=1312877385]
-position = Vector2(-3, 1)
+position = Vector2(-3, 10)
 
 [node name="InteractIcon" type="Sprite2D" parent="." index="5" unique_id=1172031311]
 texture_filter = 1

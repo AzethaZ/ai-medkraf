@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://6cjhudrhixcu"]
+
+[ext_resource type="Script" uid="uid://ccwqqfux0t0yq" path="res://script/cutscene_pohon.gd" id="1_v67v1"]
+[ext_resource type="Texture2D" uid="uid://dbqqprjgofdtl" path="res://assets/cutscene_9.png" id="2_7nmqx"]
+[ext_resource type="Texture2D" uid="uid://cks7pavl2qdv3" path="res://assets/cutscene_10.png" id="3_u2hgd"]
+[ext_resource type="Texture2D" uid="uid://bocy0xrh3yrso" path="res://assets/cutscene_11.png" id="4_5dq8x"]
+[ext_resource type="Texture2D" uid="uid://cnn4l8mjqba4w" path="res://assets/cutscene_12.png" id="5_x6h63"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="6_7nmqx"]
+
+[node name="CutscenePohon" type="Control" unique_id=250983348]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v67v1")
+image_1 = ExtResource("2_7nmqx")
+image_2 = ExtResource("3_u2hgd")
+image_3 = ExtResource("4_5dq8x")
+image_4 = ExtResource("5_x6h63")
+
+[node name="DisplayImage" type="TextureRect" parent="." unique_id=418023248]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1351048773]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=904041644]
+visible = false
+texture_filter = 1
+position = Vector2(572, 305)
+texture = ExtResource("6_7nmqx")

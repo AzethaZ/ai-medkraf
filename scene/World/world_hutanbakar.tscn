@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://c8lqe3rb4rosr"]
 
 [ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_eryjc"]
-[ext_resource type="Texture2D" uid="uid://xxxr2tnjacrw" path="res://assets/l2d 5 bg1.png" id="2_1mw3k"]
 [ext_resource type="Script" uid="uid://cbgnte3ea67qp" path="res://script/world_hutanbakar.gd" id="2_a0gq0"]
+[ext_resource type="Texture2D" uid="uid://bl7rdx4vj6bpn" path="res://assets/hutan_awal_langit.png" id="3_b2cea"]
 [ext_resource type="Texture2D" uid="uid://croew68kh0w4k" path="res://assets/l2d 5 bg-Sheet.png" id="3_nmtv5"]
+[ext_resource type="Texture2D" uid="uid://cc3i83iimuk5g" path="res://assets/hutan_awal_bg.png" id="4_ll5ln"]
 [ext_resource type="PackedScene" uid="uid://bxp0avbn6xmqt" path="res://scene/npc_chaser.tscn" id="5_3bv0e"]
+[ext_resource type="Texture2D" uid="uid://bpknwa8im1hyi" path="res://assets/hutan_awal_mg.png" id="5_xe6xn"]
 [ext_resource type="Texture2D" uid="uid://bjtx0jb5bntdp" path="res://assets/lingkaran dalem.png" id="6_3bv0e"]
 [ext_resource type="Texture2D" uid="uid://i2kklrtp7r2" path="res://assets/lingkaran luar.png" id="7_l5113"]
 
@@ -48,14 +50,22 @@ animations = [{
 script = ExtResource("2_a0gq0")
 
 [node name="Parallax2D" type="Parallax2D" parent="." index="0" unique_id=1671699467]
-repeat_size = Vector2(1727, 0)
+scroll_offset = Vector2(0, -149)
+repeat_size = Vector2(1653, 0)
 autoscroll = Vector2(1, 0)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" index="0" unique_id=457876292]
-texture = ExtResource("2_1mw3k")
+[node name="Sprite2D3" type="Sprite2D" parent="Parallax2D" index="0" unique_id=1709275091]
+texture = ExtResource("3_b2cea")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Parallax2D" index="1" unique_id=1795154466]
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D" index="1" unique_id=886905520]
+texture = ExtResource("4_ll5ln")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" index="2" unique_id=457876292]
+texture = ExtResource("5_xe6xn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Parallax2D" index="3" unique_id=1795154466]
+visible = false
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
 frame_progress = 0.076380394
@@ -67,10 +77,10 @@ layer_0/tile_data = PackedInt32Array(131061, 65538, 2, 196597, 65538, 2, 262133,
 position = Vector2(-502, -19)
 
 [node name="Player" parent="." index="3" unique_id=1312877385]
-position = Vector2(0, -1)
+position = Vector2(0, 9)
 
 [node name="SpawnPoint" parent="." index="4" unique_id=627443350]
-position = Vector2(-1, 0)
+position = Vector2(-1, 9)
 
 [node name="NPC_Chaser" parent="." index="5" unique_id=1370154020 instance=ExtResource("5_3bv0e")]
 position = Vector2(-227, -15)
