@@ -88,8 +88,8 @@ script = ExtResource("1_4dbx6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2093253478]
 texture_filter = 1
-position = Vector2(-1.364242e-12, -8.000001)
-scale = Vector2(1.0854167, 1.0854167)
+position = Vector2(-1, -17)
+scale = Vector2(1.2260417, 1.2260417)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
 frame_progress = 0.08571852
