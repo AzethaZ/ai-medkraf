@@ -79,7 +79,7 @@ position = Vector2(0, -111)
 texture = ExtResource("6_v5srt")
 
 [node name="DarknessOverlay" type="ColorRect" parent="." index="4" unique_id=1504115804]
-modulate = Color(1, 1, 1, 0.25490198)
+modulate = Color(1, 1, 1, 0.10980392)
 offset_left = -2394.0
 offset_top = -348.0
 offset_right = 5445.0

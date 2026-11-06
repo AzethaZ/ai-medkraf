@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://bxplm11baemsx"]
+
+[ext_resource type="Script" uid="uid://dmlcf3t2e1ass" path="res://script/rhythm_minigame.gd" id="1_3ejmu"]
+[ext_resource type="Texture2D" uid="uid://bjtx0jb5bntdp" path="res://assets/lingkaran dalem.png" id="2_burxp"]
+[ext_resource type="Texture2D" uid="uid://i2kklrtp7r2" path="res://assets/lingkaran luar.png" id="3_qok5d"]
+
+[node name="RhythmMinigame" type="CanvasLayer" unique_id=184376380]
+script = ExtResource("1_3ejmu")
+
+[node name="QTECircle" type="Control" parent="." unique_id=260545388]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BaseCircle" type="TextureRect" parent="QTECircle" unique_id=1705388195]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_burxp")
+
+[node name="ApproachCircle" type="TextureRect" parent="QTECircle" unique_id=121104783]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_qok5d")
+
+[node name="Label" type="Label" parent="QTECircle" unique_id=1585130788]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -7.0
+offset_right = 8.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "E"
+
+[node name="InstructionLabel" type="Label" parent="." unique_id=513135811]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1

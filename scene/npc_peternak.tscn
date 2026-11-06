@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://drdktrlhbigqb"]
 
-[ext_resource type="Script" uid="uid://c0gvyam7bu8cp" path="res://script/npc_2.gd" id="1_udvkr"]
+[ext_resource type="Script" uid="uid://c0gvyam7bu8cp" path="res://script/npc_peternak.gd" id="1_udvkr"]
 [ext_resource type="Texture2D" uid="uid://cb4frmo4b1h0o" path="res://assets/idle_template_cewek-Sheet.png" id="2_tvcat"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_udvkr"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="3_173el"]

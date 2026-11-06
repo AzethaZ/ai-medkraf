@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b2fy6vfoyh8dy" path="res://script/world_2.gd" id="2_nxrxh"]
 [ext_resource type="Texture2D" uid="uid://b12s0gwrrcl7x" path="res://assets/testes.png" id="2_ytcnd"]
 [ext_resource type="Texture2D" uid="uid://croew68kh0w4k" path="res://assets/l2d 5 bg-Sheet.png" id="3_nxrxh"]
-[ext_resource type="PackedScene" uid="uid://drdktrlhbigqb" path="res://scene/npc2.tscn" id="4_3lax0"]
+[ext_resource type="PackedScene" uid="uid://debs5swvyci4p" path="res://scene/Function/area_exit.tscn" id="7_ytcnd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s3saa"]
 atlas = ExtResource("3_nxrxh")
@@ -79,6 +79,7 @@ layer_0/tile_data = PackedInt32Array(131061, 65538, 2, 196597, 65538, 2, 262133,
 
 [node name="AreaExit" parent="." index="4" unique_id=678330850]
 position = Vector2(106, 2)
+required_quest_id = "quest_ayam_1"
 
 [node name="Player" parent="." index="5" unique_id=1312877385]
 position = Vector2(101, 10)
@@ -89,5 +90,10 @@ position = Vector2(104, 5)
 [node name="CharacterBody2D" parent="." index="7" unique_id=1643254683 instance=ExtResource("2_638ig")]
 position = Vector2(362, -18)
 
-[node name="CharacterBody2D2" parent="." index="8" unique_id=1198646282 instance=ExtResource("4_3lax0")]
-position = Vector2(-152, -15)
+[node name="AreaExit2" parent="." index="8" unique_id=1000238523 instance=ExtResource("7_ytcnd")]
+position = Vector2(1232, 8)
+target_scene_path = "uid://b7wpa6ffnem3w"
+requires_interaction = false
+
+[node name="SpawnFromWorld3" type="Marker2D" parent="." index="9" unique_id=1997883830]
+position = Vector2(1153, 10)

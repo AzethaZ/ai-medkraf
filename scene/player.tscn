@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://jap5gtgxivae" path="res://assets/Idle-Sheet.png" id="2_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://bvk8yr07p3vu2" path="res://assets/Fall.png" id="3_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://cksj45kvbtmi5" path="res://assets/Run_2-Sheet.png" id="4_ct4mp"]
+[ext_resource type="Texture2D" uid="uid://bl0u6gslh83i7" path="res://assets/Running-Sheet.png" id="4_hp4bs"]
+[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="5_oh5ij"]
+[ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="6_hp4bs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s4jxa"]
 atlas = ExtResource("2_ct4mp")
@@ -32,6 +35,38 @@ region = Rect2(116, 0, 116, 116)
 [sub_resource type="AtlasTexture" id="AtlasTexture_l1uwf"]
 atlas = ExtResource("3_ct4mp")
 region = Rect2(232, 0, 116, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fvbb"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(0, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ml7e8"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(80, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihjo1"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(160, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dk1vr"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(240, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34jf3"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(320, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7b46"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(400, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4wxg"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(480, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bup7g"]
+atlas = ExtResource("4_hp4bs")
+region = Rect2(560, 0, 80, 95)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ie14"]
 atlas = ExtResource("4_ct4mp")
@@ -82,7 +117,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"default",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -96,6 +131,35 @@ animations = [{
 }],
 "loop": 1,
 "name": &"jumping",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fvbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ml7e8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihjo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dk1vr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34jf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7b46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4wxg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bup7g")
+}],
+"loop": 1,
+"name": &"run",
 "speed": 10.0
 }, {
 "frames": [{
@@ -124,12 +188,19 @@ animations = [{
 "texture": SubResource("AtlasTexture_6vs06")
 }],
 "loop": 1,
-"name": &"run",
+"name": &"walk",
 "speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vivr"]
 size = Vector2(31, 96)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g2vtq"]
+texture = ExtResource("5_oh5ij")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1312877385]
 z_index = 1
@@ -140,7 +211,7 @@ texture_filter = 1
 position = Vector2(6, -7)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-frame_progress = 0.25696826
+frame_progress = 0.67505354
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=380073661]
 position = Vector2(8, 1)
@@ -150,3 +221,39 @@ shape = SubResource("RectangleShape2D_1vivr")
 texture_filter = 1
 position = Vector2(0, -86)
 limit_smoothed = true
+
+[node name="DialogueUI" type="Control" parent="." unique_id=572375048]
+visible = false
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+offset_transform_enabled = true
+mouse_filter = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="DialogueUI" unique_id=526596937]
+texture_filter = 1
+layout_mode = 1
+offset_left = -124.0
+offset_top = -102.0
+offset_right = 140.0
+offset_bottom = -66.0
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0.5, 1)
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_g2vtq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueUI/PanelContainer" unique_id=909569105]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="DialogueUI/PanelContainer/VBoxContainer" unique_id=244644916]
+texture_filter = 1
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_hp4bs")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+autowrap_mode = 3

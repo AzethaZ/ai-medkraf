@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cy7cneygpmelq"]
+
+[ext_resource type="Texture2D" uid="uid://uxj85yv3tncl" path="res://assets/api-Sheet (1).png" id="1_12q18"]
+[ext_resource type="Script" uid="uid://o30a6a7hkkad" path="res://script/chick_farm.gd" id="1_p55md"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84y8h"]
+atlas = ExtResource("1_12q18")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60ske"]
+atlas = ExtResource("1_12q18")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh21d"]
+atlas = ExtResource("1_12q18")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkafa"]
+atlas = ExtResource("1_12q18")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yq144"]
+atlas = ExtResource("1_12q18")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kl6t"]
+atlas = ExtResource("1_12q18")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_athi1"]
+atlas = ExtResource("1_12q18")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvlu6"]
+atlas = ExtResource("1_12q18")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p55md"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84y8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60ske")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qh21d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkafa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yq144")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kl6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_athi1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvlu6")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="chick_farm" type="CharacterBody2D" unique_id=79431841]
+script = ExtResource("1_p55md")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=611743385]
+position = Vector2(0, 37)
+sprite_frames = SubResource("SpriteFrames_p55md")
+autoplay = "default"
