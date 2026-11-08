@@ -22,6 +22,7 @@ SceneTransition="*uid://c0o4lcu46wt8t"
 QuestManager="*uid://bsxe4dmheg516"
 QuestPopupUi="*uid://b3vivtn7hgjel"
 GameBorder="*uid://c14vokpg8r5sb"
+DialogueManager="*uid://bi6qm3r4wh2ch"
 
 [display]
 

@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bi6qm3r4wh2ch"]
+
+[ext_resource type="Script" uid="uid://dg05vfr6kmcdj" path="res://script/dialogue_manager.gd" id="1_wneuf"]
+[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="1_xo4ut"]
+[ext_resource type="Texture2D" uid="uid://dcahqovk62jh5" path="res://assets/ui/icon mark next.png" id="3_r0k2p"]
+[ext_resource type="Texture2D" uid="uid://c0kk108vnhx8e" path="res://assets/ui/icon tail.png" id="4_wneuf"]
+[ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="5_3ajdr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8vrlf"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("1_xo4ut")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="DialogueManager" type="CanvasLayer" unique_id=1295713616]
+layer = 100
+script = ExtResource("1_wneuf")
+
+[node name="BoxAnchor" type="Control" parent="." unique_id=320587125]
+z_index = 20
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueBox" type="PanelContainer" parent="BoxAnchor" unique_id=1170204412]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -148.0
+offset_top = -40.0
+offset_right = 148.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxTexture_8vrlf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BoxAnchor/DialogueBox" unique_id=722068629]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="BoxAnchor/DialogueBox/VBoxContainer" unique_id=1809099534]
+texture_filter = 1
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NextIndicator" type="TextureRect" parent="BoxAnchor/DialogueBox" unique_id=809890105]
+custom_minimum_size = Vector2(10, 6)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(2, 4)
+texture = ExtResource("3_r0k2p")
+expand_mode = 1
+
+[node name="TailPointer" type="TextureRect" parent="BoxAnchor/DialogueBox" unique_id=1838658178]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 18)
+texture = ExtResource("4_wneuf")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="." unique_id=1227274763]
+stream = ExtResource("5_3ajdr")
+volume_db = -7.0
+pitch_scale = 0.83
+
+[node name="TypeSound" type="AudioStreamPlayer" parent="." unique_id=1043259089]
+stream = ExtResource("5_3ajdr")
+volume_db = -7.0
+pitch_scale = 0.35

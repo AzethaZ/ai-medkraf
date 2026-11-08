@@ -6,6 +6,7 @@
 layer = 101
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=652194223]
+z_index = 10
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0

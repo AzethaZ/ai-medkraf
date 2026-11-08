@@ -31,24 +31,22 @@ func _ready() -> void:
 		spawn_farm_chicks()
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Jika dialog sedang aktif, abaikan input dari NPC agar tidak bentrok dengan DialogueManager
+	if DialogueManager.is_active:
+		return
+
 	if is_player_in_chat_zone and event.is_action_pressed("interact"):
-		if not is_chatting:
-			start_dialogue()
-		else:
-			if text_tween and text_tween.is_running():
-				text_tween.kill()
-				dialogue_label.visible_ratio = 1.0
-			else:
-				advance_dialogue()
+		get_viewport().set_input_as_handled()
+		start_dialogue()
 
 func prepare_dialogue_lines() -> void:
 	should_start_quest_on_end = false
 	should_complete_quest_on_end = false
 	current_active_quest = ""
-	
+
 	var q1 = QuestManager.get_quest_status("quest_ayam_1")
 	var q3 = QuestManager.get_quest_status("quest_ayam_3")
-	
+
 	# --- TAHAP 1: QUEST ANAK AYAM (0/3) ---
 	if q1 == "NOT_STARTED":
 		current_active_quest = "quest_ayam_1"
@@ -59,7 +57,6 @@ func prepare_dialogue_lines() -> void:
 		]
 	elif q1 == "ACTIVE":
 		var count = QuestManager.get_quest_progress("quest_ayam_1")
-		
 		if count >= 3:
 			current_active_quest = "quest_ayam_1"
 			should_complete_quest_on_end = true
@@ -94,6 +91,7 @@ func prepare_dialogue_lines() -> void:
 			dialogue_lines = [
 				"Ayam jago galak itu masih berkeliaran di area sungai!"
 			]
+
 	elif q3 == "COMPLETED":
 		dialogue_lines = [
 			"Semua ayam sudah aman di kandang. Terima kasih banyak, Danum!"
@@ -101,15 +99,54 @@ func prepare_dialogue_lines() -> void:
 
 func start_dialogue() -> void:
 	is_chatting = true
-	current_line_index = 0
-	
+
 	if interact_icon:
 		interact_icon.visible = false
 		stop_hover_animation()
 
 	prepare_dialogue_lines()
-	dialogue_ui.visible = true
-	show_current_line()
+
+	# 1. Jalankan dialogue manager global
+	DialogueManager.start_dialogue(dialogue_lines, self)
+	
+	# 2. Tunggu sampai percakapan selesai
+	await DialogueManager.dialogue_finished
+	
+	# 3. Jalankan efek & pemicu quest sesuai status
+	process_quest_after_dialogue()
+	
+	is_chatting = false
+
+	if is_player_in_chat_zone and interact_icon:
+		interact_icon.visible = true
+		start_hover_animation()
+
+func process_quest_after_dialogue() -> void:
+	# Aktifkan quest baru jika diset
+	if should_start_quest_on_end and current_active_quest != "":
+		QuestManager.start_quest(current_active_quest)
+		should_start_quest_on_end = false
+
+	# Selesaikan quest jika diset
+	if should_complete_quest_on_end and current_active_quest != "":
+		if current_active_quest == "quest_ayam_1":
+			if SceneTransition and SceneTransition.has_method("fade_out"):
+				await SceneTransition.fade_out()
+
+			QuestManager.complete_quest("quest_ayam_1")
+			spawn_farm_chicks()
+
+			# Trigger Quest 3 (Ayam Jago)
+			QuestManager.start_quest("quest_ayam_3")
+
+			await get_tree().create_timer(0.3).timeout
+
+			if SceneTransition and SceneTransition.has_method("fade_in"):
+				await SceneTransition.fade_in()
+		else:
+			QuestManager.complete_quest(current_active_quest)
+
+		should_complete_quest_on_end = false
 
 func show_current_line() -> void:
 	if text_tween and text_tween.is_running():
@@ -149,7 +186,7 @@ func end_dialogue() -> void:
 			QuestManager.complete_quest("quest_ayam_1")
 			spawn_farm_chicks()
 
-			# 3. LANGSUNG TRIGGER / AKTIFKAN QUEST 3 (Ayam Jago Galak) OLEH SISTEM
+			# 3. Langsung aktifkan Quest 3 (Ayam Jago Galak) oleh sistem
 			QuestManager.start_quest("quest_ayam_3")
 
 			await get_tree().create_timer(0.3).timeout
@@ -169,7 +206,7 @@ func end_dialogue() -> void:
 func spawn_farm_chicks() -> void:
 	if get_tree().current_scene.has_node("FarmChick_1"):
 		return
-		
+
 	if farm_chick_scene:
 		var offsets = [Vector2(-60, 5), Vector2(50, 5), Vector2(-110, 5)]
 		for i in range(3):

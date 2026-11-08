@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bhorer1v5v7rk"]
+
+[ext_resource type="Script" uid="uid://bgrt076wd7kcw" path="res://script/cutscene_burung.gd" id="1_javew"]
+[ext_resource type="Texture2D" uid="uid://b5om3dc4adgbx" path="res://assets/animation/Buwung.png" id="2_y5jt2"]
+[ext_resource type="Texture2D" uid="uid://cwxfo5xjqjpnh" path="res://assets/animation/Bulu.png" id="3_y5jt2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5jt2"]
+size = Vector2(76.5, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vti7k"]
+atlas = ExtResource("2_y5jt2")
+region = Rect2(0, 0, 117, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vti7k")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_javew"]
+radius = 17.117243
+
+[node name="Node2D" type="Node2D" unique_id=1883263315]
+script = ExtResource("1_javew")
+
+[node name="TriggerArea" type="Area2D" parent="." unique_id=1113964238]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=1174167279]
+position = Vector2(15.75, 48)
+shape = SubResource("RectangleShape2D_y5jt2")
+
+[node name="BirdSprite" type="AnimatedSprite2D" parent="." unique_id=1981663609]
+position = Vector2(0, -264)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+frame_progress = 0.21957591
+
+[node name="FeatherItem" type="Area2D" parent="." unique_id=1382627750]
+position = Vector2(0, -238)
+
+[node name="Sprite2D" type="Sprite2D" parent="FeatherItem" unique_id=964059219]
+texture = ExtResource("3_y5jt2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeatherItem" unique_id=1970402024]
+shape = SubResource("CircleShape2D_javew")

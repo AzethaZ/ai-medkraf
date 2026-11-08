@@ -11,6 +11,7 @@ radius = 23.194826
 script = ExtResource("1_2n3m8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=359345647]
+visible = false
 texture_filter = 1
 position = Vector2(1, -9)
 scale = Vector2(1.3863636, 1.3863636)
@@ -21,5 +22,5 @@ shape = SubResource("CircleShape2D_1vivr")
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=1805863368]
 texture_filter = 1
-position = Vector2(0, -73)
+position = Vector2(0, -102)
 texture = ExtResource("3_44o0v")

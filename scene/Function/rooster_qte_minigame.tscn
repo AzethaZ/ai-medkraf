@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://cn51qbckn06pm"]
+
+[ext_resource type="Script" uid="uid://dn3wvf7ursii8" path="res://script/rooster_qte_minigame.gd" id="1_bgc7s"]
+[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_7palp"]
+[ext_resource type="Texture2D" uid="uid://d2lxwgka3lsix" path="res://assets/Inventorytes.png" id="3_lujym"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8dkeh"]
+texture = ExtResource("2_7palp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7palp"]
+texture = ExtResource("3_lujym")
+
+[node name="RoosterQTEMinigame" type="Control" unique_id=2122403319]
+custom_minimum_size = Vector2(100, 24)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bgc7s")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1123954005]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -85.0
+offset_right = 107.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=172950272]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SequenceContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=218134174]
+custom_minimum_size = Vector2(100, 24)
+layout_mode = 2
+
+[node name="TimerBar" type="ProgressBar" parent="PanelContainer/VBoxContainer" unique_id=205109872]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxTexture_8dkeh")
+theme_override_styles/fill = SubResource("StyleBoxTexture_7palp")
+show_percentage = false

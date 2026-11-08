@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bkk8shkhx0gl0"]
+
+[ext_resource type="Texture2D" uid="uid://b55725qjta4b8" path="res://assets/animation/hotel.png" id="1_am40p"]
+[ext_resource type="Script" uid="uid://bpvmdgxffcuib" path="res://script/npc_pengelola_hutan.gd" id="1_p8llq"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_dr12i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yqvj"]
+atlas = ExtResource("1_am40p")
+region = Rect2(0, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wshjg"]
+atlas = ExtResource("1_am40p")
+region = Rect2(60, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqj02"]
+atlas = ExtResource("1_am40p")
+region = Rect2(120, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulons"]
+atlas = ExtResource("1_am40p")
+region = Rect2(180, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ogr4"]
+atlas = ExtResource("1_am40p")
+region = Rect2(240, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o08yy"]
+atlas = ExtResource("1_am40p")
+region = Rect2(300, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1oxs"]
+atlas = ExtResource("1_am40p")
+region = Rect2(360, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_em7l7"]
+atlas = ExtResource("1_am40p")
+region = Rect2(420, 0, 60, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yqvj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wshjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqj02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulons")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ogr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o08yy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1oxs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_em7l7")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vrlf"]
+size = Vector2(38, 115)
+
+[node name="npc_pengelola_hutan" type="Area2D" unique_id=1396833978]
+script = ExtResource("1_p8llq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1543290031]
+position = Vector2(-3, -11)
+scale = Vector2(1.1833333, 1.1833333)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.5493469
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1664304813]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_8vrlf")
+
+[node name="DialoguePivot" type="Marker2D" parent="." unique_id=552428444]
+position = Vector2(0, -93)
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=808589712]
+texture_filter = 1
+position = Vector2(1, -100.00001)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("2_dr12i")

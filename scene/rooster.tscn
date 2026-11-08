@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bkbxq7k6oh0kr"]
+
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="1_1lumk"]
+[ext_resource type="Texture2D" uid="uid://d07yosaqey4x6" path="res://assets/burung level 1-Sheet.png" id="1_l5rwq"]
+[ext_resource type="Script" uid="uid://qwf7rahcnjqd" path="res://script/rooster.gd" id="1_mvakc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvakc"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27i65"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23hga"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e516r"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn61n"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmspp"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1gfm"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxaej"]
+atlas = ExtResource("1_l5rwq")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l5rwq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvakc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27i65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23hga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e516r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn61n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmspp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1gfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxaej")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mvakc"]
+radius = 35.22783
+
+[node name="Rooster" type="Area2D" unique_id=1988690237]
+script = ExtResource("1_mvakc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=878940116]
+position = Vector2(9.536743e-07, 9.536743e-07)
+scale = Vector2(1.875, 1.875)
+sprite_frames = SubResource("SpriteFrames_l5rwq")
+autoplay = "default"
+frame_progress = 0.108089395
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=615729069]
+shape = SubResource("CircleShape2D_mvakc")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=496903465]
+visible = false
+texture_filter = 1
+position = Vector2(0, -78)
+texture = ExtResource("1_1lumk")

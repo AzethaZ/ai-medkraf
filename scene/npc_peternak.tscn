@@ -222,5 +222,8 @@ sprite_frames = SubResource("SpriteFrames_8vrlf")
 autoplay = "default"
 frame_progress = 0.9032131
 
+[node name="DialoguePivot" type="Marker2D" parent="." unique_id=1190174383]
+position = Vector2(0, -79)
+
 [connection signal="body_entered" from="chat_detection" to="." method="_on_chat_detection_body_entered"]
 [connection signal="body_exited" from="chat_detection" to="." method="_on_chat_detection_body_exited"]
