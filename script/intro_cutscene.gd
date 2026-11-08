@@ -89,7 +89,7 @@ func _ready() -> void:
 			"lines": [
 				{
 					"text": "!!",
-					"sfx": "res://assets/audio/alert_sfx.wav"
+					"sfx": "res://assets/audio/running.mp3"
 				}
 			]
 		}

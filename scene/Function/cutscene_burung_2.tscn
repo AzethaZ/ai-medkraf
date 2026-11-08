@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://cmh1jk8jbb76o"]
+
+[ext_resource type="Script" uid="uid://dfotc2mttglty" path="res://script/cutscene_burung_2.gd" id="1_1swwi"]
+[ext_resource type="Texture2D" uid="uid://b5om3dc4adgbx" path="res://assets/animation/Buwung.png" id="1_017y4"]
+[ext_resource type="Texture2D" uid="uid://cwxfo5xjqjpnh" path="res://assets/animation/Bulu.png" id="2_1swwi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jx8di"]
+size = Vector2(76.5, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vti7k"]
+atlas = ExtResource("1_017y4")
+region = Rect2(0, 0, 117, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m6l8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vti7k")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sckjt"]
+radius = 17.117243
+
+[node name="CutsceneBurung2" type="Node2D" unique_id=750326465]
+script = ExtResource("1_1swwi")
+
+[node name="TriggerArea" type="Area2D" parent="." unique_id=1072117080]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=188863329]
+position = Vector2(15.75, 48)
+shape = SubResource("RectangleShape2D_jx8di")
+
+[node name="BirdSprite" type="AnimatedSprite2D" parent="." unique_id=2038805184]
+visible = false
+position = Vector2(0, -264)
+sprite_frames = SubResource("SpriteFrames_m6l8l")
+
+[node name="FeatherItem" type="Area2D" parent="." unique_id=1055038334]
+visible = false
+position = Vector2(0, -238)
+
+[node name="Sprite2D" type="Sprite2D" parent="FeatherItem" unique_id=1670129702]
+texture = ExtResource("2_1swwi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeatherItem" unique_id=535541068]
+shape = SubResource("CircleShape2D_sckjt")
+
+[node name="BirdSFX" type="AudioStreamPlayer" parent="." unique_id=760209563]
+
+[node name="BirdChirpSFX" type="AudioStreamPlayer" parent="." unique_id=264128543]

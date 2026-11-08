@@ -12,6 +12,10 @@ const TOTAL_REQUIRED: int = 2
 var cutscene_triggered: bool = false
 
 func _ready() -> void:
+	# 0. AKTIFKAN MODE PINCANG & DISABLE LARI UNTUK DANUM
+	if player and player.has_method("set_limping_mode"):
+		player.set_limping_mode(true)
+
 	# 1. Nonaktifkan AreaExit agar pemain tidak bisa keluar map dulu
 	if area_exit:
 		area_exit.monitoring = false
@@ -37,6 +41,11 @@ func _ready() -> void:
 
 	# 6. Kalimat Pertama: Langsung muncul saat pertama kali masuk scene
 	play_initial_dialogue()
+
+func _exit_tree() -> void:
+	# KEMBALIKAN KONTROL DANUM KE NORMAL SAAT SCENE DITINGGALKAN
+	if is_instance_valid(player) and player.has_method("set_limping_mode"):
+		player.set_limping_mode(false)
 
 # --- KALIMAT PERTAMA (LANGSUNG SAAT MASUK SCENE) ---
 func play_initial_dialogue() -> void:

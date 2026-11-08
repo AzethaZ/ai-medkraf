@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bgrt076wd7kcw" path="res://script/cutscene_burung.gd" id="1_javew"]
 [ext_resource type="Texture2D" uid="uid://b5om3dc4adgbx" path="res://assets/animation/Buwung.png" id="2_y5jt2"]
 [ext_resource type="Texture2D" uid="uid://cwxfo5xjqjpnh" path="res://assets/animation/Bulu.png" id="3_y5jt2"]
+[ext_resource type="AudioStream" uid="uid://rfitbh3nxp81" path="res://assets/audio/freesound_community-075692_bird-flying-awaywav-86143.mp3" id="4_vti7k"]
+[ext_resource type="AudioStream" uid="uid://csl7jcaneg4mt" path="res://assets/audio/yuliana-yurukova-bird-chirps-343624.mp3" id="5_0dc6y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5jt2"]
 size = Vector2(76.5, 53)
@@ -37,7 +39,7 @@ shape = SubResource("RectangleShape2D_y5jt2")
 [node name="BirdSprite" type="AnimatedSprite2D" parent="." unique_id=1981663609]
 position = Vector2(0, -264)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-frame_progress = 0.21957591
+frame_progress = 0.53845096
 
 [node name="FeatherItem" type="Area2D" parent="." unique_id=1382627750]
 position = Vector2(0, -238)
@@ -47,3 +49,11 @@ texture = ExtResource("3_y5jt2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FeatherItem" unique_id=1970402024]
 shape = SubResource("CircleShape2D_javew")
+
+[node name="BirdSFX" type="AudioStreamPlayer" parent="." unique_id=625705658]
+stream = ExtResource("4_vti7k")
+volume_db = 10.0
+
+[node name="BirdChirpSFX" type="AudioStreamPlayer" parent="." unique_id=1904847767]
+stream = ExtResource("5_0dc6y")
+volume_db = 24.0

@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://qme82ro6cpee" path="res://assets/animation/Walk_anim.png" id="5_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="5_oh5ij"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="6_hp4bs"]
-[ext_resource type="AudioStream" uid="uid://b74kwkpdot0cq" path="res://assets/audio/freesound_community-footstep-1-83098.mp3" id="8_g2vtq"]
+[ext_resource type="AudioStream" uid="uid://dag541r2875r7" path="res://assets/audio/walk_sound.mp3" id="11_ihjo1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ja17"]
 atlas = ExtResource("2_hp4bs")
@@ -324,5 +324,5 @@ autowrap_mode = 3
 position = Vector2(8, -63)
 
 [node name="FootstepSound" type="AudioStreamPlayer" parent="." unique_id=1182057216]
-stream = ExtResource("8_g2vtq")
+stream = ExtResource("11_ihjo1")
 pitch_scale = 1.22

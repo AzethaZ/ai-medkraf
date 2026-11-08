@@ -13,27 +13,27 @@ var tween_hover: Tween
 var main_dialogue_data: Array[Dictionary] = [
 	{
 		"speaker": "npc",
-		"text": "Eh, Danum? Kenapa mukanya cemberut begitu?"
+		"text": "Eh, Danum? Kenapa mukanya cemberut?"
 	},
 	{
 		"speaker": "mc",
-		"text": "Orang-orang desa tidak ada yang mau dengar, Mas... Hutan ini kan lagi kering sekali."
+		"text": "Orang-orang desa tidak ada yang mau dengar, Paman. Mereka meyalakan api padahal hutan ini kan lagi kering sekali."
 	},
 	{
 		"speaker": "npc",
-		"text": "Sebenarnya kamu tidak sepenuhnya salah, Danum. Mas juga lagi khawatir..."
+		"text": "Sebenarnya kamu tidak sepenuhnya salah, Danum. Paman juga lagi khawatir..."
 	},
 	{
 		"speaker": "npc",
-		"text": "Tadi Mas lihat ada dua orang asing masuk ke arah hutan dalam. Katanya mau survei lahan, tapi mereka merokok sembarangan."
+		"text": "Tadi Paman lihat ada dua orang asing masuk ke arah hutan dalam. Katanya mau survei lahan, tapi mereka merokok sembarangan."
 	},
 	{
 		"speaker": "mc",
-		"text": "Dua orang asing? Bawa puntung rokok berkobar?!"
+		"text": "Dua orang asing? Bawa rokok?!"
 	},
 	{
 		"speaker": "npc",
-		"text": "Iya. Mas mau susul mereka tapi masih ada urusan di pos. Kamu jangan ke arah hutan dalam ya, bahaya kalau ketemu orang luar yang tidak kita kenal."
+		"text": "Iya. Paman mau susul mereka tapi masih ada urusan. Kamu jangan ke arah hutan dalam ya, bahaya kalau ketemu orang luar yang tidak kita kenal."
 	}
 ]
 
