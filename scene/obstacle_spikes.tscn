@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://ddf65m8npkxk3"]
 
 [ext_resource type="Script" uid="uid://cocdhwtqx7rfg" path="res://script/obstacle_spikes.gd" id="1_nclnc"]
-[ext_resource type="Texture2D" uid="uid://bi8whltvh1kgx" path="res://assets/duri.png" id="2_nclnc"]
+[ext_resource type="Texture2D" uid="uid://1ggwaypc7eco" path="res://assets/animation/trenggiling_fix.png" id="2_nclnc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nclnc"]
+radius = 34.0147
 
 [node name="ObstacleSpikes" type="Node2D" unique_id=327491784]
 script = ExtResource("1_nclnc")
@@ -9,3 +12,9 @@ script = ExtResource("1_nclnc")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1509144959]
 position = Vector2(0, 24)
 texture = ExtResource("2_nclnc")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1363642652]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=822928933]
+position = Vector2(1, 26)
+shape = SubResource("CircleShape2D_nclnc")

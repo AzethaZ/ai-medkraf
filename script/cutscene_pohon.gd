@@ -18,6 +18,11 @@ var hover_tween: Tween = null
 var base_icon_y: float = 0.0
 
 func _ready() -> void:
+	# Memutar Ambience Kebakaran mulai dari scene cutscene_pohon
+	if MusicManager and MusicManager.has_method("play_world_audio"):
+		var ambience_track = load("res://assets/audio/kebakaran_ambience.mp3")
+		MusicManager.play_world_audio(ambience_track, null, -12.0, 0.0)
+	
 	if not ResourceLoader.exists(target_next_scene):
 		target_next_scene = "res://scene/world/world_hutanbakar2.tscn"
 

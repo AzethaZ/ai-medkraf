@@ -1,46 +1,68 @@
 [gd_scene format=3 uid="uid://bw51j5bwix5ke"]
 
 [ext_resource type="Script" uid="uid://m6scgyj3p5dc" path="res://script/chick.gd" id="1_84y8h"]
-[ext_resource type="Texture2D" uid="uid://uxj85yv3tncl" path="res://assets/api-Sheet (1).png" id="1_352vn"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_84y8h"]
-atlas = ExtResource("1_352vn")
-region = Rect2(0, 0, 32, 32)
+[ext_resource type="Texture2D" uid="uid://d4lkbxrule8i" path="res://assets/animation/Anak_Ayam-Sheet2.png" id="2_84y8h"]
+[ext_resource type="AudioStream" uid="uid://ddsevw26hofn3" path="res://assets/audio/chick.mp3" id="3_60ske"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_60ske"]
-atlas = ExtResource("1_352vn")
-region = Rect2(32, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(0, 0, 23, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qh21d"]
-atlas = ExtResource("1_352vn")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(23, 0, 23, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gkafa"]
-atlas = ExtResource("1_352vn")
-region = Rect2(96, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(46, 0, 23, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yq144"]
-atlas = ExtResource("1_352vn")
-region = Rect2(128, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(69, 0, 23, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8kl6t"]
-atlas = ExtResource("1_352vn")
-region = Rect2(160, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(0, 20, 23, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_athi1"]
-atlas = ExtResource("1_352vn")
-region = Rect2(192, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(23, 20, 23, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yvlu6"]
-atlas = ExtResource("1_352vn")
-region = Rect2(224, 0, 32, 32)
+atlas = ExtResource("2_84y8h")
+region = Rect2(46, 20, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5xke"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(69, 20, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owsjy"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(0, 40, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qg86c"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(23, 40, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wx0w4"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(46, 40, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g62o6"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(69, 40, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2nj0"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(0, 60, 23, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn5li"]
+atlas = ExtResource("2_84y8h")
+region = Rect2(23, 60, 23, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_84y8h")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_60ske")
 }, {
@@ -61,10 +83,31 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yvlu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5xke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owsjy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qg86c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wx0w4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g62o6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2nj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sn5li")
 }],
 "loop": 1,
 "name": &"default",
-"speed": 8.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
@@ -75,10 +118,12 @@ position = Vector2(0, -1)
 script = ExtResource("1_84y8h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1120185105]
-position = Vector2(0, 37)
+texture_filter = 1
+position = Vector2(-1.9073486e-06, 30)
+scale = Vector2(1.7, 1.7)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.8695675
+frame_progress = 0.99435914
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=259107850]
 light_mask = 0
@@ -86,3 +131,6 @@ visibility_layer = 0
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_8vrlf")
 disabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1678600414]
+stream = ExtResource("3_60ske")

@@ -24,6 +24,7 @@ QuestPopupUi="*uid://b3vivtn7hgjel"
 GameBorder="*uid://c14vokpg8r5sb"
 DialogueManager="*uid://bi6qm3r4wh2ch"
 MusicManager="*uid://c06e6y33flady"
+GameState="*uid://dmqd4c3rjfk3d"
 
 [display]
 

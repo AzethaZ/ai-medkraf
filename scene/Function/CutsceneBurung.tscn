@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://csl7jcaneg4mt" path="res://assets/audio/yuliana-yurukova-bird-chirps-343624.mp3" id="5_0dc6y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5jt2"]
-size = Vector2(76.5, 53)
+size = Vector2(175.5, 53)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vti7k"]
 atlas = ExtResource("2_y5jt2")
@@ -33,7 +33,7 @@ script = ExtResource("1_javew")
 [node name="TriggerArea" type="Area2D" parent="." unique_id=1113964238]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=1174167279]
-position = Vector2(15.75, 48)
+position = Vector2(65.25, 48)
 shape = SubResource("RectangleShape2D_y5jt2")
 
 [node name="BirdSprite" type="AnimatedSprite2D" parent="." unique_id=1981663609]

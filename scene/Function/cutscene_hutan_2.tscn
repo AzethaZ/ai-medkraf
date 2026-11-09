@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://8e5782dsw6d5"]
+
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="1_ej16d"]
+[ext_resource type="Script" uid="uid://dcni7twe8fayr" path="res://script/cutscene_hutan_2.gd" id="1_p0so8"]
+[ext_resource type="Texture2D" uid="uid://bq0xttirgejhp" path="res://assets/animation/Text_Box.png" id="3_0u1k7"]
+[ext_resource type="Texture2D" uid="uid://dcahqovk62jh5" path="res://assets/ui/icon mark next.png" id="4_kna8a"]
+[ext_resource type="Texture2D" uid="uid://c0kk108vnhx8e" path="res://assets/ui/icon tail.png" id="5_7wi2j"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s05u0"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("3_0u1k7")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=159716845]
+script = ExtResource("1_p0so8")
+
+[node name="CutsceneImage" type="TextureRect" parent="." unique_id=1007706526]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1392823009]
+texture_filter = 1
+position = Vector2(591, 318)
+texture = ExtResource("1_ej16d")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=225557703]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D" parent="." unique_id=927199262]
+
+[node name="PivotSlide1" type="Marker2D" parent="Node2D" unique_id=185392828]
+position = Vector2(399, 249)
+
+[node name="CutsceneDialogBox" type="Control" parent="." unique_id=716493544]
+visible = false
+z_index = 20
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueBox" type="PanelContainer" parent="CutsceneDialogBox" unique_id=2078966974]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -62.0
+offset_top = -31.0
+offset_right = 142.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxTexture_s05u0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CutsceneDialogBox/DialogueBox" unique_id=1680592600]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="CutsceneDialogBox/DialogueBox/VBoxContainer" unique_id=1601687109]
+texture_filter = 1
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NextIndicator" type="TextureRect" parent="CutsceneDialogBox/DialogueBox" unique_id=233623012]
+custom_minimum_size = Vector2(10, 6)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(2, 4)
+texture = ExtResource("4_kna8a")
+expand_mode = 1
+
+[node name="TailPointer" type="TextureRect" parent="CutsceneDialogBox/DialogueBox" unique_id=268440465]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(105, 0)
+offset_transform_rotation = -1.5707964
+texture = ExtResource("5_7wi2j")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://mfftaciuuc3g" path="res://script/cutscene_hutan_1.gd" id="1_g10qx"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_jqca4"]
-[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="3_4x2jo"]
+[ext_resource type="Texture2D" uid="uid://bq0xttirgejhp" path="res://assets/animation/Text_Box.png" id="3_p2pxw"]
 [ext_resource type="Texture2D" uid="uid://dcahqovk62jh5" path="res://assets/ui/icon mark next.png" id="4_i0mfd"]
 [ext_resource type="Texture2D" uid="uid://c0kk108vnhx8e" path="res://assets/ui/icon tail.png" id="5_v5xbe"]
 [ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="6_i0mfd"]
@@ -16,7 +16,7 @@ content_margin_left = 12.0
 content_margin_top = 12.0
 content_margin_right = 12.0
 content_margin_bottom = 12.0
-texture = ExtResource("3_4x2jo")
+texture = ExtResource("3_p2pxw")
 texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
@@ -27,7 +27,7 @@ content_margin_left = 12.0
 content_margin_top = 12.0
 content_margin_right = 12.0
 content_margin_bottom = 12.0
-texture = ExtResource("3_4x2jo")
+texture = ExtResource("3_p2pxw")
 texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
@@ -65,7 +65,10 @@ color = Color(0, 0, 0, 1)
 position = Vector2(148, 181)
 
 [node name="PivotSlide2" type="Marker2D" parent="Node2D" unique_id=1787632597]
-position = Vector2(180, 86)
+position = Vector2(191, 86)
+
+[node name="PivotSlide3" type="Marker2D" parent="Node2D" unique_id=817586922]
+position = Vector2(293, 118)
 
 [node name="PivotSlide4" type="Marker2D" parent="Node2D" unique_id=1923322429]
 position = Vector2(350, 119)

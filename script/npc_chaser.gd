@@ -1,20 +1,24 @@
 extends CharacterBody2D
 
-@onready var dialogue_ui: Control = $DialogueUI
-@onready var dialogue_label: Label = $DialogueUI/PanelContainer/VBoxContainer/Label
+@onready var dialogue_pivot: Marker2D = $DialoguePivot if has_node("DialoguePivot") else self
 
 signal dialogue_finished
 
-func show_chase_dialogue(text_content: String) -> void:
-	if dialogue_ui and dialogue_label:
-		dialogue_label.text = text_content
-		dialogue_ui.visible = true
+func show_chase_dialogue(text: String) -> void:
+	if DialogueManager:
+		# Argumen 1: Array teks dialog [text]
+		# Argumen 2: Node pembicara (self)
+		if DialogueManager.has_method("start_dialogue"):
+			await DialogueManager.start_dialogue([text], self)
+		elif DialogueManager.has_method("show_dialogue"):
+			await DialogueManager.show_dialogue([text], self)
+		
+		# Tunggu hingga sinyal dialog selesai
+		if DialogueManager.has_signal("dialogue_ended"):
+			await DialogueManager.dialogue_ended
+		elif DialogueManager.has_signal("dialogue_finished"):
+			await DialogueManager.dialogue_finished
+	else:
+		await get_tree().create_timer(1.5).timeout
 
-		# Menunggu pemain menekan tombol "interact" (E) untuk menutup dialog
-		while true:
-			await get_tree().process_frame
-			if Input.is_action_just_pressed("interact"):
-				break
-
-		dialogue_ui.visible = false
-		dialogue_finished.emit()
+	dialogue_finished.emit()

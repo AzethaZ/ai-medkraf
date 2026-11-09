@@ -32,7 +32,7 @@ extends CanvasLayer
 var slides: Array[Texture2D] = [
 	preload("res://assets/cutscene_5.png"),
 	preload("res://assets/cutscene/scene_6.png"),
-	preload("res://assets/cutscene_7.png"),
+	preload("res://assets/cutscene/scene_7.png"),
 	preload("res://assets/cutscene_8.png")
 ]
 

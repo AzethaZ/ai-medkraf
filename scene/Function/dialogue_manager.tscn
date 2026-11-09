@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bi6qm3r4wh2ch"]
 
 [ext_resource type="Script" uid="uid://dg05vfr6kmcdj" path="res://script/dialogue_manager.gd" id="1_wneuf"]
-[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="1_xo4ut"]
-[ext_resource type="Texture2D" uid="uid://dcahqovk62jh5" path="res://assets/ui/icon mark next.png" id="3_r0k2p"]
-[ext_resource type="Texture2D" uid="uid://c0kk108vnhx8e" path="res://assets/ui/icon tail.png" id="4_wneuf"]
+[ext_resource type="Texture2D" uid="uid://bq0xttirgejhp" path="res://assets/animation/Text_Box.png" id="2_3ajdr"]
+[ext_resource type="Texture2D" uid="uid://cptaalelq214h" path="res://assets/animation/Arrow3.png" id="3_3ajdr"]
+[ext_resource type="Texture2D" uid="uid://cbgvk4nyfltj1" path="res://assets/animation/Text_Box_Indicator.png" id="4_3ajdr"]
 [ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="5_3ajdr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8vrlf"]
@@ -11,7 +11,7 @@ content_margin_left = 12.0
 content_margin_top = 12.0
 content_margin_right = 12.0
 content_margin_bottom = 12.0
-texture = ExtResource("1_xo4ut")
+texture = ExtResource("2_3ajdr")
 texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
@@ -59,13 +59,14 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="NextIndicator" type="TextureRect" parent="BoxAnchor/DialogueBox" unique_id=809890105]
-custom_minimum_size = Vector2(10, 6)
+custom_minimum_size = Vector2(10, 7)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 offset_transform_enabled = true
 offset_transform_position = Vector2(2, 4)
-texture = ExtResource("3_r0k2p")
+offset_transform_scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_3ajdr")
 expand_mode = 1
 
 [node name="TailPointer" type="TextureRect" parent="BoxAnchor/DialogueBox" unique_id=1838658178]
@@ -73,8 +74,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 offset_transform_enabled = true
-offset_transform_position = Vector2(0, 18)
-texture = ExtResource("4_wneuf")
+offset_transform_position = Vector2(0, 22)
+texture = ExtResource("4_3ajdr")
 
 [node name="PopSound" type="AudioStreamPlayer" parent="." unique_id=1227274763]
 stream = ExtResource("5_3ajdr")

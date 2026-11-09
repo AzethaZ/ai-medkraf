@@ -48,6 +48,9 @@ animations = [{
 
 [node name="world_hutanbakar" unique_id=1697432782 instance=ExtResource("1_eryjc")]
 script = ExtResource("2_a0gq0")
+total_obstacles = 6
+scroll_speed = 300.0
+chase_jump_velocity = -400.0
 
 [node name="Parallax2D" type="Parallax2D" parent="." index="0" unique_id=1671699467]
 scroll_offset = Vector2(0, -149)
@@ -91,24 +94,28 @@ position = Vector2(-227, -15)
 [node name="ChaseUI" type="CanvasLayer" parent="." index="7" unique_id=1697808277]
 
 [node name="QTECircle" type="TextureRect" parent="ChaseUI" index="0" unique_id=958234227]
+visible = false
 offset_left = 138.0
 offset_top = -107.0
 offset_right = 178.0
 offset_bottom = -67.0
 
 [node name="BaseCircle" type="TextureRect" parent="ChaseUI/QTECircle" index="0" unique_id=2097610271]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("6_3bv0e")
 
 [node name="ApproachCircle" type="TextureRect" parent="ChaseUI/QTECircle" index="1" unique_id=1214201101]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("7_l5113")
 
 [node name="Label" type="Label" parent="ChaseUI/QTECircle" index="2" unique_id=1146205693]
+visible = false
 layout_mode = 0
 offset_left = 17.0
 offset_top = 17.0

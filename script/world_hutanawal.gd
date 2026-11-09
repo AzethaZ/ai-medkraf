@@ -20,18 +20,26 @@ var has_switched_camera: bool = false
 var is_camera_following: bool = false
 var is_exiting: bool = false
 
+
 func _ready() -> void:
 	# 0. MEMUTAR AMBIENCE HUTAN & MUSIK LATAR VIA MUSICMANAGER
-	# (Membuat audio tetap terus di-fade out walau sudah pindah ke cutscene_hutan_1)
-	var ambience_file = preload("res://assets/audio/nature_ambience.mp3") # Sesuaikan path file kamu
-	var bgm_file = preload("res://assets/audio/music_hutan_awal.mp3")     # Sesuaikan path file kamu
-	
+	if player:
+		# Pastikan mode chase mati saat masuk ke world_hutanawal
+		if "is_chasing_mode" in player:
+			player.is_chasing_mode = false
+		if "is_auto_walking" in player:
+			player.is_auto_walking = false
+
+	var ambience_file = preload("res://assets/audio/nature_ambience.mp3")
+	var bgm_file = preload("res://assets/audio/hutanawal_music.mp3")
+
 	if MusicManager:
-		MusicManager.play_world_audio(ambience_file, bgm_file, -8.0, -12.0)
+		MusicManager.play_world_audio(ambience_file, bgm_file, -8.0, -6.0)
 
 	# --- BATASI KAMERA DI SISI KANAN MAP (X = 3700) ---
 	if camera_2d:
 		camera_2d.limit_right = 3700
+		camera_2d.limit_left = -880
 
 	# 1. SEMBUNYIKAN LOGO STUDIO DI AWAL
 	if logo_texture:
@@ -42,7 +50,6 @@ func _ready() -> void:
 	if camera_2d:
 		camera_2d.zoom = intro_zoom
 		camera_2d.offset = intro_offset
-		# Aktifkan top_level agar posisi kamera bisa diatur penuh lewat script
 		camera_2d.top_level = true
 
 	# 3. PINDAHKAN DANUM KE SPAWNPOINT
@@ -61,7 +68,7 @@ func _ready() -> void:
 	# 5. HUBUNGKAN SINYAL BENTURAN
 	if center_trigger and not center_trigger.body_entered.is_connected(_on_center_trigger_body_entered):
 		center_trigger.body_entered.connect(_on_center_trigger_body_entered)
-		
+
 	if area_exit and not area_exit.body_entered.is_connected(_on_area_exit_body_entered):
 		area_exit.body_entered.connect(_on_area_exit_body_entered)
 
@@ -72,6 +79,7 @@ func _ready() -> void:
 	# 7. MULAI JALAN OTOMATIS DARI LUAR LAYAR
 	if player:
 		player.start_auto_walk(1.0)
+
 
 func _physics_process(_delta: float) -> void:
 	if not camera_2d or not is_instance_valid(player):
@@ -84,16 +92,16 @@ func _physics_process(_delta: float) -> void:
 				camera_point.global_position.x,
 				player.global_position.y + original_camera_offset.y
 			)
-	# Setelah menabrak titik tengah: Kamera menguntit posisi player (X & Y) penuh
 	elif camera_2d.top_level and is_camera_following:
 		camera_2d.global_position = player.global_position + original_camera_offset
 
-# FUNGSI DIPANGGIL TEPAT SAAT DANUM MENYENTUH TITIK TENGAH (CAMERAPOINT)
+
 func _on_center_trigger_body_entered(body: Node2D) -> void:
 	if body == player and not has_switched_camera:
 		has_switched_camera = true
 		is_camera_following = true # Mulai ikuti player saat bergerak
 		run_logo_sequence()
+
 
 func run_logo_sequence() -> void:
 	# A. Fade In Logo Studio
@@ -115,10 +123,10 @@ func run_logo_sequence() -> void:
 	if player:
 		player.stop_auto_walk()
 
+
 func fade_logo_image(appear: bool) -> void:
 	if not logo_texture:
 		return
-
 	var tween = create_tween()
 	if appear:
 		logo_texture.visible = true
@@ -129,7 +137,7 @@ func fade_logo_image(appear: bool) -> void:
 		await tween.finished
 		logo_texture.visible = false
 
-# TRANSISI SMOOTH KAMERA
+
 func transition_camera_to_normal() -> void:
 	if not camera_2d:
 		return
@@ -147,27 +155,24 @@ func transition_camera_to_normal() -> void:
 	camera_2d.top_level = false
 	camera_2d.position = original_camera_offset
 
-# ========================================================
-# TRANSISI KELUAR: FADE OUT AUDIO & PINDAH KE CUTSCENE 1
-# ========================================================
+
 func _on_area_exit_body_entered(body: Node2D) -> void:
 	if is_exiting:
 		return
-		
+
 	if body == player or body.is_in_group("player"):
 		is_exiting = true
-		
+
 		# 1. Kunci pergerakan player
 		if player and player.has_method("set_dialogue_state"):
 			player.set_dialogue_state(true)
-			
-		var target_cutscene = "res://scene/World/cutscene_hutan_1.tscn" # Sesuaikan path file cutscene kamu
-		
+
+		var target_cutscene = "res://scene/World/cutscene_hutan_1.tscn"
+
 		# 2. PICU FADE OUT AUDIO PELAN (2.5 DETIK) PADA MUSICMANAGER
-		# Audio akan terus meredup pelan walau scene sudah berpindah ke cutscene_hutan_1!
 		if MusicManager:
 			MusicManager.fade_out_audio(2.5)
-			
+
 		# 3. TRANSISI KE CUTSCENE 1
 		if SceneTransition and SceneTransition.has_method("change_scene"):
 			SceneTransition.change_scene(target_cutscene)

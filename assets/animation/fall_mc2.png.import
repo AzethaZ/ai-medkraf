@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2sd55gjuhv1o"
-path="res://.godot/imported/Rise.png-c00ff8dec7f23a14cef64a7da6156a47.ctex"
+uid="uid://crqk0t2gid0h2"
+path="res://.godot/imported/fall_mc2.png-c784c48bb8310e7ee732109995614173.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animation/Rise.png"
-dest_files=["res://.godot/imported/Rise.png-c00ff8dec7f23a14cef64a7da6156a47.ctex"]
+source_file="res://assets/animation/fall_mc2.png"
+dest_files=["res://.godot/imported/fall_mc2.png-c784c48bb8310e7ee732109995614173.ctex"]
 
 [params]
 

@@ -153,11 +153,12 @@ script = ExtResource("1_udvkr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=593655250]
 texture_filter = 1
-position = Vector2(0.9999981, -9.999996)
-scale = Vector2(1.0781249, 1.0781249)
+position = Vector2(3, -21.65625)
+scale = Vector2(1.2723957, 1.2723957)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
 frame_progress = 0.7544182
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=480670820]
 position = Vector2(2.5, -7)
@@ -223,7 +224,7 @@ autoplay = "default"
 frame_progress = 0.9032131
 
 [node name="DialoguePivot" type="Marker2D" parent="." unique_id=1190174383]
-position = Vector2(0, -79)
+position = Vector2(0, -95)
 
 [connection signal="body_entered" from="chat_detection" to="." method="_on_chat_detection_body_entered"]
 [connection signal="body_exited" from="chat_detection" to="." method="_on_chat_detection_body_exited"]
