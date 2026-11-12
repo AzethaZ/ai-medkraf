@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c0o4lcu46wt8t"]
 
 [ext_resource type="Script" uid="uid://du0dgy257agpb" path="res://script/scene_transition.gd" id="1_n4u00"]
+[ext_resource type="Shader" uid="uid://d0ky6sx0nma0p" path="res://shader/eye_blink.gdshader.gdshader" id="2_mfowg"]
 
 [sub_resource type="Animation" id="Animation_mfowg"]
 length = 0.001
@@ -56,6 +57,14 @@ _data = {
 &"fade_to_black": SubResource("Animation_1r1h1")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5gy4"]
+shader = ExtResource("2_mfowg")
+shader_parameter/progress = 0.0
+shader_parameter/horizontal_blocks = 24.0
+shader_parameter/wave_frequency = 4.0
+shader_parameter/wave_amplitude = 0.15
+shader_parameter/transition_color = Color(0, 0, 0, 1)
+
 [node name="SceneTransition" type="CanvasLayer" unique_id=1168009837]
 layer = 100
 script = ExtResource("1_n4u00")
@@ -72,3 +81,11 @@ color = Color(0, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1044599213]
 libraries/ = SubResource("AnimationLibrary_o1gv7")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1419628317]
+material = SubResource("ShaderMaterial_v5gy4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

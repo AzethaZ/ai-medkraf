@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://d0jr5ilrur6yh"]
 
 [ext_resource type="Script" uid="uid://dxgww083t18wu" path="res://script/batang_pohon.gd" id="1_nsvem"]
-[ext_resource type="Texture2D" uid="uid://djwhp6t87m7kr" path="res://assets/map button.png" id="1_w8n4t"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_nsvem"]
+[ext_resource type="Texture2D" uid="uid://dyqdyvpou6wdq" path="res://assets/animation/hutan_awal_1 pohon.png" id="2_ona73"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
 radius = 38.118237
@@ -11,12 +11,14 @@ radius = 38.118237
 script = ExtResource("1_nsvem")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1217090914]
-texture = ExtResource("1_w8n4t")
+position = Vector2(9.000001, -12.999999)
+scale = Vector2(1.6551723, 1.6551725)
+texture = ExtResource("2_ona73")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=892298531]
 shape = SubResource("CircleShape2D_1vivr")
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=1975404399]
 texture_filter = 1
-position = Vector2(0, -71)
+position = Vector2(4, -106)
 texture = ExtResource("2_nsvem")

@@ -129,12 +129,15 @@ func show_current_line() -> void:
 
 func _on_text_typing_finished() -> void:
 	is_typing = false
-	if message_label:
-		message_label.visible_characters = -1
-
+	message_label.visible_characters = -1
+	
+	# Munculkan indikator bahwa pemain bisa menekan E untuk lanjut
 	if next_indicator:
 		next_indicator.visible = true
 		start_indicator_anim()
+		
+	# CATATAN: JANGAN PANGGIL TIMER ATAU advance_dialogue() DI SINI!
+	# Biarkan pemain menekan E sendiri melalui _unhandled_input.
 
 func start_indicator_anim() -> void:
 	if not next_indicator:
@@ -181,43 +184,63 @@ func end_dialogue() -> void:
 
 	dialogue_finished.emit()
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
+	# Jika dialog sedang tidak aktif, abaikan input
 	if not is_active or is_just_started:
 		return
-
-	if event.is_action_pressed("interact") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+		
+	# Cek apakah tombol E ditekan (via Keycode atau Input Action)
+	var is_e_pressed: bool = false
+	
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_E:
+			is_e_pressed = true
+			
+	if not is_e_pressed and event.is_action_pressed("interact"):
+		is_e_pressed = true
+		
+	if not is_e_pressed and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		is_e_pressed = true
+		
+	# JIKA TOMBOL E ATAU KLIK DITEKAN:
+	if is_e_pressed:
 		get_viewport().set_input_as_handled()
-
+		
+		# 1. Jika teks masih mengetik huruf demi huruf, langsung tuntaskan teksnya
 		if is_typing:
 			is_typing = false
+			message_label.visible_characters = -1
 			_on_text_typing_finished()
+		# 2. Jika teks sudah selesai tampil penuh, MAJU KE KALIMAT SEBERIKUTNYA
 		else:
 			advance_dialogue()
 
 func update_anchor_position() -> void:
 	if not is_instance_valid(target_speaker) or not box_anchor:
 		return
-	
-	# 1. Jika speaker memiliki node DialoguePivot (seperti di player.tscn)
+		
+	# 1. Jika speaker memiliki node DialoguePivot (seperti di player.scn)
 	if target_speaker.has_node("DialoguePivot"):
 		var pivot = target_speaker.get_node("DialoguePivot")
 		
 		# Ambil koordinat layar (Canvas) langsung dari node DialoguePivot
 		var pivot_screen_pos = pivot.get_global_transform_with_canvas().origin
 		
-		# Jika MC sedang bicara dengan NPC, berikan ekstra offset Y (-25px) agar tidak menutupi NPC
-		var player = get_tree().current_scene.find_child("Player", true, false)
+		# Amankan pencarian node player agar tidak error null value saat ganti scene
 		var extra_y: float = 0.0
-		if target_speaker == player and current_npc_node != null:
-			extra_y = -25.0
-			
+		var current_scene = get_tree().current_scene
+		if current_scene:
+			var found_player = current_scene.find_child("Player", true, false)
+			if found_player and target_speaker == found_player and current_npc_node != null:
+				extra_y = -25.0
+				
 		box_anchor.global_position = pivot_screen_pos + Vector2(0, extra_y)
 		
 	# 2. Fallback jika tidak ada DialoguePivot (Kalkulasi dari Sprite/Origin)
 	else:
 		var speaker_screen_pos = target_speaker.get_global_transform_with_canvas().origin
-		var y_offset = get_speaker_offset(target_speaker)
-		box_anchor.global_position = speaker_screen_pos + Vector2(0, y_offset)
+		var v_offset = get_speaker_offset(target_speaker)
+		box_anchor.global_position = speaker_screen_pos + Vector2(0, v_offset)
 
 func get_speaker_offset(speaker: Node2D) -> float:
 	if not is_instance_valid(speaker):
@@ -237,3 +260,12 @@ func get_speaker_offset(speaker: Node2D) -> float:
 			return -(half_height + 4.0)
 
 	return -36.0
+
+# Tambahkan fungsi ini di dialogue_manager.gd jika belum ada, atau sesuaikan:
+# Fungsi untuk memaksa posisi kotak dialog berada di tengah layar
+func set_dialogue_centered() -> void:
+	if box_anchor:
+		# Resolusi game kamu adalah 640x360, titik tengahnya adalah (320, 180)
+		# Atau menggunakan ukuran viewport aktif agar dinamis:
+		var viewport_size = get_viewport().get_visible_rect().size
+		box_anchor.global_position = viewport_size / 2.0

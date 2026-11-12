@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cptaalelq214h"
-path="res://.godot/imported/Arrow3.png-d012ffa95eed27e1f56173f4182e572e.ctex"
+uid="uid://duw1mqjfm1osh"
+path="res://.godot/imported/langit_kebakar.png-781b3e2347b73e431b06c8639a6f4729.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animation/Arrow3.png"
-dest_files=["res://.godot/imported/Arrow3.png-d012ffa95eed27e1f56173f4182e572e.ctex"]
+source_file="res://assets/world bg/langit_kebakar.png"
+dest_files=["res://.godot/imported/langit_kebakar.png-781b3e2347b73e431b06c8639a6f4729.ctex"]
 
 [params]
 

@@ -21,6 +21,7 @@ extends CanvasLayer
 @onready var angry_sound_2: AudioStreamPlayer = $AngrySound2 if has_node("AngrySound2") else null
 @onready var fire_sound: AudioStreamPlayer = $FireSound if has_node("FireSound") else null
 @onready var water_sound: AudioStreamPlayer = $WaterSound if has_node("WaterSound") else null
+@onready var bush_sound: AudioStreamPlayer = $BushSound if has_node("BushSound") else null
 
 # --- REFERENSI NODE PIVOT LOKASI BALON KATA ---
 @onready var pivot_slide_1: Node = $Node2D/PivotSlide1 if has_node("Node2D/PivotSlide1") else null
@@ -98,6 +99,10 @@ func _ready() -> void:
 		fire_sound.play()
 		var tween_fire_intro = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween_fire_intro.tween_property(fire_sound, "volume_db", -20.0, 2.0)
+		
+		# --- PLAY BUSH SOUND DI SLIDE 1 ---
+	if bush_sound and bush_sound.stream:
+		bush_sound.play()
 
 	fade_in_screen()
 
@@ -135,6 +140,7 @@ func next_slide() -> void:
 func change_slide_with_fade(next_index: int) -> void:
 	is_transitioning = true
 	
+	# Sembunyikan UI sementara saat transisi
 	if interact_icon:
 		interact_icon.visible = false
 	if cutscene_dialog_box:
@@ -142,55 +148,69 @@ func change_slide_with_fade(next_index: int) -> void:
 		
 	if color_rect_2:
 		color_rect_2.visible = true
-		var tween = create_tween()
 		
-		# Layar me-fade out ke hitam
-		tween.tween_property(color_rect_2, "modulate:a", 1.0, 0.25)
-		await tween.finished
+		# --- TENTUKAN DURASI FADE ---
+		# Durasi standar = 0.25s, Khusus ke Slide 3 (next_index == 2) = 0.9s (lebih lambat)
+		var fade_out_time: float = 0.25
+		var fade_in_time: float = 0.25
 		
-		# Ganti gambar slide
+		if next_index == 2:
+			fade_out_time = 0.9  # Fade menutup ke hitam dibuat lambat
+			fade_in_time = 0.9   # Fade membuka terang dibuat lambat
+		
+		# 1. LAYAR ME-FADE OUT KE HITAM DULU (LAMBAT)
+		var tween_out = create_tween()
+		tween_out.tween_property(color_rect_2, "modulate:a", 1.0, fade_out_time)
+		await tween_out.finished
+		
+		# ======================================================================
+		# 2. SEKARANG LAYAR SUDAH GELAP HITAM PEKAT:
+		# GANTI GAMBAR SLIDE + JALANKAN SFX & DIALOG DI DALAM KEGELAPAN
+		# ======================================================================
 		show_slide(next_index)
 		
-		# Layar me-fade in terang kembali
+		# --- KONTROL SFX & DIALOG KHUSUS SLIDE 3 (next_index == 2) ---
+		if next_index == 2:
+			# Stop suara api
+			if fire_sound and fire_sound.playing:
+				fire_sound.stop()
+				
+			# Putar suara guyuran air & marah di balik layar hitam
+			if water_sound and water_sound.stream:
+				water_sound.play()
+			if angry_sound_2 and angry_sound_2.stream:
+				angry_sound_2.play()
+				
+			# Jalankan dialog Slide 3 di balik layar hitam
+			if dialogues_per_slide.has(next_index):
+				play_slide_dialogue(next_index)
+				
+			# Jeda tahanan hitam sejenak (0.6 detik) sebelum layar mulai mekar terang
+			await get_tree().create_timer(0.6).timeout
+
+		# --- KONTROL UNTUK SLIDE LAINNYA ---
+		else:
+			if next_index == 1 and fire_sound and fire_sound.playing:
+				var fire_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+				fire_tween.tween_property(fire_sound, "volume_db", -3.0, 1.2)
+				
+			if dialogues_per_slide.has(next_index):
+				play_slide_dialogue(next_index)
+		
+		# ======================================================================
+		# 3. ME-FADE IN TERANG KEMBALI MEMPERLIHATKAN SLIDE 3 (LAMBAT)
+		# ======================================================================
 		var tween_in = create_tween()
-		tween_in.tween_property(color_rect_2, "modulate:a", 0.0, 0.25)
+		tween_in.tween_property(color_rect_2, "modulate:a", 0.0, fade_in_time)
 		await tween_in.finished
 		color_rect_2.visible = false
+		
 	else:
 		show_slide(next_index)
+		if dialogues_per_slide.has(next_index):
+			play_slide_dialogue(next_index)
 		
 	is_transitioning = false
-
-	# --- KONTROL AUDIO BERDASARKAN SLIDE ---
-	# SLIDE 2 (Index 1): Suara Api Membesar Keras
-	if next_index == 1:
-		if fire_sound and fire_sound.playing:
-			var fire_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-			fire_tween.tween_property(fire_sound, "volume_db", -3.0, 1.2)
-			
-	# SLIDE 3 (Index 2): Suara Api Padam, Air Menyiram, & Suara Marah Kedua!
-	elif next_index == 2:
-		# 1. Fade out suara api sampai hening
-		if fire_sound and fire_sound.playing:
-			var fire_fade = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			fire_fade.tween_property(fire_sound, "volume_db", -80.0, 0.6)
-			await fire_fade.finished
-			fire_sound.stop()
-			
-		# 2. Putar suara guyuran air menyiram api
-		if water_sound and water_sound.stream:
-			water_sound.play()
-			
-		# 3. Putar suara marah kedua (angry_sound_2)
-		if angry_sound_2 and angry_sound_2.stream:
-			angry_sound_2.play()
-	
-	# Jalankan dialog slide
-	if dialogues_per_slide.has(next_index):
-		play_slide_dialogue(next_index)
-	else:
-		if interact_icon:
-			interact_icon.visible = true
 
 func play_slide_dialogue(slide_index: int) -> void:
 	is_in_dialogue = true

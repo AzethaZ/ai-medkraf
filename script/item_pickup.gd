@@ -11,12 +11,13 @@ extends Area2D
 
 var is_player_inside: bool = false
 var is_minigame_active: bool = false
+var current_player_node: Node2D = null
 var tween: Tween
 var initial_icon_y: float
 
 
 func _ready() -> void:
-	# 1. Cek apakah item ini sudah pernah diambil sebelumnya
+	# Cek apakah item ini sudah pernah diambil sebelumnya
 	var is_collected: bool = false
 	if item_id != "":
 		if GameManager and GameManager.has_method("is_item_collected") and GameManager.is_item_collected(item_id):
@@ -41,54 +42,64 @@ func _ready() -> void:
 		body_exited.connect(_on_body_exited)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if is_player_inside and not is_minigame_active:
-		# KETAT: Cek apakah quest sudah diawali/diaktifkan dari world_3
-		if QuestManager and QuestManager.has_method("get_quest_status"):
-			var quest_status = QuestManager.get_quest_status(target_quest_id)
-			if quest_status != "ACTIVE":
-				# Jika status quest bukan ACTIVE (masih NOT_STARTED), tolak interaksi!
-				return
+func _is_quest_active() -> bool:
+	if QuestManager and QuestManager.has_method("get_quest_status"):
+		return QuestManager.get_quest_status(target_quest_id) == "ACTIVE"
+	return true # Fallback jika QuestManager tidak membatasi status
 
-		# Pemicu tombol interact (E / Enter / Space)
-		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.is_pressed() and event.keycode == KEY_E):
+
+func _unhandled_input(event: InputEvent) -> void:
+	# HANYA BISA INTERAKSI JIKA QUEST SUDAH ACTIVE
+	if is_player_inside and not is_minigame_active and _is_quest_active():
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.is_pressed() and not event.is_echo()):
 			get_viewport().set_input_as_handled()
 			start_chick_minigame()
 
 
 func start_chick_minigame() -> void:
-	var minigame_ui = get_tree().current_scene.find_child("RhythmMinigame", true, false)
+	var minigame_ui: Node = null
 	
+	if current_player_node and current_player_node.has_node("RhythmMinigame"):
+		minigame_ui = current_player_node.get_node("RhythmMinigame")
+	if not minigame_ui:
+		minigame_ui = get_tree().current_scene.find_child("RhythmMinigame", true, false)
+
 	if minigame_ui:
 		is_minigame_active = true
-
+		stop_hover_animation()
+		
 		if minigame_ui.has_signal("minigame_completed"):
 			if minigame_ui.minigame_completed.is_connected(_on_minigame_completed):
 				minigame_ui.minigame_completed.disconnect(_on_minigame_completed)
 			minigame_ui.minigame_completed.connect(_on_minigame_completed)
-
+			
 		if minigame_ui.has_method("start_minigame"):
-			minigame_ui.start_minigame()
-	else:
-		print("PERINGATAN: Node RhythmMinigame belum dimasukkan ke scene ", get_tree().current_scene.name)
+			# Tentukan pola berdasarkan item_id anak ayam
+			var pattern_id: int = 1
+			if item_id == "ayam_2":
+				pattern_id = 2  # Pola Segitiga (3 ketukan, lambat)
+			elif item_id == "ayam_3":
+				pattern_id = 3  # Pola Pentagon (5 ketukan)
+			else:
+				pattern_id = 1  # Pola Kotak (4 ketukan)
+				
+			minigame_ui.start_minigame(pattern_id)
 
 
 func _on_minigame_completed(success: bool) -> void:
 	is_minigame_active = false
-
+	
 	if success:
 		spawn_and_add_chick_follower()
 	else:
-		is_player_inside = true
+		if is_player_inside and _is_quest_active():
+			start_hover_animation()
 
 
 func spawn_and_add_chick_follower() -> void:
-	var player = get_tree().current_scene.find_child("Player", true, false)
+	var player = current_player_node
 	if not player:
-		for child in get_tree().current_scene.get_children():
-			if child.is_in_group("player") or child is CharacterBody2D:
-				player = child
-				break
+		player = get_tree().current_scene.find_child("Player", true, false)
 
 	if chick_scene and player:
 		var new_chick = chick_scene.instantiate() as Node2D
@@ -104,7 +115,6 @@ func spawn_and_add_chick_follower() -> void:
 	if GameManager and GameManager.has_method("collect_item"):
 		GameManager.collect_item(item_id)
 
-	# Update progres quest persisten (3/3)
 	if QuestManager:
 		if QuestManager.has_method("collect_chick"):
 			QuestManager.collect_chick(item_id)
@@ -114,35 +124,36 @@ func spawn_and_add_chick_follower() -> void:
 	queue_free()
 
 
-# --- PEMERIKSAAN BODY ENTERED & EXITED ---
+# --- DETEKSI AREA PLAYER ---
 func _on_body_entered(body: Node2D) -> void:
 	if _is_player_node(body):
 		is_player_inside = true
-		
+		current_player_node = body
 		# HANYA TAMPILKAN IKON INTERAKSI JIKA QUEST SUDAH ACTIVE
-		if QuestManager and QuestManager.has_method("get_quest_status"):
-			if QuestManager.get_quest_status(target_quest_id) == "ACTIVE":
-				start_hover_animation()
-		else:
+		if _is_quest_active():
 			start_hover_animation()
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if _is_player_node(body):
 		is_player_inside = false
+		current_player_node = null
 		stop_hover_animation()
 
 
 func _is_player_node(body: Node2D) -> bool:
-	if not body: return false
+	if not body:
+		return false
 	return body.is_in_group("player") or body.name == "Player" or body.name.begins_with("Player") or body is CharacterBody2D
 
 
 func start_hover_animation() -> void:
-	if not interact_icon: return
+	if not interact_icon:
+		return
 	interact_icon.visible = true
 
-	if tween and tween.is_running(): tween.kill()
+	if tween and tween.is_running():
+		tween.kill()
 
 	tween = create_tween().set_loops()
 	tween.tween_property(interact_icon, "position:y", initial_icon_y - 5.0, 0.4).set_trans(Tween.TRANS_SINE)
@@ -150,8 +161,9 @@ func start_hover_animation() -> void:
 
 
 func stop_hover_animation() -> void:
-	if not interact_icon: return
+	if not interact_icon:
+		return
 	interact_icon.visible = false
-
-	if tween and tween.is_running(): tween.kill()
+	if tween and tween.is_running():
+		tween.kill()
 	interact_icon.position.y = initial_icon_y

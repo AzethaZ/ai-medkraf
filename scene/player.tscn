@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bx3uuy7f5r2bo" path="res://assets/animation/Rise_mc.png" id="5_dk1vr"]
 [ext_resource type="Texture2D" uid="uid://qme82ro6cpee" path="res://assets/animation/Walk_anim.png" id="5_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="5_oh5ij"]
+[ext_resource type="Texture2D" uid="uid://b0it3rrllhciw" path="res://assets/animation/bakar_animation.png" id="6_34jf3"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="6_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://cptyuj8nbfuln" path="res://assets/animation/Run_MC-Sheet.png" id="7_34jf3"]
 [ext_resource type="AudioStream" uid="uid://dag541r2875r7" path="res://assets/audio/walk_sound.mp3" id="11_ihjo1"]
@@ -52,6 +53,38 @@ region = Rect2(0, 0, 80, 95)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kk4ol"]
 atlas = ExtResource("5_dk1vr")
 region = Rect2(0, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xsw3c"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(0, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1uwf"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(80, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpsxb"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(160, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rt08c"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(240, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vs06"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(320, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wyue1"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(400, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyaf6"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(480, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtygy"]
+atlas = ExtResource("6_34jf3")
+region = Rect2(560, 0, 80, 95)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u7b46"]
 atlas = ExtResource("7_34jf3")
@@ -171,6 +204,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_xsw3c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1uwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpsxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rt08c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vs06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wyue1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyaf6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtygy")
+}],
+"loop": 1,
+"name": &"limp",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_u7b46")
 }, {
 "duration": 1.0,
@@ -247,7 +309,8 @@ texture_filter = 1
 position = Vector2(6, -7)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-animation = &"walk"
+animation = &"limp"
+frame_progress = 0.1307207
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=380073661]
 visible = false

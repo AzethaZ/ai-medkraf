@@ -3,13 +3,14 @@
 [ext_resource type="Script" uid="uid://mfftaciuuc3g" path="res://script/cutscene_hutan_1.gd" id="1_g10qx"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_jqca4"]
 [ext_resource type="Texture2D" uid="uid://bq0xttirgejhp" path="res://assets/animation/Text_Box.png" id="3_p2pxw"]
-[ext_resource type="Texture2D" uid="uid://dcahqovk62jh5" path="res://assets/ui/icon mark next.png" id="4_i0mfd"]
-[ext_resource type="Texture2D" uid="uid://c0kk108vnhx8e" path="res://assets/ui/icon tail.png" id="5_v5xbe"]
+[ext_resource type="Texture2D" uid="uid://bpwqeto4mjdi3" path="res://assets/animation/Arrow5.png" id="4_p2pxw"]
+[ext_resource type="Texture2D" uid="uid://cbgvk4nyfltj1" path="res://assets/animation/Text_Box_Indicator.png" id="5_mnpxi"]
 [ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="6_i0mfd"]
 [ext_resource type="AudioStream" uid="uid://bw2fm5uqllel" path="res://assets/audio/angry_voice2.mp3" id="7_8lp4e"]
 [ext_resource type="AudioStream" uid="uid://bg4kg273ncu30" path="res://assets/audio/angry_voice.mp3" id="7_v5xbe"]
 [ext_resource type="AudioStream" uid="uid://b0oljb37l8hdx" path="res://assets/audio/fire_sound.mp3" id="8_0q1d5"]
 [ext_resource type="AudioStream" uid="uid://dsvau0nhu788y" path="res://assets/audio/universfield-water-splash-199583.mp3" id="9_8lp4e"]
+[ext_resource type="AudioStream" uid="uid://bx2enk37n8px0" path="res://assets/audio/bush.mp3" id="11_p2pxw"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0q1d5"]
 content_margin_left = 12.0
@@ -112,13 +113,13 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="NextIndicator" type="TextureRect" parent="CutsceneDialogBox/DialogueBox" unique_id=1162155734]
-custom_minimum_size = Vector2(10, 6)
+custom_minimum_size = Vector2(8, 7)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 offset_transform_enabled = true
 offset_transform_position = Vector2(2, 4)
-texture = ExtResource("4_i0mfd")
+texture = ExtResource("4_p2pxw")
 expand_mode = 1
 
 [node name="TailPointer" type="TextureRect" parent="CutsceneDialogBox/DialogueBox" unique_id=940864550]
@@ -126,9 +127,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 offset_transform_enabled = true
-offset_transform_position = Vector2(105, 0)
+offset_transform_position = Vector2(110, 0)
 offset_transform_rotation = -1.5707964
-texture = ExtResource("5_v5xbe")
+texture = ExtResource("5_mnpxi")
 
 [node name="ExclamationBox" type="PanelContainer" parent="CutsceneDialogBox" unique_id=80095950]
 custom_minimum_size = Vector2(60, 0)
@@ -162,13 +163,13 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="NextIndicator" type="TextureRect" parent="CutsceneDialogBox/ExclamationBox" unique_id=990195194]
-custom_minimum_size = Vector2(10, 6)
+custom_minimum_size = Vector2(8, 7)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 offset_transform_enabled = true
 offset_transform_position = Vector2(2, 4)
-texture = ExtResource("4_i0mfd")
+texture = ExtResource("4_p2pxw")
 expand_mode = 1
 
 [node name="TailPointer" type="TextureRect" parent="CutsceneDialogBox/ExclamationBox" unique_id=1635434452]
@@ -176,9 +177,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 offset_transform_enabled = true
-offset_transform_position = Vector2(33, 0)
+offset_transform_position = Vector2(38, 0)
 offset_transform_rotation = 1.5707964
-texture = ExtResource("5_v5xbe")
+texture = ExtResource("5_mnpxi")
 flip_v = true
 
 [node name="TypeSound" type="AudioStreamPlayer" parent="." unique_id=1050163686]
@@ -198,3 +199,6 @@ stream = ExtResource("9_8lp4e")
 
 [node name="AngrySound2" type="AudioStreamPlayer" parent="." unique_id=1255436425]
 stream = ExtResource("7_v5xbe")
+
+[node name="BushSound" type="AudioStreamPlayer" parent="." unique_id=476986595]
+stream = ExtResource("11_p2pxw")

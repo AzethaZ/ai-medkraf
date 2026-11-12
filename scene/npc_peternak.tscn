@@ -75,7 +75,7 @@ animations = [{
 size = Vector2(43, 124)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jirua"]
-radius = 36.14378
+radius = 22.70968
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_quhwl"]
 texture = ExtResource("2_udvkr")
@@ -170,7 +170,7 @@ position = Vector2(-1.0000019, -9.999998)
 scale = Vector2(1.9375, 1.9375)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=1508404906]
-position = Vector2(1.0322591, -1.4305115e-06)
+position = Vector2(2.0645173, -9.3829243e-07)
 shape = SubResource("CircleShape2D_jirua")
 
 [node name="DialogueUI" type="Control" parent="." unique_id=1065598722]

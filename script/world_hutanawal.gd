@@ -22,6 +22,9 @@ var is_exiting: bool = false
 
 
 func _ready() -> void:
+	if MusicManager:
+		var nature_sfx = preload("res://assets/audio/nature_ambience.mp3")
+		MusicManager.play_world_audio(nature_sfx, null, 0.0)
 	# 0. MEMUTAR AMBIENCE HUTAN & MUSIK LATAR VIA MUSICMANAGER
 	if player:
 		# Pastikan mode chase mati saat masuk ke world_hutanawal
@@ -38,7 +41,7 @@ func _ready() -> void:
 
 	# --- BATASI KAMERA DI SISI KANAN MAP (X = 3700) ---
 	if camera_2d:
-		camera_2d.limit_right = 3700
+		camera_2d.limit_right = 4710
 		camera_2d.limit_left = -880
 
 	# 1. SEMBUNYIKAN LOGO STUDIO DI AWAL

@@ -17,6 +17,7 @@ var is_transitioning: bool = false
 var tween: Tween = null
 var base_icon_y: float = 0.0
 
+
 func _ready() -> void:
 	if interact_icon:
 		base_icon_y = interact_icon.position.y
@@ -27,11 +28,13 @@ func _ready() -> void:
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if requires_interaction and is_player_inside and not is_transitioning and event.is_action_pressed("interact"):
 		get_viewport().set_input_as_handled()
 		is_transitioning = true
 		change_level()
+
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D or body.is_in_group("player") or body.name.begins_with("Player"):
@@ -40,10 +43,11 @@ func _on_body_entered(body: Node2D) -> void:
 			interact_icon.visible = true
 			start_hover_animation()
 
-		# Jika mode TANPA interaksi (tinggal jalan ke kanan), langsung picu pindah scene
+		# Jika mode TANPA interaksi (tinggal jalan ke portal/ujung peta), langsung picu pindah scene
 		if not requires_interaction and not is_transitioning:
 			is_transitioning = true
 			change_level()
+
 
 func _on_body_exited(body: Node2D) -> void:
 	if body is CharacterBody2D or body.is_in_group("player") or body.name.begins_with("Player"):
@@ -51,6 +55,7 @@ func _on_body_exited(body: Node2D) -> void:
 		if interact_icon:
 			interact_icon.visible = false
 			stop_hover_animation()
+
 
 func start_hover_animation() -> void:
 	if not interact_icon:
@@ -63,12 +68,13 @@ func start_hover_animation() -> void:
 	tween.tween_property(interact_icon, "position:y", base_icon_y - 4.0, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(interact_icon, "position:y", base_icon_y, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
+
 func stop_hover_animation() -> void:
 	if tween and tween.is_running():
 		tween.kill()
 
-# --- LOGIKA PINDAH SCENE AMAN ---
 
+# --- LOGIKA PINDAH SCENE DENGAN TRANSISI KEDIPAN MATA ---
 func change_level() -> void:
 	# 1. PENGECEKAN SYARAT QUEST (TAMBAHAN)
 	if required_quest_id != "":
@@ -91,10 +97,8 @@ func change_level() -> void:
 	if SceneTransition and "target_spawn_id" in SceneTransition:
 		SceneTransition.target_spawn_id = target_spawn_id
 
+	# Panggil transisi kedipan piksel dan pindah scene otomatis
 	if SceneTransition and SceneTransition.has_method("change_scene"):
 		SceneTransition.change_scene(target_scene_path)
-	elif SceneTransition and SceneTransition.has_method("fade_out"):
-		await SceneTransition.fade_out()
-		get_tree().change_scene_to_file(target_scene_path)
 	else:
 		get_tree().change_scene_to_file(target_scene_path)

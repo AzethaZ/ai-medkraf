@@ -31,8 +31,8 @@ func _ready() -> void:
 	if camera_2d:
 		camera_2d.enabled = true
 		camera_2d.make_current()
-		camera_2d.limit_left = -500
-		camera_2d.limit_right = 500
+		camera_2d.limit_left = -450
+		camera_2d.limit_right = 430
 
 	# 4. Hubungkan signal dari 2 objek interactable
 	if interact_kiri and interact_kiri.has_signal("interacted"):
@@ -106,7 +106,7 @@ func trigger_dialogue_manager(text: String) -> void:
 
 # --- TIMER 5 DETIK & TRANSIKSI KE CUTSCENE HUTAN 2 ---
 func start_cutscene_timer() -> void:
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(10.0).timeout
 
 	# 1. Fade Out Layar (Tanpa fade out audio agar ambience terus menyambung ke cutscene_hutan_2)
 	if SceneTransition and SceneTransition.has_method("fade_out"):

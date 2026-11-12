@@ -69,7 +69,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vrlf"]
-size = Vector2(38, 115)
+size = Vector2(101, 115)
 
 [node name="npc_pengelola_hutan" type="Area2D" unique_id=1396833978]
 script = ExtResource("1_p8llq")
@@ -83,7 +83,7 @@ frame_progress = 0.5493469
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1664304813]
-position = Vector2(0, 1.5)
+position = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_8vrlf")
 
 [node name="DialoguePivot" type="Marker2D" parent="." unique_id=552428444]

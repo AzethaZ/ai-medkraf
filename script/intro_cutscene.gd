@@ -43,6 +43,9 @@ var indicator_tween: Tween
 var dialogues_per_slide: Dictionary = {}
 
 func _ready() -> void:
+	if MusicManager:
+		var nature_sfx = preload("res://assets/audio/nature_ambience.mp3") # Sesuaikan path file audio ambience kamu
+		MusicManager.play_world_audio(nature_sfx, null, 18.0) # Set volume target ke 0.0 dB
 	load_slides()
 	start_hover_animation()
 	

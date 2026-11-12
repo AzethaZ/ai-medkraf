@@ -45,6 +45,7 @@ var followers: Array[Node2D] = []
 var footstep_cooldown: float = 0.48 # Jeda antar langkah saat berjalan santai
 var footstep_timer: float = 0.0
 
+var is_in_battle: bool = false
 
 func _ready() -> void:
 	# Beri sedikit jeda (0.05 detik) agar posisi Player sudah fix dipindahkan oleh script pemicu scene
@@ -52,6 +53,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Jika sedang dalam mode battle/cutscene, abaikan gerakan normal player
+	if is_in_battle:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	# Jika sedang memutar animasi cutscene, lewati logika animasi otomatis player
 	if is_in_cutscene_anim:
 		return
@@ -138,25 +144,20 @@ func _physics_process(delta: float) -> void:
 	# 8. KONTROL ANIMASI (HOLD KANAN SAAT CHASE & TRANSISI LOMPAT)
 	if is_on_floor():
 		if is_chasing_mode:
-			# Jika sedang menahan tombol KANAN (D / Panah Kanan) -> Animasi RUN
-			if Input.is_action_pressed("ui_right"):
-				if animated_sprite_2d.animation != "run":
-					animated_sprite_2d.play("run")
-				animated_sprite_2d.speed_scale = 1.0
-			else:
-				if animated_sprite_2d.animation != "default":
-					animated_sprite_2d.play("default")
-				animated_sprite_2d.speed_scale = 1.0
+			# Auto-Run otomatis tanpa perlu menahan tombol kanan
+			if animated_sprite_2d.animation != "run":
+				animated_sprite_2d.play("run")
+			animated_sprite_2d.speed_scale = 1.0
 		elif is_auto_walking:
 			if animated_sprite_2d.animation != "walk":
 				animated_sprite_2d.play("walk")
 			animated_sprite_2d.speed_scale = 1.0
 		elif velocity.x == 0:
-			animated_sprite_2d.play("walk" if is_limping else "default")
-			animated_sprite_2d.speed_scale = 0.5 if is_limping else 1.0
+			animated_sprite_2d.play("default")
+			animated_sprite_2d.speed_scale = 1.0
 		else:
 			if is_limping:
-				animated_sprite_2d.play("walk")
+				animated_sprite_2d.play("limp")
 				animated_sprite_2d.speed_scale = 0.5
 			elif current_speed == RUN_SPEED:
 				animated_sprite_2d.play("run")
@@ -190,6 +191,8 @@ func _physics_process(delta: float) -> void:
 				animated_sprite_2d.play("Fall")
 			elif animated_sprite_2d.sprite_frames.has_animation("falling"):
 				animated_sprite_2d.play("falling")
+				
+				
 
 	# Memutar SFX Langkah kaki dan batuk
 	var sfx_speed = WALK_SPEED if (is_chasing_mode and Input.is_action_pressed("ui_right")) or is_auto_walking else velocity.x
@@ -210,7 +213,12 @@ func handle_footstep_sound(delta: float, speed: float) -> void:
 			else:
 				footstep_sound.pitch_scale = randf_range(1.1, 1.5)
 			footstep_sound.play()
-		footstep_timer = footstep_cooldown
+
+		# Jika sedang lari (chasing/speed tinggi), atur cooldown lebih cepat
+		if speed > 150.0 or ("is_chasing_mode" in self and is_chasing_mode):
+			footstep_timer = 0.36  # Jeda cepat pas Danum lari
+		else:
+			footstep_timer = footstep_cooldown  # Jeda normal pas jalan biasa
 
 
 # --- FUNGSI HELPER UNTUK MODE PINCANG, CUTSCENE & DIALOG ---
@@ -230,8 +238,17 @@ func start_auto_walk(dir: float = 1.0) -> void:
 func stop_auto_walk() -> void:
 	is_auto_walking = false
 	can_move = true
-	if animated_sprite_2d and animated_sprite_2d.sprite_frames.has_animation("default"):
-		animated_sprite_2d.play("default")
+	velocity = Vector2.ZERO # Hentikan sisa kecepatan fisik
+	
+	if animated_sprite_2d:
+		# Reset kecepatan pemutaran animasi
+		animated_sprite_2d.speed_scale = 1.0
+		
+		# Paksa putar animasi diam (default / idle / limp_idle)
+		if is_limping and animated_sprite_2d.sprite_frames.has_animation("limp_idle"):
+			animated_sprite_2d.play("limp_idle")
+		elif animated_sprite_2d.sprite_frames.has_animation("default"):
+			animated_sprite_2d.play("default")
 
 
 func disable_movement() -> void:
