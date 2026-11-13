@@ -2,14 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_kvxg0"]
 [ext_resource type="Script" uid="uid://b4wfl6j2w8ekx" path="res://script/world_hutanbakar_2.gd" id="2_uixhn"]
-[ext_resource type="Texture2D" uid="uid://cmwd7wcymec3d" path="res://assets/world bg/langit_2.png" id="3_vry15"]
-[ext_resource type="Texture2D" uid="uid://3i8fjf2s5x5w" path="res://assets/world bg/bg_2_.png" id="4_vry15"]
+[ext_resource type="Texture2D" uid="uid://cmwd7wcymec3d" path="res://assets/world bg/hutan_bakar/langit_2.png" id="3_vry15"]
+[ext_resource type="Texture2D" uid="uid://3i8fjf2s5x5w" path="res://assets/world bg/hutan_bakar/bg_2_.png" id="4_vry15"]
 [ext_resource type="PackedScene" uid="uid://dkbga5yhg3b4d" path="res://scene/Function/interactable_area.tscn" id="4_y71ae"]
-[ext_resource type="Texture2D" uid="uid://ylglngsb1g5x" path="res://assets/world bg/api_belakang-Sheet.png" id="5_1gril"]
-[ext_resource type="Texture2D" uid="uid://cwi7wu2vkg1b7" path="res://assets/world bg/kebakar_jalan.png" id="5_ni2s7"]
-[ext_resource type="Texture2D" uid="uid://c3ulk6ilw33q7" path="res://assets/world bg/mid.png" id="6_vry15"]
+[ext_resource type="Texture2D" uid="uid://ylglngsb1g5x" path="res://assets/world bg/hutan_bakar/api_belakang-Sheet.png" id="5_1gril"]
+[ext_resource type="Texture2D" uid="uid://cwi7wu2vkg1b7" path="res://assets/world bg/hutan_bakar/kebakar_jalan.png" id="5_ni2s7"]
+[ext_resource type="Texture2D" uid="uid://c3ulk6ilw33q7" path="res://assets/world bg/hutan_bakar/mid.png" id="6_vry15"]
 [ext_resource type="Texture2D" uid="uid://d1xgdtj2ph4nu" path="res://assets/animation/hutanawal pohonbakar.png" id="8_6v0y8"]
-[ext_resource type="Texture2D" uid="uid://bcdw10sujetry" path="res://assets/world bg/kebakar_foreground.png" id="9_vry15"]
+[ext_resource type="Texture2D" uid="uid://bcdw10sujetry" path="res://assets/world bg/hutan_bakar/kebakar_foreground.png" id="9_vry15"]
+[ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="11_ol3yx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6v0y8"]
 atlas = ExtResource("5_1gril")
@@ -159,6 +160,14 @@ emission_curve = SubResource("CurveTexture_v5gy4")
 hue_variation_min = -0.06000002
 hue_variation_max = -2.2351742e-08
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cxmq"]
+shader = ExtResource("11_ol3yx")
+shader_parameter/ray_color = Color(1, 0.95, 0.7, 0.25)
+shader_parameter/position = -0.2
+shader_parameter/falloff = 0.8
+shader_parameter/speed = 1.0
+shader_parameter/pixel_size = 128.0
+
 [node name="world_hutanbakar2" unique_id=1697432782 instance=ExtResource("1_kvxg0")]
 script = ExtResource("2_uixhn")
 
@@ -251,3 +260,15 @@ process_material = SubResource("ParticleProcessMaterial_1vivr")
 position = Vector2(-3, 17)
 scale = Vector2(1.655, 1.655)
 texture = ExtResource("8_6v0y8")
+
+[node name="SunRayOverlay" type="ColorRect" parent="." index="15" unique_id=1881773288]
+material = SubResource("ShaderMaterial_2cxmq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -511.0
+offset_top = -383.0
+offset_right = 1339.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2

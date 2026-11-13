@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brxh3igjfjsio"
-path="res://.godot/imported/midground-Sheet.png-f022af212dd4194e8ae78adbd1201921.ctex"
+uid="uid://c8oiprk711cyi"
+path="res://.godot/imported/mid_2_-Sheet.png-050dcfd3d06c50400c2de9b0d76982d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world bg/midground-Sheet.png"
-dest_files=["res://.godot/imported/midground-Sheet.png-f022af212dd4194e8ae78adbd1201921.ctex"]
+source_file="res://assets/world bg/hutan_bakar/mid_2_-Sheet.png"
+dest_files=["res://.godot/imported/mid_2_-Sheet.png-050dcfd3d06c50400c2de9b0d76982d6.ctex"]
 
 [params]
 

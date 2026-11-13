@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmwd7wcymec3d"
-path="res://.godot/imported/langit_2.png-2175d03ac4bfa70100c650c1c8ce026e.ctex"
+uid="uid://b2welns7qnrww"
+path="res://.godot/imported/ha_mg_2.png-1bddc59f111bba17ee4a220aabba4907.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world bg/langit_2.png"
-dest_files=["res://.godot/imported/langit_2.png-2175d03ac4bfa70100c650c1c8ce026e.ctex"]
+source_file="res://assets/world bg/hutan_awal_fix/ha_mg_2.png"
+dest_files=["res://.godot/imported/ha_mg_2.png-1bddc59f111bba17ee4a220aabba4907.ctex"]
 
 [params]
 

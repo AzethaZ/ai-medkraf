@@ -79,11 +79,11 @@ script = ExtResource("1_2n3m8")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1199017512]
 modulate = Color(0.4023078, 0.5451023, 0.7701825, 0.34117648)
 texture_filter = 1
-position = Vector2(6, -113.5)
-scale = Vector2(0.834591, 1.025)
+position = Vector2(17, -119)
+scale = Vector2(0.89632386, 1.100817)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.65367275
+frame_progress = 0.93915653
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=209158851]
 position = Vector2(-2.000002, -12.000002)

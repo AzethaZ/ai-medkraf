@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ylglngsb1g5x"
-path="res://.godot/imported/api_belakang-Sheet.png-779b611f41cff8428ec630447c659e7a.ctex"
+uid="uid://gv3x632w8y7b"
+path="res://.godot/imported/border2.png-034a2357da896b4df86f7200ea3d6caf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world bg/api_belakang-Sheet.png"
-dest_files=["res://.godot/imported/api_belakang-Sheet.png-779b611f41cff8428ec630447c659e7a.ctex"]
+source_file="res://assets/animation/border2.png"
+dest_files=["res://.godot/imported/border2.png-034a2357da896b4df86f7200ea3d6caf.ctex"]
 
 [params]
 

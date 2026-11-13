@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3ulk6ilw33q7"
-path="res://.godot/imported/mid.png-974adba8374d46b35012ef328c27be57.ctex"
+uid="uid://dlximu8gtthii"
+path="res://.godot/imported/background_kebakar.png-09f2732722609d791c1ee51ffe41c589.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world bg/mid.png"
-dest_files=["res://.godot/imported/mid.png-974adba8374d46b35012ef328c27be57.ctex"]
+source_file="res://assets/world bg/hutan_bakar/background_kebakar.png"
+dest_files=["res://.godot/imported/background_kebakar.png-09f2732722609d791c1ee51ffe41c589.ctex"]
 
 [params]
 

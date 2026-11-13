@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c14vokpg8r5sb"]
 
-[ext_resource type="Texture2D" uid="uid://bvokbegafqmm0" path="res://assets/border.png" id="1_gn35n"]
+[ext_resource type="Texture2D" uid="uid://gv3x632w8y7b" path="res://assets/animation/border2.png" id="1_gn35n"]
 
 [node name="GameBorder" type="CanvasLayer" unique_id=1435046413]
 layer = 101

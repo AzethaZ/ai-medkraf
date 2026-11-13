@@ -29,11 +29,20 @@ extends Node2D
 # Referensi Audio Node
 @onready var chaser_sfx_player: AudioStreamPlayer = $ChaserSFXPlayer if has_node("ChaserSFXPlayer") else null
 @onready var chase_bgm_player: AudioStreamPlayer = $ChaseBGMPlayer if has_node("ChaseBGMPlayer") else null
+@onready var dialog_blip_player: AudioStreamPlayer = find_child("DialogBlipPlayer", true, false) as AudioStreamPlayer
+
+@onready var chase_particles: GPUParticles2D = find_child("GPUParticles2D", true, false) as GPUParticles2D
 
 # UI Game Over
 @onready var game_over_panel: Control = $ChaseUI/GameOverPanel if has_node("ChaseUI/GameOverPanel") else null
 @onready var retry_button: Button = find_child("RetryButton", true, false) as Button
 
+@onready var burung_pengikut: Sprite2D = find_child("BurungPengikut", true, false) as Sprite2D
+@onready var bird_sfx_player: AudioStreamPlayer = find_child("BirdSFXPlayer", true, false) as AudioStreamPlayer
+var has_bird_flown: bool = false
+var is_bird_flying: bool = false
+var bird_fly_time: float = 0.0
+var bird_base_y: float = 0.0
 
 # --- VARIABEL STATE ---
 var current_cleared: int = 0
@@ -48,6 +57,11 @@ var obstacle_timer: Timer
 var spawned_obstacles_count: int = 0 # Tambahkan variabel ini di atas (dekat total_obstacles)
 
 func _ready() -> void:
+	# Geser DialoguePivot NPC_Chaser agar memakai koordinat HutanBakarPivot
+	if npc_chaser and npc_chaser.has_node("DialoguePivot") and npc_chaser.has_node("HutanBakarPivot"):
+		npc_chaser.get_node("DialoguePivot").position = npc_chaser.get_node("HutanBakarPivot").position
+	if burung_pengikut:
+		burung_pengikut.visible = false
 	# 1. Sembunyikan UI yang tidak dipakai
 	if game_over_panel:
 		game_over_panel.visible = false
@@ -91,6 +105,15 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# Gerakkan Burung Pengikut dari kiri ke kanan layar
+	if is_bird_flying and burung_pengikut:
+		bird_fly_time += delta
+		burung_pengikut.global_position.x += 280.0 * delta
+		burung_pengikut.global_position.y = bird_base_y + sin(bird_fly_time * 8.0) * 12.0
+		
+		if burung_pengikut.global_position.x > player.global_position.x + 450.0:
+			is_bird_flying = false
+			burung_pengikut.visible = false
 	if not is_scene_initialized or not is_chasing:
 		return
 
@@ -133,14 +156,36 @@ func start_pre_chase_dialogue() -> void:
 	# Putar SFX marah Chaser tepat saat dialog dipicu
 	if chaser_sfx_player and chaser_sfx_player.stream:
 		chaser_sfx_player.play()
-
-	if npc_chaser and npc_chaser.has_method("show_chase_dialogue"):
-		await npc_chaser.show_chase_dialogue("Kau tidak akan bisa lari, Danum!")
+		
+	if npc_chaser and npc_chaser.has_node("CutsceneDialogBox"):
+		await _show_chaser_cutscene_dialog("Kau tidak akan bisa lari!", 0.6)
+	elif npc_chaser and npc_chaser.has_method("show_chase_dialogue"):
+		await npc_chaser.show_chase_dialogue("Kau tidak akan bisa lari!")
 	else:
 		await get_tree().create_timer(1.0).timeout
 
 
 func start_chase_sequence() -> void:
+	is_chasing = true
+	current_cleared = 0
+	spawned_obstacles_count = 0
+	has_bird_flown = false
+	
+	# --- NYALAKAN GPU PARTICLES SAAT MULAI LARI ---
+	if chase_particles:
+		chase_particles.visible = true
+		chase_particles.emitting = true
+	is_chasing = true
+	current_cleared = 0
+	spawned_obstacles_count = 0
+	has_bird_flown = false
+	
+	# --- PEMICU BURUNG TERBANG SETELAH 12 DETIK ---
+	get_tree().create_timer(12.0).timeout.connect(func():
+		if is_chasing and not has_bird_flown:
+			has_bird_flown = true
+			_fly_follower_bird()
+	)
 	is_chasing = true
 	current_cleared = 0
 	spawned_obstacles_count = 0 # Reset hitungan awal
@@ -358,3 +403,77 @@ func increment_obstacle_cleared() -> void:
 			obstacle_timer.queue_free() # Hapus node timer dari memori
 			
 		finish_chase_sequence()
+
+func _fly_follower_bird() -> void:
+	if not burung_pengikut or not player:
+		return
+		
+	var start_x = player.global_position.x - 350.0
+	bird_base_y = player.global_position.y - 170.0
+	
+	burung_pengikut.global_position = Vector2(start_x, bird_base_y)
+	burung_pengikut.visible = true
+	burung_pengikut.z_index = 0
+	burung_pengikut.flip_h = false
+	
+	# --- PUTAR SUARA BURUNG ---
+	if bird_sfx_player and bird_sfx_player.stream:
+		bird_sfx_player.play()
+	
+	bird_fly_time = 0.0
+	is_bird_flying = true
+
+func _show_chaser_cutscene_dialog(text_line: String, duration: float = 1.0) -> void:
+	if not npc_chaser or not npc_chaser.has_node("CutsceneDialogBox"):
+		return
+		
+	var dialog_root = npc_chaser.get_node("CutsceneDialogBox")
+	var msg_label = dialog_root.find_child("MessageLabel", true, false)
+	var next_icon = dialog_root.find_child("NextIndicator", true, false)
+	
+	# Pastikan posisi kotak dialog mengikuti titik HutanBakarPivot
+	if npc_chaser.has_node("HutanBakarPivot"):
+		dialog_root.position = npc_chaser.get_node("HutanBakarPivot").position
+		
+	if msg_label:
+		msg_label.text = text_line
+		msg_label.visible_characters = 0
+		
+	if next_icon:
+		next_icon.visible = false
+		
+	# 1. Tween Pop-Out muncul dari skala 0 ke 1
+	dialog_root.scale = Vector2.ZERO
+	dialog_root.visible = true
+	
+	var pop_in = create_tween()
+	pop_in.tween_property(dialog_root, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	await pop_in.finished
+	
+	# 2. Efek teks mengetik per huruf + suara blip setiap 2 huruf
+	if msg_label:
+		var total_chars = text_line.length()
+		for i in range(1, total_chars + 1):
+			msg_label.visible_characters = i
+			
+			# Putar suara ketik setiap 2 karakter (kecuali spasi) agar ritmenya pas
+			var current_char = text_line[i - 1]
+			if current_char != " " and i % 2 == 1:
+				if dialog_blip_player and dialog_blip_player.stream:
+					dialog_blip_player.pitch_scale = randf_range(0.55, 0.65)
+					dialog_blip_player.play()
+					
+			await get_tree().create_timer(0.03).timeout
+			
+	if next_icon:
+		next_icon.visible = true
+		
+	# 3. Tunggu sebentar sesuai durasi, lalu tutup dengan Tween Pop-In
+	await get_tree().create_timer(duration).timeout
+	
+	var pop_out = create_tween()
+	pop_out.tween_property(dialog_root, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	await pop_out.finished
+	
+	dialog_root.visible = false
+	dialog_root.scale = Vector2.ONE

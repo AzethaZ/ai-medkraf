@@ -5,6 +5,8 @@ extends Node2D
 @onready var batang_pohon: Area2D = $BatangPohon
 @onready var npc_chaser: Node2D = $NPC_Chaser
 
+@onready var chaser_step_player: AudioStreamPlayer = find_child("ChaserStepPlayer", true, false) as AudioStreamPlayer
+
 var is_interacting: bool = false
 
 func _ready() -> void:
@@ -81,7 +83,7 @@ func _on_tree_interacted() -> void:
 		},
 		{
 			"speaker": "mc",
-			"text": "Suasana mulai tenang... tapi aku merasa sangat mengantuk..."
+			"text": "Semoga mereka tidak menemukanku"
 		}
 	]
 	
@@ -142,6 +144,17 @@ func _play_chaser_passing_sequence() -> void:
 		var walk_tween = create_tween()
 		walk_tween.tween_property(npc_chaser, "global_position:x", 1150.0, 5.0)
 		
+		# --- MULAI SUARA LANGKAH KAKI CHASER MENGULANG ---
+		var step_tween: Tween
+		if chaser_step_player and chaser_step_player.stream:
+			step_tween = create_tween().set_loops()
+			step_tween.tween_callback(func():
+				chaser_step_player.pitch_scale = randf_range(0.95, 1.05) # Sedikit variasi nada agar natural
+				chaser_step_player.play()
+			)
+			# Jeda antar langkah kaki (ubah 0.35 menjadi lebih kecil jika ingin langkah lebih cepat, misal 0.25)
+			step_tween.tween_interval(0.35)
+		
 		# Tunggu 1.5 detik sampai dia masuk ke layar, lalu keluarkan dialog mengikuti kepalanya
 		await get_tree().create_timer(1.5).timeout
 		if DialogueManager and DialogueManager.has_method("start_dialogue"):
@@ -155,6 +168,12 @@ func _play_chaser_passing_sequence() -> void:
 			
 		# Tunggu sampai NPC Chaser selesai keluar ke sisi kanan layar
 		await walk_tween.finished
+		
+		# --- HENTIKAN PENGULANGAN SUARA LANGKAH KAKI ---
+		if step_tween:
+			step_tween.kill()
+		if chaser_step_player:
+			chaser_step_player.stop()
 		
 		# Tutup kotak dialog jika masih terbuka saat chaser sudah keluar layar
 		if DialogueManager and DialogueManager.get("is_active") == true:

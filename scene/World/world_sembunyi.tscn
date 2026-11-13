@@ -11,8 +11,28 @@
 [ext_resource type="PackedScene" uid="uid://d0jr5ilrur6yh" path="res://scene/batang_pohon.tscn" id="6_jbm7m"]
 [ext_resource type="Texture2D" uid="uid://vbhyx8lbxraw" path="res://assets/world bg/hutan_awal/fg_1.png" id="10_m1pcb"]
 [ext_resource type="PackedScene" uid="uid://bxp0avbn6xmqt" path="res://scene/npc_chaser.tscn" id="11_82obn"]
+[ext_resource type="AudioStream" uid="uid://dag541r2875r7" path="res://assets/audio/walk_sound.mp3" id="12_fh023"]
+[ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="13_1qo3h"]
+[ext_resource type="AudioStream" uid="uid://b5xmo2yiosk72" path="res://assets/audio/nature_ambience.mp3" id="14_ve6xw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ve6xw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ve6xw"]
+shader = ExtResource("13_1qo3h")
+shader_parameter/ray_color = Color(1, 0.95, 0.7, 0.25)
+shader_parameter/position = -0.2
+shader_parameter/falloff = 0.8
+shader_parameter/speed = 1.0
+shader_parameter/pixel_size = 128.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ve6xw"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5, 20, 1)
+emission_shape = 3
+emission_box_extents = Vector3(100, 10, 1)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+gravity = Vector3(15, 30, 0)
 
 [node name="world_sembunyi" unique_id=1697432782 instance=ExtResource("1_h371d")]
 script = ExtResource("2_2yqhe")
@@ -98,3 +118,30 @@ texture = ExtResource("10_m1pcb")
 
 [node name="NPC_Chaser" parent="." index="14" unique_id=1370154020 instance=ExtResource("11_82obn")]
 position = Vector2(60, 5)
+
+[node name="ChaserStepPlayer" type="AudioStreamPlayer" parent="NPC_Chaser" index="3" unique_id=713658]
+stream = ExtResource("12_fh023")
+
+[node name="SunRayOverlay" type="ColorRect" parent="." index="15" unique_id=160323027]
+material = SubResource("ShaderMaterial_ve6xw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -306.0
+offset_top = -320.0
+offset_right = 1944.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ForestAmbience" type="AudioStreamPlayer" parent="." index="16" unique_id=1823103209]
+stream = ExtResource("14_ve6xw")
+volume_db = 11.0
+autoplay = true
+
+[node name="LeafParticles" type="GPUParticles2D" parent="." index="17" unique_id=170015336]
+position = Vector2(457, -107)
+amount = 20
+lifetime = 1.48
+preprocess = 3.0
+process_material = SubResource("ParticleProcessMaterial_ve6xw")

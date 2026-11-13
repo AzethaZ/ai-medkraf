@@ -41,8 +41,9 @@ func _ready() -> void:
 
 	# --- BATASI KAMERA DI SISI KANAN MAP (X = 3700) ---
 	if camera_2d:
-		camera_2d.limit_right = 4710
+		camera_2d.limit_right = 5000
 		camera_2d.limit_left = -880
+		camera_2d.limit_top = -290
 
 	# 1. SEMBUNYIKAN LOGO STUDIO DI AWAL
 	if logo_texture:
