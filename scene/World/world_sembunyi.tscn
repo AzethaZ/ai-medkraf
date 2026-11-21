@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_h371d"]
 [ext_resource type="Script" uid="uid://47wesygyh518" path="res://script/world_sembunyi.gd" id="2_2yqhe"]
 [ext_resource type="Texture2D" uid="uid://4q8sjtm0tco8" path="res://assets/world bg/hutan_awal/sky_1.png" id="3_m1pcb"]
-[ext_resource type="Texture2D" uid="uid://q3xgnmtr6vgr" path="res://assets/world bg/hutan_awal/bg_1.png" id="4_m1pcb"]
+[ext_resource type="Texture2D" uid="uid://bwreiu7negceg" path="res://assets/world bg/hutan_awal_fix/ha_bg_1.png" id="4_ve6xw"]
 [ext_resource type="Texture2D" uid="uid://cnpt851dve7gx" path="res://assets/world bg/hutan_awal/mg_2.png" id="5_82obn"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="5_yfa6i"]
 [ext_resource type="Texture2D" uid="uid://b12a422ncfmer" path="res://assets/world bg/hutan_awal/mg_1.png" id="6_1qo3h"]
@@ -14,14 +14,16 @@
 [ext_resource type="AudioStream" uid="uid://dag541r2875r7" path="res://assets/audio/walk_sound.mp3" id="12_fh023"]
 [ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="13_1qo3h"]
 [ext_resource type="AudioStream" uid="uid://b5xmo2yiosk72" path="res://assets/audio/nature_ambience.mp3" id="14_ve6xw"]
+[ext_resource type="AudioStream" uid="uid://cw4yn1yfox7rn" path="res://assets/audio/woodtrunk3.MP3" id="15_k2mpa"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ve6xw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve6xw"]
 shader = ExtResource("13_1qo3h")
 shader_parameter/ray_color = Color(1, 0.95, 0.7, 0.25)
-shader_parameter/position = -0.2
-shader_parameter/falloff = 0.8
+shader_parameter/position = -0.26899996527750003
+shader_parameter/spread = 0.950000045125
+shader_parameter/falloff = 1.858000088255
 shader_parameter/speed = 1.0
 shader_parameter/pixel_size = 128.0
 
@@ -42,12 +44,14 @@ scroll_scale = Vector2(0.3, 1)
 scroll_offset = Vector2(-1145, 118)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Far3" index="0" unique_id=1004150730]
+modulate = Color(0.57254905, 0.627451, 0.6431373, 1)
 position = Vector2(1523, -243)
 texture = ExtResource("3_m1pcb")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." index="1" unique_id=411301241]
-position = Vector2(738, -96)
-texture = ExtResource("4_m1pcb")
+modulate = Color(0.37254903, 0.5019608, 0.54901963, 1)
+position = Vector2(634, -96)
+texture = ExtResource("4_ve6xw")
 
 [node name="ParallaxBG_Mid" type="Parallax2D" parent="." index="2" unique_id=1243386599]
 scroll_scale = Vector2(0.6, 1)
@@ -60,6 +64,7 @@ sprite_frames = SubResource("SpriteFrames_ve6xw")
 autoplay = "default"
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Mid" index="1" unique_id=869771759]
+modulate = Color(0.63529414, 0.63529414, 0.63529414, 1)
 position = Vector2(1523, -238)
 texture = ExtResource("5_82obn")
 
@@ -88,6 +93,7 @@ visible = false
 position = Vector2(314, -3)
 
 [node name="Player" parent="." index="8" unique_id=1312877385]
+modulate = Color(0.827451, 0.8745098, 0.92941177, 1)
 position = Vector2(98, 6)
 
 [node name="Camera2D" type="Camera2D" parent="." index="9" unique_id=44576731]
@@ -106,10 +112,11 @@ scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("5_yfa6i")
 
 [node name="BatangPohon" parent="." index="12" unique_id=933575158 instance=ExtResource("6_jbm7m")]
+modulate = Color(0.95585304, 0.97486, 0.9928277, 1)
 position = Vector2(417, 27)
 
 [node name="Parallax2D2" type="Parallax2D" parent="." index="13" unique_id=1979401095]
-z_index = 3
+z_index = 11
 scroll_offset = Vector2(-21, 27)
 
 [node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2" index="0" unique_id=1145868917]
@@ -117,12 +124,14 @@ position = Vector2(389, -138)
 texture = ExtResource("10_m1pcb")
 
 [node name="NPC_Chaser" parent="." index="14" unique_id=1370154020 instance=ExtResource("11_82obn")]
+modulate = Color(0.7921569, 0.8156863, 0.93333334, 1)
 position = Vector2(60, 5)
 
 [node name="ChaserStepPlayer" type="AudioStreamPlayer" parent="NPC_Chaser" index="3" unique_id=713658]
 stream = ExtResource("12_fh023")
 
 [node name="SunRayOverlay" type="ColorRect" parent="." index="15" unique_id=160323027]
+z_index = 10
 material = SubResource("ShaderMaterial_ve6xw")
 anchors_preset = 15
 anchor_right = 1.0
@@ -145,3 +154,8 @@ amount = 20
 lifetime = 1.48
 preprocess = 3.0
 process_material = SubResource("ParticleProcessMaterial_ve6xw")
+
+[node name="TreeRustlePlayer" type="AudioStreamPlayer" parent="." index="18" unique_id=656064703]
+stream = ExtResource("15_k2mpa")
+
+[node name="SnoreSFXPlayer" type="AudioStreamPlayer" parent="." index="19" unique_id=1898588047]

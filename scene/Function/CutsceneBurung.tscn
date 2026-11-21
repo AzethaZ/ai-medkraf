@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bhorer1v5v7rk"]
 
 [ext_resource type="Script" uid="uid://bgrt076wd7kcw" path="res://script/cutscene_burung.gd" id="1_javew"]
-[ext_resource type="Texture2D" uid="uid://b5om3dc4adgbx" path="res://assets/animation/Buwung.png" id="2_y5jt2"]
+[ext_resource type="Texture2D" uid="uid://b8pigx7p301di" path="res://assets/animation/ui/Buwung1.png" id="2_0dc6y"]
 [ext_resource type="Texture2D" uid="uid://cwxfo5xjqjpnh" path="res://assets/animation/Bulu.png" id="3_y5jt2"]
 [ext_resource type="AudioStream" uid="uid://rfitbh3nxp81" path="res://assets/audio/freesound_community-075692_bird-flying-awaywav-86143.mp3" id="4_vti7k"]
 [ext_resource type="AudioStream" uid="uid://csl7jcaneg4mt" path="res://assets/audio/yuliana-yurukova-bird-chirps-343624.mp3" id="5_0dc6y"]
@@ -9,15 +9,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5jt2"]
 size = Vector2(175.5, 53)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vti7k"]
-atlas = ExtResource("2_y5jt2")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mj7h"]
+atlas = ExtResource("2_0dc6y")
 region = Rect2(0, 0, 117, 70)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vti7k")
+"texture": SubResource("AtlasTexture_1mj7h")
 }],
 "loop": 1,
 "name": &"default",

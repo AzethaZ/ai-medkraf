@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://pofiqo3piyow"]
+
+[ext_resource type="Texture2D" uid="uid://dh0iipjof4otj" path="res://assets/idel_template_cowok-Sheet.png" id="1_0qwkm"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_54vm3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54vm3"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(0, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu3op"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(60, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4c0r8"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(120, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vy1aw"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(180, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qefm1"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(240, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dw8co"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(300, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7ilx"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(360, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnfpq"]
+atlas = ExtResource("1_0qwkm")
+region = Rect2(420, 0, 60, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54vm3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xu3op")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4c0r8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vy1aw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qefm1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dw8co")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7ilx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qnfpq")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vivr"]
+size = Vector2(57, 118)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0qwkm"]
+radius = 22.70968
+
+[node name="npc_petani" type="CharacterBody2D" unique_id=1985323136]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1203656005]
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.10354804
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1056710931]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_1vivr")
+disabled = true
+
+[node name="chat_detection" type="Area2D" parent="." unique_id=617589287]
+position = Vector2(-1.0000019, -9.999998)
+scale = Vector2(1.9375, 1.9375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=579199085]
+position = Vector2(2.0645173, -9.3829243e-07)
+shape = SubResource("CircleShape2D_0qwkm")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1954439311]
+texture_filter = 1
+position = Vector2(1, -92)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("2_54vm3")
+
+[node name="DialoguePivot" type="Marker2D" parent="." unique_id=1692754577]
+position = Vector2(0, -95)

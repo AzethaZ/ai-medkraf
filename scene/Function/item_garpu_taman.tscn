@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://diy6spcuacvv3"]
+
+[ext_resource type="Script" uid="uid://03r2yrlgoxnl" path="res://script/item_garpu_taman.gd" id="1_gyvxy"]
+[ext_resource type="Texture2D" uid="uid://djwhp6t87m7kr" path="res://assets/map button.png" id="1_ltilx"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="1_sxxj8"]
+[ext_resource type="AudioStream" uid="uid://ofui1yuslcsv" path="res://assets/audio/wood pick up.mp3" id="4_0ri02"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ltilx"]
+radius = 44.011364
+
+[node name="ItemGarpuTaman" type="Area2D" unique_id=161118475]
+script = ExtResource("1_gyvxy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2088383980]
+position = Vector2(2.3841858e-07, 0)
+scale = Vector2(1.0833334, 1.0833334)
+texture = ExtResource("1_ltilx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1846268]
+shape = SubResource("CircleShape2D_ltilx")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1481626874]
+texture_filter = 1
+position = Vector2(0, -108.00001)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("1_sxxj8")
+
+[node name="PickupSFX" type="AudioStreamPlayer" parent="." unique_id=151930778]
+stream = ExtResource("4_0ri02")

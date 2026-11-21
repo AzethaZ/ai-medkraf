@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://duafusvbaej7"]
+
+[ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="1_qh4bh"]
+[ext_resource type="Script" uid="uid://c27uniw50q43m" path="res://script/clue_pohon_besar.gd" id="1_urle0"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_urle0"]
+[ext_resource type="Texture2D" uid="uid://cym8xo0bv4nn1" path="res://assets/item/kertas_-_Copy.png" id="4_r603r"]
+[ext_resource type="AudioStream" uid="uid://bgxd06hsgqneh" path="res://assets/audio/paper.mp3" id="5_mgtoa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 58.00862
+
+[node name="CluePohonBesar" type="Area2D" unique_id=868807031]
+script = ExtResource("1_urle0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=494182872]
+position = Vector2(-1.9073486e-06, -2.9999998)
+scale = Vector2(1.2083334, 1.2083334)
+texture = ExtResource("1_qh4bh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1161472022]
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=112891916]
+texture_filter = 1
+position = Vector2(0, -108.00001)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("2_urle0")
+
+[node name="IllustrationUI" type="CanvasLayer" parent="." unique_id=1935036181]
+
+[node name="DimBackground" type="ColorRect" parent="IllustrationUI" unique_id=1762138391]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.4392157)
+
+[node name="PaperRect" type="TextureRect" parent="IllustrationUI" unique_id=160817669]
+offset_left = 139.0
+offset_top = 41.0
+offset_right = 1903.0095
+offset_bottom = 1130.9999
+scale = Vector2(0.2, 0.2)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_r603r")
+
+[node name="PaperSFX" type="AudioStreamPlayer" parent="IllustrationUI" unique_id=1965417117]
+stream = ExtResource("5_mgtoa")

@@ -24,6 +24,29 @@ var default_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
+	# ... kode _ready() world_3 milikmu yang sudah ada ...
+
+	# Cek apakah quest ayam sudah selesai / ayam sudah dikalahkan
+	var is_quest_done: bool = false
+	if QuestManager and QuestManager.has_method("is_quest_completed"):
+		is_quest_done = QuestManager.is_quest_completed("quest_ayam_3")
+	elif GameState:
+		is_quest_done = GameState.get_meta("rooster_defeated", false)
+
+	var rooster_node := get_node_or_null("Rooster") as Node2D
+	if rooster_node:
+		if not is_quest_done:
+			# Jika quest belum selesai, ayam belum boleh ada di world_3
+			rooster_node.queue_free()
+		else:
+			# Jika quest sudah selesai, pastikan ayam tampil & memutar animasi idle/default
+			rooster_node.visible = true
+			var rooster_sprite := rooster_node.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+			if rooster_sprite:
+				if rooster_sprite.sprite_frames.has_animation("idle"):
+					rooster_sprite.play("idle")
+				elif rooster_sprite.sprite_frames.has_animation("default"):
+					rooster_sprite.play("default")
 	# 0. MEMUTAR AUDIO DUNIA
 	var ambience_file = preload("res://assets/audio/chinese_ambience.mp3")
 	var bgm_file = preload("res://assets/audio/chinese_music2.mp3")

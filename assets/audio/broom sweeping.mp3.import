@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://xj3a0ephumh"
+path="res://.godot/imported/broom sweeping.mp3-0f383875406f072238b15cca733fd414.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/broom sweeping.mp3"
+dest_files=["res://.godot/imported/broom sweeping.mp3-0f383875406f072238b15cca733fd414.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

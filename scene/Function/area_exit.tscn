@@ -7,6 +7,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
 radius = 46.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_8vrlf"]
+radius = 76.02631
+
 [node name="AreaExit" type="Area2D" unique_id=678330850]
 script = ExtResource("1_y1ob6")
 
@@ -27,5 +30,10 @@ visible = false
 texture_filter = 1
 position = Vector2(0, -71)
 texture = ExtResource("3_gd4ft")
+
+[node name="IconTriggerArea" type="Area2D" parent="." unique_id=487007403]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IconTriggerArea" unique_id=240154329]
+shape = SubResource("CircleShape2D_8vrlf")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

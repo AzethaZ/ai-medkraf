@@ -6,7 +6,12 @@ const WALK_SPEED = 130.0
 const RUN_SPEED = 250.0 # Kecepatan saat lari
 const LIMP_SPEED = 80.0  # Kecepatan saat jalan pincang/terluka
 var JUMP_VELOCITY: float = -320.0
+var is_fighting: bool = false
 
+@onready var shadow: Sprite2D = $Shadow if has_node("Shadow") else null
+var shadow_offset_y: float = 0.0
+var last_ground_y: float = 0.0
+var base_shadow_scale: Vector2 = Vector2.ONE
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 # Referensi Node DialogueUI
@@ -48,11 +53,33 @@ var footstep_timer: float = 0.0
 var is_in_battle: bool = false
 
 func _ready() -> void:
+	if shadow:
+		shadow_offset_y = shadow.position.y
+		last_ground_y = global_position.y
+		base_shadow_scale = shadow.scale
 	# Beri sedikit jeda (0.05 detik) agar posisi Player sudah fix dipindahkan oleh script pemicu scene
 	get_tree().create_timer(0.05).timeout.connect(restore_followers_on_scene_load)
 
 
 func _physics_process(delta: float) -> void:
+	if shadow:
+		if is_on_floor():
+			last_ground_y = global_position.y
+			shadow.position.y = shadow_offset_y
+			shadow.scale = base_shadow_scale
+		else:
+			shadow.global_position.y = last_ground_y + shadow_offset_y
+			var height_diff: float = max(0.0, last_ground_y - global_position.y)
+			var scale_factor: float = clampf(1.0 - (height_diff / 250.0), 0.5, 1.0)
+			shadow.scale = base_shadow_scale * scale_factor
+	# Jika sedang dalam mode battle/cutscene, abaikan gerakan normal player
+	if is_in_battle:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		if $AnimatedSprite2D and $AnimatedSprite2D.sprite_frames and $AnimatedSprite2D.sprite_frames.has_animation("fighting"):
+			if $AnimatedSprite2D.animation != "fighting":
+				$AnimatedSprite2D.play("fighting")
+		return
 	# Jika sedang dalam mode battle/cutscene, abaikan gerakan normal player
 	if is_in_battle:
 		velocity = Vector2.ZERO

@@ -10,10 +10,25 @@ extends Control
 @onready var player_hearts: Node = $PlayerHearts if has_node("PlayerHearts") else null
 @onready var rooster_hearts: Node = $RoosterHearts if has_node("RoosterHearts") else null
 
+@export_group("Intro Countdown SFX")
+@export var ready_sfx: AudioStream
+@export var set_sfx: AudioStream
+@export var fight_sfx: AudioStream
+@export var countdown_sfx_volume_db: float = 0.0
+@export_group("Battle Result SFX")
+@export var win_sfx: AudioStream
+@export var win_sfx_volume: float = 0.0
+
+var win_audio_player: AudioStreamPlayer
+var is_battle_ended: bool = false
+
 var player_current_health: int = 3
 var rooster_current_health: int = 4
 
 func _ready() -> void:
+	win_audio_player = AudioStreamPlayer.new()
+	win_audio_player.volume_db = win_sfx_volume
+	add_child(win_audio_player)
 	if qte_minigame:
 		qte_minigame.visible = false
 		qte_minigame.connect("minigame_completed", _on_minigame_completed)
@@ -69,7 +84,6 @@ func _ready() -> void:
 		qte_minigame.start_minigame(character_body)
 
 
-# --- ANIMASI INTRO TEXT & LAYAR MEREDUP ---
 func play_intro_sequence() -> void:
 	if not intro_label:
 		return
@@ -84,10 +98,19 @@ func play_intro_sequence() -> void:
 		dim_tween.tween_property(dim_overlay, "modulate:a", 0.5, 0.5)
 
 	intro_label.visible = true
-	var steps = ["READY", "SET", "FIGHT!"]
+	var steps = ["READY", "SET", "TANGKAP!"]
 
 	for text in steps:
 		intro_label.text = text
+
+		match text:
+			"READY":
+				_play_countdown_sfx(ready_sfx)
+			"SET":
+				_play_countdown_sfx(set_sfx)
+			"TANGKAP!":
+				_play_countdown_sfx(fight_sfx)
+
 		intro_label.modulate.a = 0.0
 		intro_label.scale = Vector2(0.2, 0.2)
 
@@ -98,10 +121,10 @@ func play_intro_sequence() -> void:
 		tween.tween_property(intro_label, "scale", Vector2(1.2, 1.2), 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		tween.tween_property(intro_label, "modulate:a", 1.0, 0.4)
 		await tween.finished
-		
+
 		await get_tree().create_timer(0.4).timeout
 
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.3).timeout
 
 	var fade_tween = create_tween()
 	fade_tween.tween_property(intro_label, "modulate:a", 0.0, 0.3)
@@ -137,9 +160,11 @@ func _on_rooster_damaged() -> void:
 # --- KETIKA MINIGAME SELESAI ---
 func _on_minigame_completed(success: bool) -> void:
 	if success:
+		await play_win_sequence()
 		print("QTE Berhasil! Ayam Jago berhasil dikalahkan.")
-		if QuestManager:
-			QuestManager.complete_quest("quest_ayam_3")
+		if GameState:
+			GameState.set_meta("rooster_defeated", true)
+			GameState.set_meta("rooster_defeated_pending_popup", true)
 
 		if character_body and "is_in_battle" in character_body:
 			character_body.is_in_battle = false
@@ -148,7 +173,6 @@ func _on_minigame_completed(success: bool) -> void:
 			await SceneTransition.fade_out()
 
 		get_tree().change_scene_to_file("res://scene/World/world_1.tscn")
-		
 	else:
 		print("QTE Gagal! Kembali ke World 1.")
 
@@ -181,3 +205,92 @@ func _on_minigame_completed(success: bool) -> void:
 			await SceneTransition.fade_out()
 
 		get_tree().change_scene_to_file("res://scene/World/world_1.tscn")
+
+func _play_countdown_sfx(stream: AudioStream) -> void:
+	if not stream:
+		return
+	var sfx := AudioStreamPlayer.new()
+	sfx.stream = stream
+	sfx.volume_db = countdown_sfx_volume_db
+	add_child(sfx)
+	sfx.play()
+	sfx.finished.connect(sfx.queue_free)
+
+func play_win_sequence() -> void:
+	if is_battle_ended:
+		return
+	is_battle_ended = true
+
+	var rooster_node := get_node_or_null("Rooster") as Node2D
+	var rooster_sprite := $Rooster.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+
+	# 1. Efek kelap-kelip putih solid + getar bertubi-tubi
+	if rooster_node and rooster_sprite:
+		var flash_shader := Shader.new()
+		flash_shader.code = """
+		shader_type canvas_item;
+		uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
+		void fragment() {
+			vec4 tex_color = texture(TEXTURE, UV);
+			COLOR = vec4(mix(tex_color.rgb, vec3(1.0), flash_amount), tex_color.a);
+		}
+		"""
+		var flash_mat := ShaderMaterial.new()
+		flash_mat.shader = flash_shader
+		rooster_sprite.material = flash_mat
+
+		var orig_pos := rooster_node.position
+		var flash_tween := create_tween()
+
+		for i in range(6):
+			var shake_x := 8.0 if i % 2 == 0 else -8.0
+			var shake_y := -3.0 if i % 2 == 0 else 3.0
+
+			flash_tween.tween_method(func(val: float): flash_mat.set_shader_parameter("flash_amount", val), 0.0, 1.0, 0.04)
+			flash_tween.parallel().tween_property(rooster_node, "position", orig_pos + Vector2(shake_x, shake_y), 0.04)
+
+			flash_tween.tween_method(func(val: float): flash_mat.set_shader_parameter("flash_amount", val), 1.0, 0.0, 0.04)
+			flash_tween.parallel().tween_property(rooster_node, "position", orig_pos, 0.04)
+
+		await flash_tween.finished
+		rooster_node.position = orig_pos
+		rooster_sprite.material = null
+
+	# 2. Ubah ayam ke animasi death & putar SFX menang
+	if rooster_sprite and rooster_sprite.sprite_frames.has_animation("death"):
+		rooster_sprite.sprite_frames.set_animation_loop("death", false)
+		rooster_sprite.play("death")
+
+	if win_sfx and win_audio_player:
+		win_audio_player.stream = win_sfx
+		win_audio_player.volume_db = win_sfx_volume
+		win_audio_player.play()
+
+	if intro_label:
+		if dim_overlay:
+			var dim_tween := create_tween()
+			dim_tween.tween_property(dim_overlay, "modulate:a", 0.5, 0.3)
+
+		intro_label.text = "YOU WIN!"
+		intro_label.visible = true
+		intro_label.modulate.a = 0.0
+		intro_label.scale = Vector2(0.2, 0.2)
+
+		var win_tween := create_tween()
+		win_tween.set_parallel(true)
+		win_tween.tween_property(intro_label, "modulate:a", 1.0, 0.3)
+		win_tween.tween_property(intro_label, "scale", Vector2(1.0, 1.0), 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		await win_tween.finished
+
+	await get_tree().create_timer(1.5).timeout
+
+	# 3. Simpan status kemenangan agar world_1 menjalankan cutscene dialog & fade hilang
+	if GameState:
+		GameState.set_meta("rooster_defeated", true)
+		GameState.set_meta("rooster_defeated_pending_popup", true)
+
+	# 4. Fade keluar & kembali ke world_1
+	if SceneTransition and SceneTransition.has_method("fade_out"):
+		await SceneTransition.fade_out()
+
+	get_tree().change_scene_to_file("res://scene/World/world_1.tscn")

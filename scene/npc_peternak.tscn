@@ -1,81 +1,55 @@
 [gd_scene format=3 uid="uid://drdktrlhbigqb"]
 
 [ext_resource type="Script" uid="uid://c0gvyam7bu8cp" path="res://script/npc_peternak.gd" id="1_udvkr"]
-[ext_resource type="Texture2D" uid="uid://cb4frmo4b1h0o" path="res://assets/idle_template_cewek-Sheet.png" id="2_tvcat"]
+[ext_resource type="Texture2D" uid="uid://da02ks1yrpan2" path="res://assets/cutscene/scene_cina_tes.png" id="2_4nwei"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_udvkr"]
+[ext_resource type="Texture2D" uid="uid://dfc563iy5elkn" path="res://assets/animation/ayam/cina_peternak.png" id="3_4nwei"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="3_173el"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="5_173el"]
 [ext_resource type="Texture2D" uid="uid://407j8gewuenu" path="res://assets/hantubaik-Sheet.png" id="6_tvcat"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="8_kkr4e"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ob3r"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(0, 0, 60, 120)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkr4e"]
+atlas = ExtResource("3_4nwei")
+region = Rect2(0, 0, 105, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2cpvo"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(60, 0, 60, 120)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jo67"]
+atlas = ExtResource("3_4nwei")
+region = Rect2(105, 0, 105, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w6ohr"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(120, 0, 60, 120)
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6j74"]
+atlas = ExtResource("3_4nwei")
+region = Rect2(210, 0, 105, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1c027"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(180, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_imqsb"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(240, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aa7li"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(300, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3cno7"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(360, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sails"]
-atlas = ExtResource("2_tvcat")
-region = Rect2(420, 0, 60, 120)
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tmx1"]
+atlas = ExtResource("3_4nwei")
+region = Rect2(315, 0, 105, 127)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ob3r")
+"texture": SubResource("AtlasTexture_kkr4e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2cpvo")
+"texture": SubResource("AtlasTexture_5jo67")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w6ohr")
+"texture": SubResource("AtlasTexture_t6j74")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1c027")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_imqsb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aa7li")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3cno7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sails")
+"texture": SubResource("AtlasTexture_7tmx1")
 }],
 "loop": 1,
 "name": &"default",
-"speed": 6.0
+"speed": 4.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uegy2"]
 size = Vector2(43, 124)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jirua"]
-radius = 22.70968
+radius = 37.161293
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_quhwl"]
 texture = ExtResource("2_udvkr")
@@ -148,17 +122,22 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vivr"]
+size = Vector2(199, 24)
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1198646282]
 script = ExtResource("1_udvkr")
+farm_cutscene_texture = ExtResource("2_4nwei")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=593655250]
+modulate = Color(0.88603395, 0.8366098, 0.94602853, 1)
+z_index = 5
 texture_filter = 1
 position = Vector2(3, -21.65625)
 scale = Vector2(1.2723957, 1.2723957)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.7544182
-flip_h = true
+frame_progress = 0.6524324
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=480670820]
 position = Vector2(2.5, -7)
@@ -211,7 +190,7 @@ autowrap_mode = 3
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=295217037]
 texture_filter = 1
-position = Vector2(1, -92)
+position = Vector2(1, -102)
 scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("5_173el")
 
@@ -224,7 +203,26 @@ autoplay = "default"
 frame_progress = 0.9032131
 
 [node name="DialoguePivot" type="Marker2D" parent="." unique_id=1190174383]
-position = Vector2(0, -95)
+position = Vector2(0, -78)
+
+[node name="CutscenePivotPeternak" type="Marker2D" parent="." unique_id=2046640032]
+position = Vector2(-16, -112)
+
+[node name="CutscenePivotDanum" type="Marker2D" parent="." unique_id=73801089]
+position = Vector2(-121, 2)
+
+[node name="CutsceneTrigger" type="Area2D" parent="." unique_id=1937331720]
+position = Vector2(-293, 0)
+
+[node name="CutscenePlayerSpot" type="CollisionShape2D" parent="CutsceneTrigger" unique_id=1666143311]
+position = Vector2(-21.5, 63)
+shape = SubResource("RectangleShape2D_1vivr")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=2063585832]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(-4, 56.999996)
+scale = Vector2(2.6535156, 2.5372856)
+texture = ExtResource("8_kkr4e")
 
 [connection signal="body_entered" from="chat_detection" to="." method="_on_chat_detection_body_entered"]
 [connection signal="body_exited" from="chat_detection" to="." method="_on_chat_detection_body_exited"]

@@ -60,9 +60,7 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v5gy4"]
 shader = ExtResource("2_mfowg")
 shader_parameter/progress = 0.0
-shader_parameter/horizontal_blocks = 24.0
-shader_parameter/wave_frequency = 4.0
-shader_parameter/wave_amplitude = 0.15
+shader_parameter/curve_intensity = 0.15
 shader_parameter/transition_color = Color(0, 0, 0, 1)
 
 [node name="SceneTransition" type="CanvasLayer" unique_id=1168009837]

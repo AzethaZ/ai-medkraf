@@ -37,6 +37,8 @@ extends Node2D
 @onready var game_over_panel: Control = $ChaseUI/GameOverPanel if has_node("ChaseUI/GameOverPanel") else null
 @onready var retry_button: Button = find_child("RetryButton", true, false) as Button
 
+
+@onready var speed_lines: CPUParticles2D = find_child("CPUParticles2D", true, false) as CPUParticles2D
 @onready var burung_pengikut: Sprite2D = find_child("BurungPengikut", true, false) as Sprite2D
 @onready var bird_sfx_player: AudioStreamPlayer = find_child("BirdSFXPlayer", true, false) as AudioStreamPlayer
 var has_bird_flown: bool = false
@@ -50,6 +52,16 @@ var current_miss_count: int = 0
 var is_chasing: bool = false
 var is_scene_initialized: bool = false
 
+@onready var jump_tutorial_ui: CanvasLayer = get_node_or_null("JumpTutorialUI")
+@onready var dark_overlay: ColorRect = get_node_or_null("JumpTutorialUI/DarkOverlay")
+@onready var tutorial_image: TextureRect = get_node_or_null("JumpTutorialUI/TutorialImage")
+@onready var tutorial_anim: AnimatedSprite2D = get_node_or_null("JumpTutorialUI/AnimatedSprite2D")
+@export var tutorial_delay: float = 7.0
+
+var first_obstacle: Node2D = null
+var jump_tutorial_shown: bool = false
+var is_jump_tutorial_paused: bool = false
+
 var player_start_x: float = 0.0
 var player_ground_y: float = 0.0 # Posisi Y lantai disembunyikan agar obstacle tidak melayang
 var npc_start_x: float = 0.0
@@ -57,6 +69,9 @@ var obstacle_timer: Timer
 var spawned_obstacles_count: int = 0 # Tambahkan variabel ini di atas (dekat total_obstacles)
 
 func _ready() -> void:
+	if speed_lines:
+		speed_lines.visible = false
+		speed_lines.emitting = false
 	# Geser DialoguePivot NPC_Chaser agar memakai koordinat HutanBakarPivot
 	if npc_chaser and npc_chaser.has_node("DialoguePivot") and npc_chaser.has_node("HutanBakarPivot"):
 		npc_chaser.get_node("DialoguePivot").position = npc_chaser.get_node("HutanBakarPivot").position
@@ -116,6 +131,13 @@ func _process(delta: float) -> void:
 			burung_pengikut.visible = false
 	if not is_scene_initialized or not is_chasing:
 		return
+	if get_tree().paused:
+		return
+
+# Putar gambar trenggiling di tutorial selama UI tutorial terlihat
+	if jump_tutorial_ui and jump_tutorial_ui.visible and tutorial_image:
+		tutorial_image.pivot_offset = tutorial_image.size / 2.0
+		tutorial_image.rotation -= 6.0 * delta # Gunakan '+=' jika ingin berputar searah jarum jam
 
 	# 1. Background Parallax OTOMATIS BERGERAK (Auto-Run)
 	if parallax_2d:
@@ -166,6 +188,9 @@ func start_pre_chase_dialogue() -> void:
 
 
 func start_chase_sequence() -> void:
+	if speed_lines:
+		speed_lines.visible = true
+		speed_lines.emitting = true
 	is_chasing = true
 	current_cleared = 0
 	spawned_obstacles_count = 0
@@ -181,7 +206,7 @@ func start_chase_sequence() -> void:
 	has_bird_flown = false
 	
 	# --- PEMICU BURUNG TERBANG SETELAH 12 DETIK ---
-	get_tree().create_timer(12.0).timeout.connect(func():
+	get_tree().create_timer(18.0).timeout.connect(func():
 		if is_chasing and not has_bird_flown:
 			has_bird_flown = true
 			_fly_follower_bird()
@@ -217,8 +242,12 @@ func start_chase_sequence() -> void:
 	if chase_bgm_player and chase_bgm_player.stream and not chase_bgm_player.playing:
 		chase_bgm_player.play()
 		
-	# 6. Jalankan spawner rintangan (Hanya dipanggil SEKALI di sini)
-	start_obstacle_spawner()
+	# 6. Biarkan aksi kejar-kejaran berjalan 1.2 detik dulu, baru fade-in tutorial
+	await get_tree().create_timer(1.2).timeout
+	if is_chasing:
+		await _play_fullrect_tutorial()
+	if is_chasing:
+		start_obstacle_spawner()
 
 
 func start_obstacle_spawner() -> void:
@@ -252,7 +281,11 @@ func spawn_obstacle(spawn_x: float) -> void:
 	var obstacle = obstacle_scene.instantiate() as Node2D
 	add_child(obstacle)
 
-	# Selalu gunakan player_ground_y agar trenggiling menempel di tanah (tidak ikut posisi Y saat melompat)
+	# Simpan obstacle pertama setelah add_child(obstacle)
+	if spawned_obstacles_count == 1 and not jump_tutorial_shown:
+		first_obstacle = obstacle
+
+	# Letakkan posisi X di luar layar kanan dan Y tepat di lantai tanah
 	obstacle.global_position = Vector2(spawn_x, player_ground_y)
 
 	if "move_speed" in obstacle:
@@ -477,3 +510,57 @@ func _show_chaser_cutscene_dialog(text_line: String, duration: float = 1.0) -> v
 	
 	dialog_root.visible = false
 	dialog_root.scale = Vector2.ONE
+
+func _play_fullrect_tutorial() -> void:
+	if not jump_tutorial_ui:
+		await get_tree().create_timer(tutorial_delay).timeout
+		return
+
+	jump_tutorial_ui.visible = true
+
+	var fade_duration: float = 0.6
+	var hold_duration: float = max(0.0, tutorial_delay - (fade_duration * 2.0))
+	if tutorial_image:
+		tutorial_image.visible = true
+		tutorial_image.modulate.a = 0.0
+		tutorial_image.pivot_offset = tutorial_image.size / 2.0
+		tutorial_image.rotation = 0.0
+
+	if dark_overlay:
+		dark_overlay.visible = true
+		dark_overlay.modulate.a = 0.0
+	if tutorial_image:
+		tutorial_image.visible = true
+		tutorial_image.modulate.a = 0.0
+	if tutorial_anim:
+		tutorial_anim.visible = true
+		tutorial_anim.modulate.a = 0.0
+		tutorial_anim.play()
+
+	# Fade In overlay gelap + 2 gambar tutorial bersamaan
+	var fade_in := create_tween().set_parallel(true)
+	if dark_overlay:
+		fade_in.tween_property(dark_overlay, "modulate:a", 1.0, fade_duration)
+	if tutorial_image:
+		fade_in.tween_property(tutorial_image, "modulate:a", 1.0, fade_duration)
+	if tutorial_anim:
+		fade_in.tween_property(tutorial_anim, "modulate:a", 1.0, fade_duration)
+	await fade_in.finished
+
+	# Tahan di layar selama tutorial berlangsung
+	await get_tree().create_timer(hold_duration).timeout
+
+	# Fade Out semuanya sebelum obstacle pertama muncul
+	var fade_out := create_tween().set_parallel(true)
+	if dark_overlay:
+		fade_out.tween_property(dark_overlay, "modulate:a", 0.0, fade_duration)
+	if tutorial_image:
+		fade_out.tween_property(tutorial_image, "modulate:a", 0.0, fade_duration)
+	if tutorial_anim:
+		fade_out.tween_property(tutorial_anim, "modulate:a", 0.0, fade_duration)
+	await fade_out.finished
+
+	if tutorial_anim:
+		tutorial_anim.stop()
+		tutorial_anim.visible = false
+	jump_tutorial_ui.visible = false

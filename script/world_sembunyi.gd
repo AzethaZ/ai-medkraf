@@ -6,6 +6,8 @@ extends Node2D
 @onready var npc_chaser: Node2D = $NPC_Chaser
 
 @onready var chaser_step_player: AudioStreamPlayer = find_child("ChaserStepPlayer", true, false) as AudioStreamPlayer
+@onready var tree_rustle_player: AudioStreamPlayer = find_child("TreeRustlePlayer", true, false) as AudioStreamPlayer
+@onready var snore_sfx_player: AudioStreamPlayer = find_child("SnoreSFXPlayer", true, false) as AudioStreamPlayer
 
 var is_interacting: bool = false
 
@@ -117,6 +119,17 @@ func _on_tree_interacted() -> void:
 
 # --- FUNGSI CUTSCENE CHASER MELINTAS ---
 func _play_chaser_passing_sequence() -> void:
+	# 1. Buat player memudar perlahan masuk ke dalam batang pohon (seperti kode aslimu)
+	if player:
+		var fade_out_tween := create_tween()
+		fade_out_tween.tween_property(player, "modulate:a", 0.0, 0.5)
+		await fade_out_tween.finished
+		player.visible = false
+
+	# 2. Setelah MC memudar, batang pohon bergoyang sedikit + bunyi SFX
+	await _shake_batang_pohon()
+
+	# 3. Baru NPC_Chaser muncul berlari dari kiri ke kanan layar...
 	# A. Danum memudar (fade out) bersembunyi di balik pohon
 	if player:
 		var fade_out_tween = create_tween()
@@ -181,5 +194,79 @@ func _play_chaser_passing_sequence() -> void:
 				DialogueManager.end_dialogue()
 				
 		npc_chaser.visible = false
-		
+		# Setelah NPC_Chaser lewat, munculkan efek "Z z z" + SFX tidur dari batang pohon
+	await _play_sleeping_zzz_effect()
 	await get_tree().create_timer(0.4).timeout
+
+func _shake_batang_pohon() -> void:
+	if not batang_pohon:
+		return
+
+	if tree_rustle_player and tree_rustle_player.stream:
+		tree_rustle_player.play()
+
+	var orig_pos: Vector2 = batang_pohon.position
+	var orig_rot: float = batang_pohon.rotation
+
+	var shake_tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	# Ayunan perlahan kiri-kanan (durasi 0.16 - 0.18 detik per ayunan)
+	shake_tween.tween_property(batang_pohon, "position", orig_pos + Vector2(-2.5, 0.0), 0.16)
+	shake_tween.parallel().tween_property(batang_pohon, "rotation", orig_rot - 0.025, 0.16)
+
+	shake_tween.tween_property(batang_pohon, "position", orig_pos + Vector2(2.5, 0.0), 0.18)
+	shake_tween.parallel().tween_property(batang_pohon, "rotation", orig_rot + 0.025, 0.18)
+
+	shake_tween.tween_property(batang_pohon, "position", orig_pos + Vector2(-1.5, 0.0), 0.16)
+	shake_tween.parallel().tween_property(batang_pohon, "rotation", orig_rot - 0.015, 0.16)
+
+	# Kembali diam ke posisi semula secara perlahan
+	shake_tween.tween_property(batang_pohon, "position", orig_pos, 0.18)
+	shake_tween.parallel().tween_property(batang_pohon, "rotation", orig_rot, 0.18)
+
+	await shake_tween.finished
+	await get_tree().create_timer(0.25).timeout
+
+func _play_sleeping_zzz_effect() -> void:
+	if not batang_pohon:
+		return
+
+	if snore_sfx_player and snore_sfx_player.stream:
+		snore_sfx_player.play()
+
+	var z_letters: Array[String] = ["z", "z", "Z"]
+
+	# Ulangi munculnya rangkaian "z z Z" sebanyak 2 kali
+	for cycle in range(2):
+		for i in range(z_letters.size()):
+			var z_label := Label.new()
+			z_label.text = z_letters[i]
+			z_label.z_index = 20
+			z_label.modulate = Color(1.0, 1.0, 1.0, 0.0)
+			z_label.add_theme_font_size_override("font_size", 10 + (i * 3))
+			z_label.add_theme_color_override("font_outline_color", Color(0.1, 0.1, 0.1, 1.0))
+			z_label.add_theme_constant_override("outline_size", 3)
+			add_child(z_label)
+
+			var start_pos: Vector2 = batang_pohon.global_position + Vector2(-4.0 + (i * 4.0), -40.0)
+			z_label.global_position = start_pos
+
+			var z_tween := create_tween().set_parallel(true)
+			z_tween.tween_property(z_label, "global_position", start_pos + Vector2(14.0, -26.0), 1.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			z_tween.tween_property(z_label, "modulate:a", 1.0, 0.3)
+			z_tween.tween_property(z_label, "modulate:a", 0.0, 0.6).set_delay(0.8)
+
+			get_tree().create_timer(1.45).timeout.connect(z_label.queue_free)
+
+			await get_tree().create_timer(0.55).timeout
+
+		# Jeda singkat antar siklus z z Z pertama dan kedua
+		if cycle == 0:
+			await get_tree().create_timer(0.4).timeout
+			if snore_sfx_player and snore_sfx_player.stream and not snore_sfx_player.playing:
+				snore_sfx_player.play()
+
+	await get_tree().create_timer(1.0).timeout
+
+	if snore_sfx_player and snore_sfx_player.playing:
+		snore_sfx_player.stop()

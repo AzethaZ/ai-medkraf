@@ -3,6 +3,7 @@ render_mode blend_add;
 
 uniform vec4 ray_color : source_color = vec4(1.0, 0.95, 0.7, 0.25);
 uniform float position : hint_range(-1.0, 1.0) = 0.0;
+uniform float spread : hint_range(0.0, 2.0) = 0.5;
 uniform float falloff : hint_range(0.0, 2.0) = 1.2;
 uniform float speed : hint_range(0.0, 10.0) = 0.8;
 
@@ -18,10 +19,10 @@ void fragment() {
 	vec2 pixel_uv = floor(UV * pixel_size) / pixel_size;
 	float time = TIME * speed;
 	
-	// 2. Kalkulasi sinar lurus tegak menggunakan pixel_uv
+	// 2. Kalkulasi sinar lurus tegak & sebaran (spread) menggunakan pixel_uv
 	vec2 ray_uv = pixel_uv;
-	ray_uv.x += position;
-	
+	ray_uv.x = (ray_uv.x + position) / max(spread, 0.05);
+
 	// 3. Pola denyut berkas sinar vertikal pixelated
 	float rays = sin(ray_uv.x * 35.0 + time) * 0.5 + 0.5;
 	rays += sin(ray_uv.x * 60.0 - time * 0.7) * 0.25;

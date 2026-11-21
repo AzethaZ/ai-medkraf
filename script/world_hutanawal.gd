@@ -8,6 +8,12 @@ extends Node2D
 @onready var center_trigger: Area2D = find_child("CenterTrigger", true, false) as Area2D
 @onready var area_exit: Area2D = find_child("AreaExit", true, false) as Area2D
 
+@export var tutorial_delay: float = 8.0
+
+@onready var move_tutorial_ui: CanvasLayer = get_node_or_null("MoveTutorialUI")
+@onready var dark_overlay: ColorRect = get_node_or_null("MoveTutorialUI/DarkOverlay")
+@onready var tutorial_image: TextureRect = get_node_or_null("MoveTutorialUI/TutorialImage")
+@onready var tutorial_anim: AnimatedSprite2D = get_node_or_null("MoveTutorialUI/AnimatedSprite2D")
 # --- PENGATURAN ZOOM & OFFSET KAMERA SINEMATIK ---
 var intro_zoom: Vector2 = Vector2(1.5, 1.5)
 var normal_zoom: Vector2 = Vector2(1.0, 1.0)
@@ -83,6 +89,8 @@ func _ready() -> void:
 	# 7. MULAI JALAN OTOMATIS DARI LUAR LAYAR
 	if player:
 		player.start_auto_walk(1.0)
+		
+	
 
 
 func _physics_process(_delta: float) -> void:
@@ -126,6 +134,11 @@ func run_logo_sequence() -> void:
 	# F. Serahkan kontrol penuh ke pemain
 	if player:
 		player.stop_auto_walk()
+	
+			# Beri jeda 1.0 detik setelah intro selesai, lalu tampilkan tutorial
+	await get_tree().create_timer(1.0).timeout
+	await _play_move_tutorial()
+
 
 
 func fade_logo_image(appear: bool) -> void:
@@ -182,3 +195,51 @@ func _on_area_exit_body_entered(body: Node2D) -> void:
 			SceneTransition.change_scene(target_cutscene)
 		else:
 			get_tree().change_scene_to_file(target_cutscene)
+
+func _play_move_tutorial() -> void:
+	if not move_tutorial_ui:
+		return
+
+	move_tutorial_ui.visible = true
+
+	var fade_duration: float = 0.6
+	var hold_duration: float = max(0.0, tutorial_delay - (fade_duration * 1.0))
+
+	if dark_overlay:
+		dark_overlay.visible = true
+		dark_overlay.modulate.a = 0.0
+	if tutorial_image:
+		tutorial_image.visible = true
+		tutorial_image.modulate.a = 0.0
+	if tutorial_anim:
+		tutorial_anim.visible = true
+		tutorial_anim.modulate.a = 0.0
+		tutorial_anim.play()
+
+	# Fade In overlay gelap + gambar + animasi tombol bersamaan
+	var fade_in := create_tween().set_parallel(true)
+	if dark_overlay:
+		fade_in.tween_property(dark_overlay, "modulate:a", 1.0, fade_duration)
+	if tutorial_image:
+		fade_in.tween_property(tutorial_image, "modulate:a", 1.0, fade_duration)
+	if tutorial_anim:
+		fade_in.tween_property(tutorial_anim, "modulate:a", 1.0, fade_duration)
+	await fade_in.finished
+
+	# Tahan di layar selama sisa durasi tutorial
+	await get_tree().create_timer(hold_duration).timeout
+
+	# Fade Out semuanya
+	var fade_out := create_tween().set_parallel(true)
+	if dark_overlay:
+		fade_out.tween_property(dark_overlay, "modulate:a", 0.0, fade_duration)
+	if tutorial_image:
+		fade_out.tween_property(tutorial_image, "modulate:a", 0.0, fade_duration)
+	if tutorial_anim:
+		fade_out.tween_property(tutorial_anim, "modulate:a", 0.0, fade_duration)
+	await fade_out.finished
+
+	if tutorial_anim:
+		tutorial_anim.stop()
+		tutorial_anim.visible = false
+	move_tutorial_ui.visible = false

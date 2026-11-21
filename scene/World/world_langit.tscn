@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cykbblktyesgl" path="res://script/world_langit.gd" id="2_emiet"]
 [ext_resource type="Texture2D" uid="uid://outsp4kx4udh" path="res://assets/cutscene/A_ HUTAN API LANDSCAPE.png" id="2_lf8n0"]
 [ext_resource type="Texture2D" uid="uid://c4v2k14rp544e" path="res://assets/cutscene/A awan s.png" id="3_m0tdp"]
-[ext_resource type="Texture2D" uid="uid://wgu2iel2qnrb" path="res://assets/cutscene/A_ VIETNAM LANDSCAPE.png" id="3_solsx"]
+[ext_resource type="Texture2D" uid="uid://bl1oh76tpbkdj" path="res://assets/cutscene/A_ CINA LANDSCAPE.png" id="3_sx6ko"]
 [ext_resource type="Texture2D" uid="uid://br7ailn2qhj6q" path="res://assets/cutscene/A_ HUTAN API (BURUNG).png" id="3_xq4gc"]
-[ext_resource type="Texture2D" uid="uid://bv6uau4k4mxcc" path="res://assets/cutscene/A_ VIETNAM BURUNG.png" id="6_cngpq"]
+[ext_resource type="Texture2D" uid="uid://c8vd3sy1c7jta" path="res://assets/cutscene/A_ BURUNG CINA.png" id="6_sx6ko"]
 [ext_resource type="AudioStream" uid="uid://drjlegapecqch" path="res://assets/audio/wing_sound_2.mp3" id="7_cngpq"]
 [ext_resource type="AudioStream" uid="uid://dg2in2q7tqqi7" path="res://assets/audio/kebakaran_ambience.mp3" id="8_sx6ko"]
 
@@ -28,7 +28,7 @@ scroll_offset = Vector2(321, 185)
 [node name="Sprite2D" type="Sprite2D" parent="LandscapeParallax3" unique_id=66074656]
 position = Vector2(1.4, 1.4)
 scale = Vector2(1.35, 1.35)
-texture = ExtResource("3_solsx")
+texture = ExtResource("3_sx6ko")
 
 [node name="LandscapeParallax2" type="Parallax2D" parent="." unique_id=1616870926]
 scroll_offset = Vector2(321, 185)
@@ -45,7 +45,7 @@ texture = ExtResource("3_xq4gc")
 
 [node name="BurungSprite2" type="Sprite2D" parent="BurungSprite" unique_id=1805605267]
 scale = Vector2(1.0000001, 1.0000001)
-texture = ExtResource("6_cngpq")
+texture = ExtResource("6_sx6ko")
 
 [node name="PivotDanum" type="Marker2D" parent="BurungSprite" unique_id=1311234339]
 position = Vector2(103.39836, -50.13927)

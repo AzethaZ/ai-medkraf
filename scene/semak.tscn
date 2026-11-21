@@ -67,7 +67,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"default",
-"speed": 8.0
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
@@ -77,13 +77,13 @@ radius = 23.194826
 script = ExtResource("1_2n3m8")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1199017512]
-modulate = Color(0.4023078, 0.5451023, 0.7701825, 0.34117648)
+modulate = Color(8.161886, 10.692498, 14.763487, 0.12941177)
 texture_filter = 1
-position = Vector2(17, -119)
-scale = Vector2(0.89632386, 1.100817)
+position = Vector2(9.999998, -89)
+scale = Vector2(0.5720809, 0.7025991)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.93915653
+frame_progress = 0.25982106
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=209158851]
 position = Vector2(-2.000002, -12.000002)

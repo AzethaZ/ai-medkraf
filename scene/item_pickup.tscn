@@ -1,11 +1,47 @@
 [gd_scene format=3 uid="uid://bmmg1yjffdl04"]
 
 [ext_resource type="Script" uid="uid://bntg5a3ck02it" path="res://script/item_pickup.gd" id="1_75b4b"]
-[ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="1_yxdo8"]
+[ext_resource type="Texture2D" uid="uid://dcv6s3d82isod" path="res://assets/animation/ayam/anak_ayam_1.png" id="2_luwgx"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_luwgx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
-radius = 20.22375
+radius = 41.19466
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwkff"]
+atlas = ExtResource("2_luwgx")
+region = Rect2(0, 0, 33, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hukr"]
+atlas = ExtResource("2_luwgx")
+region = Rect2(33, 0, 33, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhfsj"]
+atlas = ExtResource("2_luwgx")
+region = Rect2(66, 0, 33, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhs4b"]
+atlas = ExtResource("2_luwgx")
+region = Rect2(99, 0, 33, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwkff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hukr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhfsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhs4b")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
 
 [node name="Area2D" type="Area2D" unique_id=574157516]
 script = ExtResource("1_75b4b")
@@ -13,10 +49,12 @@ script = ExtResource("1_75b4b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=840786093]
 shape = SubResource("CircleShape2D_1vivr")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1622085727]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1196597263]
 texture_filter = 1
 scale = Vector2(0.7083333, 0.7083333)
-texture = ExtResource("1_yxdo8")
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.10823052
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=2090128807]
 visible = false

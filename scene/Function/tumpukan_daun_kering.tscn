@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://dogyudexyj2jw"]
+
+[ext_resource type="Script" uid="uid://cwrt540txysbh" path="res://script/tumpukan_daun_kering.gd" id="1_3g000"]
+[ext_resource type="Texture2D" uid="uid://byys437osstoi" path="res://assets/daun.png" id="1_n0m30"]
+[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_3g000"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_nksiv"]
+[ext_resource type="Texture2D" uid="uid://cym8xo0bv4nn1" path="res://assets/item/kertas_-_Copy.png" id="5_nu7n0"]
+[ext_resource type="AudioStream" uid="uid://bgxd06hsgqneh" path="res://assets/audio/paper.mp3" id="6_iwesl"]
+[ext_resource type="AudioStream" uid="uid://xj3a0ephumh" path="res://assets/audio/broom sweeping.mp3" id="7_k7lgk"]
+[ext_resource type="AudioStream" uid="uid://bk6arplvejnwi" path="res://assets/audio/item found.mp3" id="8_nu7n0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 42.0
+
+[node name="TumpukanDaunKering" type="Area2D" unique_id=71378282]
+script = ExtResource("1_3g000")
+
+[node name="SpriteDaun" type="Sprite2D" parent="." unique_id=1820996529]
+texture = ExtResource("1_n0m30")
+
+[node name="SpriteCatatan" type="Sprite2D" parent="." unique_id=2007183357]
+texture = ExtResource("2_3g000")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=922512844]
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=259895123]
+texture_filter = 1
+position = Vector2(0, -108.00001)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("3_nksiv")
+
+[node name="IllustrationUI" type="CanvasLayer" parent="." unique_id=1683938877]
+
+[node name="DimBackground" type="ColorRect" parent="IllustrationUI" unique_id=1079254743]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.4392157)
+
+[node name="PaperRect" type="TextureRect" parent="IllustrationUI" unique_id=863147517]
+offset_left = 139.0
+offset_top = 41.0
+offset_right = 1903.0095
+offset_bottom = 1130.9999
+scale = Vector2(0.2, 0.2)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_nu7n0")
+
+[node name="PaperSFX" type="AudioStreamPlayer" parent="IllustrationUI" unique_id=832941708]
+stream = ExtResource("6_iwesl")
+
+[node name="SweepSFX" type="AudioStreamPlayer" parent="." unique_id=1812268330]
+stream = ExtResource("7_k7lgk")
+
+[node name="FoundSFX" type="AudioStreamPlayer" parent="." unique_id=1435340938]
+stream = ExtResource("8_nu7n0")
+volume_db = -6.0

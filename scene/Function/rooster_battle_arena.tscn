@@ -2,10 +2,37 @@
 
 [ext_resource type="PackedScene" uid="uid://cekrvnyqckkb5" path="res://scene/player.tscn" id="1_dk3ei"]
 [ext_resource type="Script" uid="uid://bbaf4m8v8837l" path="res://script/rooster_battle_arena.gd" id="1_je07m"]
+[ext_resource type="AudioStream" uid="uid://jtwpdf0y3vu1" path="res://assets/audio/ready.mp3" id="2_b1upf"]
 [ext_resource type="PackedScene" uid="uid://bkbxq7k6oh0kr" path="res://scene/rooster.tscn" id="2_je07m"]
-[ext_resource type="Texture2D" uid="uid://t5nse2bot3c1" path="res://assets/cina3.png" id="2_rji8h"]
+[ext_resource type="AudioStream" uid="uid://c8hfyl2bwpbr3" path="res://assets/audio/fight.mp3" id="3_eiqoq"]
 [ext_resource type="PackedScene" uid="uid://cn51qbckn06pm" path="res://scene/Function/rooster_qte_minigame.tscn" id="3_rji8h"]
+[ext_resource type="Texture2D" uid="uid://c3o7lydcmqnmu" path="res://assets/world bg/cina/cina_langit.png" id="4_rxnrv"]
+[ext_resource type="AudioStream" uid="uid://caa7jim0kswum" path="res://assets/audio/chicken/win1.mp3" id="4_y1utw"]
+[ext_resource type="Texture2D" uid="uid://daah5hjjubwud" path="res://assets/world bg/cina/cina_desa_mid_2.png" id="5_2w21o"]
 [ext_resource type="Texture2D" uid="uid://bpwqeto4mjdi3" path="res://assets/animation/Arrow5.png" id="6_aacky"]
+[ext_resource type="Texture2D" uid="uid://50qbuqucibp1" path="res://assets/world bg/cina/cina_desa_jalan.png" id="6_wr8jm"]
+[ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="6_y1utw"]
+[ext_resource type="Shader" uid="uid://bu4bstd8uufdv" path="res://shader/pixel_mist_fog.gdshader" id="7_fo7ls"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ividc"]
+shader = ExtResource("6_y1utw")
+shader_parameter/ray_color = Color(1, 0.95, 0.7, 0.25)
+shader_parameter/position = -0.5069999765825
+shader_parameter/spread = 1.074000051015
+shader_parameter/falloff = 1.1590000550525
+shader_parameter/speed = 4.7830002271925
+shader_parameter/pixel_size = 268.138011216555
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k65ru"]
+shader = ExtResource("7_fo7ls")
+shader_parameter/fog_color = Color(0.85, 0.92, 1, 0.46666667)
+shader_parameter/density = 1.5430000732925
+shader_parameter/wind_speed = Vector2(1, 1)
+shader_parameter/fade_speed = 1.8250000866875
+shader_parameter/fog_scale = 1.050000002375
+shader_parameter/top_fade = 1.0
+shader_parameter/bottom_fade = 0.19200000912
+shader_parameter/pixel_size = 512.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fj7yv"]
 load_path = "res://.godot/imported/tiles_rumput_hitam__border_.png-d3ae16f765de851907f982072745d353.ctex"
@@ -61,21 +88,92 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_je07m")
+ready_sfx = ExtResource("2_b1upf")
+set_sfx = ExtResource("2_b1upf")
+fight_sfx = ExtResource("3_eiqoq")
+countdown_sfx_volume_db = -8.0
+win_sfx = ExtResource("4_y1utw")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=1162287755]
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1224718569]
-position = Vector2(78, -134)
-texture = ExtResource("2_rji8h")
+position = Vector2(212, -70)
+
+[node name="ParallaxBG_Far" type="Parallax2D" parent="." unique_id=1692858437]
+scroll_scale = Vector2(0.2, 1)
+scroll_offset = Vector2(-1145, 93)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Far" unique_id=1809136433]
+position = Vector2(1005, -226)
+texture = ExtResource("4_rxnrv")
+
+[node name="ParallaxBG_Mid" type="Parallax2D" parent="." unique_id=595540119]
+scroll_scale = Vector2(0.88, 1)
+scroll_offset = Vector2(-1145, 93)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Mid" unique_id=1413392646]
+modulate = Color(0.9236192, 0.8232606, 0.9279445, 1)
+position = Vector2(688, -200)
+texture = ExtResource("5_2w21o")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1520464893]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -313.0
+offset_top = -269.0
+offset_right = 278.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1523872, 0.13566032, 0.31656587, 0.8509804)
+
+[node name="SunRayOverlay" type="ColorRect" parent="." unique_id=1493401559]
+material = SubResource("ShaderMaterial_ividc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 543.4143
+offset_top = 136.0
+offset_right = 2739.8286
+offset_bottom = 549.0847
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+
+[node name="MistFogOverlay" type="ColorRect" parent="." unique_id=1747037444]
+modulate = Color(1.7686467, 1.7686467, 1.7686467, 1)
+material = SubResource("ShaderMaterial_k65ru")
+layout_mode = 0
+offset_left = -150.5857
+offset_top = -196.0
+offset_right = 246.4143
+offset_bottom = 200.99997
+mouse_filter = 2
+
+[node name="ParallaxBG_Tanah" type="Parallax2D" parent="." unique_id=79312284]
+scroll_offset = Vector2(0, -25)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Tanah" unique_id=47288010]
+modulate = Color(0.7715853, 0.7775887, 0.89990765, 1)
+position = Vector2(482, -115)
+scale = Vector2(1, 1.15)
+texture = ExtResource("6_wr8jm")
+flip_h = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1487636687]
 position = Vector2(0, -26)
 zoom = Vector2(1.4, 1.4)
 
 [node name="CharacterBody2D" parent="." unique_id=1312877385 instance=ExtResource("1_dk3ei")]
-position = Vector2(67, 12)
+modulate = Color(0.86858386, 0.8287921, 0.93844485, 1)
+position = Vector2(72, 12)
 
 [node name="Rooster" parent="." unique_id=1988690237 instance=ExtResource("2_je07m")]
+modulate = Color(0.92208225, 0.8467342, 0.95797724, 1)
 position = Vector2(-110, 13)
 
 [node name="RoosterQTEMinigame" parent="." unique_id=2122403319 instance=ExtResource("3_rji8h")]
@@ -123,9 +221,9 @@ vertical_alignment = 1
 
 [node name="PlayerHearts" type="HBoxContainer" parent="." unique_id=1082246895]
 layout_mode = 0
-offset_left = 65.0
+offset_left = 72.0
 offset_top = 58.0
-offset_right = 79.0
+offset_right = 86.0
 offset_bottom = 72.0
 
 [node name="TextureRect" type="TextureRect" parent="PlayerHearts" unique_id=1633142014]

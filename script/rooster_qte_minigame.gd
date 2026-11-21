@@ -32,11 +32,41 @@ var can_proceed_next: bool = true
 @onready var background_bar: Control = $PanelContainer/VBoxContainer/BarWrapper/BackgroundBar if has_node("PanelContainer/VBoxContainer/BarWrapper/BackgroundBar") else null
 @onready var panel_container: PanelContainer = $PanelContainer if has_node("PanelContainer") else null
 
+@export_group("Battle SFX")
+@export var player_attack_sfx: AudioStream   # Drag file suara pukulan Danum ke sini di Inspector
+@export var rooster_attack_sfx: AudioStream  # Drag file suara serangan/kokokan Rooster ke sini di Inspector
+@export var attack_sfx_volume_db: float = 0.0
+
+@export_group("Battle BGM")
+@export var battle_bgm: AudioStream          # Drag file musik battle ke sini di Inspector
+@export var battle_bgm_volume_db: float = -4.0
+
+@export var key_correct_sfx: AudioStream     # Drag file SFX tombol benar (misal pop.mp3 / click) ke sini
+@export var game_over_sfx: AudioStream       # Drag file SFX game over ke sini di Inspector
+
+@export var spam_e_texture: Texture2D
+@onready var spam_e_sprite: AnimatedSprite2D = find_child("SpamESprite", true, false)
+
+@export_group("QTE SFX")
+@export var wrong_sfx: AudioStream
+@export var wrong_sfx_volume: float = 0.0
+
+var wrong_sfx_player: AudioStreamPlayer
+
+var _previous_bgm: AudioStream = null
+var _previous_bgm_volume: float = -5.0
+
 var default_bar_pos_x: float = 0.0
 var full_bar_width: float = 180.0
 
 
 func _ready() -> void:
+	wrong_sfx_player = AudioStreamPlayer.new()
+	wrong_sfx_player.volume_db = wrong_sfx_volume
+	add_child(wrong_sfx_player)
+	if spam_e_sprite:
+		spam_e_sprite.visible = false
+		spam_e_sprite.stop()
 	visible = false
 	is_active = false
 	load_textures()
@@ -57,19 +87,17 @@ func load_textures() -> void:
 
 func start_minigame(player_node: Node2D = null) -> void:
 	target_player = player_node
+	if not is_instance_valid(target_player):
+		target_player = get_tree().current_scene.find_child("Player", true, false)
+
 	score_count = 0
 	strike_count = 0
 	visible = true
 	is_active = true
 	can_proceed_next = true
-	
-	if red_bar: 
-		red_bar.scale.x = 1.0
-		red_bar.position.x = default_bar_pos_x
-	if background_bar: 
-		background_bar.scale.x = 1.0
-		background_bar.position.x = default_bar_pos_x
 
+	_set_player_fighting_stance(true)
+	_start_battle_bgm()
 	next_round()
 
 
@@ -125,25 +153,25 @@ func next_round() -> void:
 
 
 func generate_random_sequence() -> void:
+	if spam_e_sprite:
+		spam_e_sprite.visible = false
+		spam_e_sprite.stop()
 	current_sequence.clear()
 	for i in range(sequence_length):
 		current_sequence.append(possible_keys.pick_random())
 
 
 func generate_spam_display() -> void:
-	if not sequence_container:
-		return
+	if sequence_container:
+		for child in sequence_container.get_children():
+			child.queue_free()
 
-	for child in sequence_container.get_children():
-		child.queue_free()
-
-	var label = Label.new()
-	label.text = "SPAM E (BLOCK)!"
-	label.custom_minimum_size = Vector2(100, 28)
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.modulate = Color(1.0, 0.6, 0.2, 1.0)
-	sequence_container.add_child(label)
+	if spam_e_sprite:
+		spam_e_sprite.visible = true
+		if spam_e_sprite.sprite_frames:
+			var anim_names := spam_e_sprite.sprite_frames.get_animation_names()
+			if anim_names.size() > 0:
+				spam_e_sprite.play(anim_names[0])
 
 
 func update_sequence_display() -> void:
@@ -165,23 +193,23 @@ func update_sequence_display() -> void:
 			rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
 			if i < current_input_index:
-				rect.modulate = Color(0.2, 1.0, 0.2, 1.0)
+				rect.modulate = Color(1.0, 1.0, 1.0, 0.0) # Hilang (transparan) tapi tetap menjaga ruang slot
 			elif i == current_input_index:
-				rect.modulate = Color(1.0, 1.0, 1.0, 1.0)
+				rect.modulate = Color(1.0, 1.0, 1.0, 1.0) # Panah aktif sekarang
 			else:
-				rect.modulate = Color(0.4, 0.4, 0.4, 0.5)
+				rect.modulate = Color(0.4, 0.4, 0.4, 0.5) # Panah antrean berikutnya
 
 			sequence_container.add_child(rect)
 		else:
 			var label = Label.new()
-			var fallback_map = {"w": "W", "a": "A", "s": "S", "d": "D", "interact": "[E]"}
+			var fallback_map = {"W": "W", "A": "A", "S": "S", "D": "D", "interact": "[E]"}
 			label.text = fallback_map.get(key_code, "[?]")
 			label.custom_minimum_size = Vector2(28, 28)
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 			if i < current_input_index:
-				label.modulate = Color(0.2, 1.0, 0.2, 1.0)
+				label.modulate = Color(1.0, 1.0, 1.0, 0.0) # Hilang (transparan) tapi tetap menjaga ruang slot
 			elif i == current_input_index:
 				label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			else:
@@ -243,10 +271,14 @@ func handle_attack_fail() -> void:
 
 
 func play_error_flash_effect() -> void:
-	var target_node = panel_container if panel_container else self
-	var tween = create_tween()
-	tween.tween_property(target_node, "modulate", Color(2.0, 0.4, 0.4), 0.08)
-	tween.tween_property(target_node, "modulate", Color.WHITE, 0.12)
+	play_player_hit_effect(false)
+	if wrong_sfx:
+		var sfx_player := AudioStreamPlayer.new()
+		sfx_player.stream = wrong_sfx
+		sfx_player.volume_db = wrong_sfx_volume
+		add_child(sfx_player)
+		sfx_player.play()
+		sfx_player.finished.connect(sfx_player.queue_free)
 
 
 func _input(event: InputEvent) -> void:
@@ -259,7 +291,7 @@ func _input(event: InputEvent) -> void:
 		if is_spam_phase:
 			if keycode_val == KEY_E or event.is_action_pressed("interact"):
 				get_viewport().set_input_as_handled()
-				
+				_play_sfx(key_correct_sfx)
 				spam_progress += 10.0
 				if spam_progress > spam_target:
 					spam_progress = spam_target
@@ -296,7 +328,11 @@ func _input(event: InputEvent) -> void:
 		if pressed_key_name != "":
 			get_viewport().set_input_as_handled()
 
+			if pressed_key_name != "":
+				get_viewport().set_input_as_handled()
+
 			if pressed_key_name == target_key:
+				_play_sfx(key_correct_sfx)
 				current_input_index += 1
 				update_sequence_display()
 
@@ -308,40 +344,104 @@ func _input(event: InputEvent) -> void:
 
 
 func handle_block_success() -> void:
+	_set_player_combat_anim("block") # Tetap pose block selama ayam menyerang & knockback
+	await play_rooster_attack_anim()
+	play_player_hit_effect()
 	play_block_knockback()
 	score_count += 1
 
 	var transition_timer = get_tree().create_timer(1.0)
 	transition_timer.timeout.connect(func():
+		_reset_player_to_fighting() # Baru balik ke fighting setelah tween & jeda selesai
 		next_round()
 	)
 
-
 func handle_attack_success() -> void:
+	_set_player_combat_anim("attack") # Tetap pose attack selama chicken hit effect berlangsung
+	_play_sfx(player_attack_sfx)
 	play_chicken_hit_effect()
 	score_count += 1
 	rooster_damaged.emit()
 
 	var transition_timer = get_tree().create_timer(1.0)
 	transition_timer.timeout.connect(func():
+		_reset_player_to_fighting() # Baru balik ke fighting setelah tween & jeda selesai
 		next_round()
 	)
 
+func _set_player_combat_anim(anim_name: String) -> void:
+	if not is_instance_valid(target_player):
+		target_player = get_tree().current_scene.find_child("Player", true, false)
+	if not is_instance_valid(target_player):
+		return
+
+	var sprite: AnimatedSprite2D = target_player.get_node_or_null("AnimatedSprite2D")
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
+		sprite.play(anim_name)
+
+func _reset_player_to_fighting() -> void:
+	if not is_instance_valid(target_player):
+		return
+	var sprite: AnimatedSprite2D = target_player.get_node_or_null("AnimatedSprite2D")
+	if is_active and sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("fighting"):
+		sprite.play("fighting")
 
 func play_chicken_hit_effect() -> void:
 	var rooster_node = get_tree().current_scene.find_child("Rooster", true, false)
 	if not rooster_node:
 		rooster_node = get_tree().current_scene.find_child("rooster", true, false)
-	
-	if rooster_node:
-		var r_sprite = rooster_node.find_child("AnimatedSprite2D", true, false)
-		if r_sprite:
-			var tween = create_tween()
-			tween.tween_property(r_sprite, "modulate", Color(1.0, 0.3, 0.3), 0.08)
-			tween.tween_property(r_sprite, "position:x", r_sprite.position.x - 10.0, 0.05)
-			tween.tween_property(r_sprite, "position:x", r_sprite.position.x + 10.0, 0.05)
-			tween.tween_property(r_sprite, "modulate", Color.WHITE, 0.15)
 
+	if rooster_node:
+		var r_sprite: CanvasItem = rooster_node.find_child("AnimatedSprite2D", true, false)
+		if r_sprite:
+			var mat := r_sprite.material as ShaderMaterial
+			if not mat or not mat.shader:
+				var shader := Shader.new()
+				shader.code = """
+shader_type canvas_item;
+uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	COLOR = vec4(mix(tex.rgb, vec3(1.0), flash_amount), tex.a);
+}
+"""
+				mat = ShaderMaterial.new()
+				mat.shader = shader
+				r_sprite.material = mat
+
+			var orig_x: float = r_sprite.position.x
+			var tween := create_tween()
+
+			# 1. Langsung putih solid & DIAM MEMBEKU (hit-stop) selama 0.25 detik
+			mat.set_shader_parameter("flash_amount", 1.0)
+			tween.tween_interval(0.40)
+
+			# 2. Setelah delay putih selesai, warna putih memudar sambil mulai bergoyang lambat
+			tween.tween_method(
+				func(val: float): mat.set_shader_parameter("flash_amount", val),
+				1.0, 0.0, 0.25
+			)
+			tween.parallel().tween_property(r_sprite, "position:x", orig_x - 14.0, 0.16)\
+				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+			# 3. Lanjutan goyangan berat sampai kembali tenang ke posisi semula
+			tween.tween_property(r_sprite, "position:x", orig_x + 9.0, 0.16)\
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(r_sprite, "position:x", orig_x - 4.0, 0.14)\
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(r_sprite, "position:x", orig_x, 0.14)\
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func _play_sfx(stream: AudioStream, volume_offset_db: float = -10.0, pitch_variance: float = 0.05) -> void:
+	if not stream:
+		return
+	var sfx := AudioStreamPlayer.new()
+	sfx.stream = stream
+	sfx.volume_db = attack_sfx_volume_db + volume_offset_db
+	sfx.pitch_scale = randf_range(1.0 - pitch_variance, 1.0 + pitch_variance)
+	add_child(sfx)
+	sfx.play()
+	sfx.finished.connect(sfx.queue_free)
 
 func play_block_knockback() -> void:
 	if is_instance_valid(target_player):
@@ -350,8 +450,158 @@ func play_block_knockback() -> void:
 		tween.tween_property(target_player, "global_position:x", original_x + 15.0, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween.tween_property(target_player, "global_position:x", original_x, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
+func play_rooster_attack_anim() -> void:
+	var rooster_node = get_tree().current_scene.find_child("Rooster", true, false)
+	if not rooster_node:
+		rooster_node = get_tree().current_scene.find_child("rooster", true, false)
+
+	if rooster_node:
+		var r_sprite: AnimatedSprite2D = rooster_node.find_child("AnimatedSprite2D", true, false)
+		if r_sprite and r_sprite.sprite_frames and r_sprite.sprite_frames.has_animation("attack"):
+			_play_sfx(rooster_attack_sfx)
+			r_sprite.play("attack")
+			await r_sprite.animation_finished
+			await get_tree().create_timer(0.45).timeout
+			if is_instance_valid(r_sprite):
+				r_sprite.play("default")
 
 func finish_minigame(success: bool) -> void:
 	is_active = false
 	visible = false
+
+	if success:
+		_restore_previous_bgm()
+	else:
+		_set_player_fighting_stance(false)
+		var battle_player := get_node_or_null("BattleBGMPlayer")
+		if battle_player:
+			battle_player.stop()
+			battle_player.queue_free()
+		_play_sfx(game_over_sfx, -10.0, 0.0)
+
 	minigame_completed.emit(success)
+
+func _start_battle_bgm() -> void:
+	if not battle_bgm:
+		return
+
+	# 1. Simpan BGM dunia sebelumnya lalu hentikan langsung agar tidak bertumpuk
+	if MusicManager:
+		for child in MusicManager.get_children():
+			if child is AudioStreamPlayer and child.playing and child.stream != null:
+				_previous_bgm = child.stream
+				_previous_bgm_volume = child.volume_db
+				child.stop()
+
+	# 2. Hapus player battle lama jika ada, lalu langsung play tanpa fade-in
+	var old_player := get_node_or_null("BattleBGMPlayer")
+	if old_player:
+		old_player.stop()
+		old_player.queue_free()
+
+	var bgm_player := AudioStreamPlayer.new()
+	bgm_player.name = "BattleBGMPlayer"
+	bgm_player.stream = battle_bgm
+	bgm_player.volume_db = battle_bgm_volume_db
+	add_child(bgm_player)
+	bgm_player.play()
+
+func _restore_previous_bgm(fade_duration: float = 1.2) -> void:
+	var battle_player := get_node_or_null("BattleBGMPlayer")
+	var prev_stream := _previous_bgm
+	var prev_vol := _previous_bgm_volume
+	_previous_bgm = null
+
+	if battle_player and battle_player.playing:
+		# Pindahkan ke MusicManager (autoload) agar tidak ikut terhapus saat ganti scene
+		if MusicManager:
+			battle_player.reparent(MusicManager)
+
+		var tween := battle_player.create_tween()
+		tween.tween_property(battle_player, "volume_db", -40.0, fade_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		tween.tween_callback(func():
+			if is_instance_valid(battle_player):
+				battle_player.stop()
+				battle_player.queue_free()
+			if prev_stream and MusicManager and MusicManager.has_method("play_world_audio"):
+				MusicManager.play_world_audio(null, prev_stream, prev_vol, -12.0)
+		)
+	else:
+		if is_instance_valid(battle_player):
+			battle_player.queue_free()
+		if prev_stream and MusicManager and MusicManager.has_method("play_world_audio"):
+			MusicManager.play_world_audio(null, prev_stream, prev_vol, -12.0)
+
+func _set_player_fighting_stance(active: bool) -> void:
+	if not is_instance_valid(target_player):
+		target_player = get_tree().current_scene.find_child("Player", true, false)
+	if not is_instance_valid(target_player):
+		return
+
+	if "is_in_battle" in target_player:
+		target_player.is_in_battle = active
+
+	var p_sprite: AnimatedSprite2D = target_player.find_child("AnimatedSprite2D", true, false)
+	if p_sprite and p_sprite.sprite_frames:
+		if active and p_sprite.sprite_frames.has_animation("fighting"):
+			p_sprite.flip_h = false
+			p_sprite.play("fighting")
+		elif p_sprite.sprite_frames.has_animation("default"):
+			p_sprite.play("default")
+			
+
+func play_player_hit_effect(with_knockback: bool = true) -> void:
+	if not is_instance_valid(target_player):
+		target_player = get_tree().current_scene.find_child("Player", true, false)
+
+	if is_instance_valid(target_player):
+		var p_sprite: CanvasItem = target_player.find_child("AnimatedSprite2D", true, false)
+		if p_sprite:
+			var mat := p_sprite.material as ShaderMaterial
+			if not mat or not mat.shader:
+				var shader := Shader.new()
+				shader.code = """
+shader_type canvas_item;
+uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	COLOR = vec4(mix(tex.rgb, vec3(1.0), flash_amount), tex.a);
+}
+"""
+				mat = ShaderMaterial.new()
+				mat.shader = shader
+				p_sprite.material = mat
+
+			var orig_x: float = p_sprite.position.x
+
+			# Tween 1: Warna putih solid lalu memudar
+			var flash_tween := create_tween()
+			mat.set_shader_parameter("flash_amount", 1.0)
+			flash_tween.tween_interval(0.20)
+			flash_tween.tween_method(
+				func(val: float): mat.set_shader_parameter("flash_amount", val),
+				1.0, 0.0, 0.25
+			)
+
+			# Tween 2 (terpisah): Hentakan mundur lalu langsung balik tanpa nunggu flash selesai
+			if with_knockback:
+				var move_tween := create_tween()
+				move_tween.tween_interval(0.08) # Sedikit jeda hit-stop biar kerasa benturannya
+				move_tween.tween_property(p_sprite, "position:x", orig_x + 6.0, 0.07)\
+					.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				move_tween.tween_property(p_sprite, "position:x", orig_x, 0.12)\
+					.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+func _play_player_combat_anim(anim_name: String) -> void:
+	if not is_instance_valid(target_player):
+		target_player = get_tree().current_scene.find_child("Player", true, false)
+	if not is_instance_valid(target_player):
+		return
+
+	var sprite: AnimatedSprite2D = target_player.get_node_or_null("AnimatedSprite2D")
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
+		sprite.play(anim_name)
+		await sprite.animation_finished
+		if is_active and sprite.sprite_frames.has_animation("fighting"):
+			sprite.play("fighting")

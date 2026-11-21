@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://m6scgyj3p5dc" path="res://script/chick.gd" id="1_84y8h"]
 [ext_resource type="Texture2D" uid="uid://d4lkbxrule8i" path="res://assets/animation/Anak_Ayam-Sheet2.png" id="2_84y8h"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="2_qh21d"]
 [ext_resource type="AudioStream" uid="uid://ddsevw26hofn3" path="res://assets/audio/chick.mp3" id="3_60ske"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_60ske"]
@@ -114,10 +115,18 @@ animations = [{
 radius = 6.0827627
 
 [node name="chick" type="CharacterBody2D" unique_id=452291382]
+z_index = 2
 position = Vector2(0, -1)
 script = ExtResource("1_84y8h")
 
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1898600201]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(1, 47)
+scale = Vector2(1.0474429, 1.0015625)
+texture = ExtResource("2_qh21d")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1120185105]
+modulate = Color(0.9750634, 0.973479, 0.98845714, 1)
 texture_filter = 1
 position = Vector2(-1.9073486e-06, 30)
 scale = Vector2(1.7, 1.7)

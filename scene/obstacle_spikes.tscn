@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddf65m8npkxk3"]
 
 [ext_resource type="Script" uid="uid://cocdhwtqx7rfg" path="res://script/obstacle_spikes.gd" id="1_nclnc"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="2_hqhu6"]
 [ext_resource type="Texture2D" uid="uid://1ggwaypc7eco" path="res://assets/animation/trenggiling_fix.png" id="2_nclnc"]
 [ext_resource type="AudioStream" uid="uid://bnwgqe88ns1cq" path="res://assets/audio/trenggiling.mp3" id="3_m6skm"]
 
@@ -8,7 +9,14 @@
 radius = 34.0147
 
 [node name="ObstacleSpikes" type="Area2D" unique_id=336226245]
+z_index = 4
 script = ExtResource("1_nclnc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=764678452]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(2.3841858e-07, 53.999996)
+scale = Vector2(2.4632812, 2.5015624)
+texture = ExtResource("2_hqhu6")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1509144959]
 position = Vector2(0, 24)

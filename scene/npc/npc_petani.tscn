@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://cbecc2utmoxhb"]
+
+[ext_resource type="Texture2D" uid="uid://dh0iipjof4otj" path="res://assets/idel_template_cowok-Sheet.png" id="1_55kig"]
+[ext_resource type="Script" uid="uid://daxjn2wgpgmy8" path="res://script/npc/npc_petani.gd" id="1_achr8"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_t7cgu"]
+[ext_resource type="Texture2D" uid="uid://044e37a1yp66" path="res://assets/cutscene_1.png" id="2_t8mgr"]
+[ext_resource type="Texture2D" uid="uid://bq0xttirgejhp" path="res://assets/animation/Text_Box.png" id="4_klqwf"]
+[ext_resource type="Texture2D" uid="uid://cbgvk4nyfltj1" path="res://assets/animation/Text_Box_Indicator.png" id="5_1jhuo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7cgu"]
+atlas = ExtResource("1_55kig")
+region = Rect2(0, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_achr8"]
+atlas = ExtResource("1_55kig")
+region = Rect2(60, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klqwf"]
+atlas = ExtResource("1_55kig")
+region = Rect2(120, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jhuo"]
+atlas = ExtResource("1_55kig")
+region = Rect2(180, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8mgr"]
+atlas = ExtResource("1_55kig")
+region = Rect2(240, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5s0b"]
+atlas = ExtResource("1_55kig")
+region = Rect2(300, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_em1xc"]
+atlas = ExtResource("1_55kig")
+region = Rect2(360, 0, 60, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6g4a"]
+atlas = ExtResource("1_55kig")
+region = Rect2(420, 0, 60, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7cgu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_achr8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klqwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jhuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8mgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5s0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_em1xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6g4a")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vrlf"]
+size = Vector2(40, 124)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_achr8"]
+radius = 24.779572
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_klqwf"]
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s5s0b"]
+texture = ExtResource("4_klqwf")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v5gy4"]
+size = Vector2(113, 20)
+
+[node name="npc_petani" type="CharacterBody2D" unique_id=1890421115]
+script = ExtResource("1_achr8")
+camera_pan_duration = 2.0
+ending_cutscene_image = ExtResource("2_t8mgr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=691090760]
+position = Vector2(0, -12)
+scale = Vector2(1.2, 1.2)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=334861177]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_8vrlf")
+disabled = true
+
+[node name="chat_detection" type="Area2D" parent="." unique_id=1791952741]
+position = Vector2(-1.0000019, -9.999998)
+scale = Vector2(1.9375, 1.9375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=1600236607]
+position = Vector2(-1.5483866, 5.1612897)
+shape = SubResource("CircleShape2D_achr8")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1892289812]
+texture_filter = 1
+position = Vector2(0, -108.00001)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("2_t7cgu")
+
+[node name="DialoguePivot" type="Marker2D" parent="." unique_id=940427341]
+position = Vector2(0, -87)
+scale = Vector2(0.9375, 0.9375)
+
+[node name="QuizUI" type="CanvasLayer" parent="." unique_id=1628991769]
+
+[node name="QuestionLabel" type="Label" parent="QuizUI" unique_id=1124672774]
+offset_left = 196.0
+offset_top = 60.0
+offset_right = 444.0
+offset_bottom = 121.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ChoicePanel" type="PanelContainer" parent="QuizUI" unique_id=431776252]
+custom_minimum_size = Vector2(280, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -25.5
+offset_right = 140.0
+offset_bottom = 86.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_klqwf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuizUI/ChoicePanel" unique_id=1057951927]
+layout_mode = 2
+alignment = 1
+
+[node name="OptionA" type="Button" parent="QuizUI/ChoicePanel/VBoxContainer" unique_id=473786451]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/h_separation = 4
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_s5s0b")
+autowrap_mode = 3
+
+[node name="OptionB" type="Button" parent="QuizUI/ChoicePanel/VBoxContainer" unique_id=969488782]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/h_separation = 4
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_s5s0b")
+autowrap_mode = 3
+
+[node name="OptionC" type="Button" parent="QuizUI/ChoicePanel/VBoxContainer" unique_id=1676749947]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/h_separation = 4
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_s5s0b")
+autowrap_mode = 3
+
+[node name="CursorArrow" type="TextureRect" parent="QuizUI" unique_id=886400250]
+offset_left = 177.0
+offset_top = 187.0
+offset_right = 189.0
+offset_bottom = 195.0
+rotation = -1.5707964
+texture = ExtResource("5_1jhuo")
+
+[node name="CutsceneTrigger" type="Area2D" parent="." unique_id=1479066668]
+position = Vector2(155, 60)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneTrigger" unique_id=1422770167]
+position = Vector2(66.5, 0)
+shape = SubResource("RectangleShape2D_v5gy4")

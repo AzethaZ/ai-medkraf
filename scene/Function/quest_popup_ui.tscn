@@ -1,19 +1,30 @@
 [gd_scene format=3 uid="uid://b3vivtn7hgjel"]
 
 [ext_resource type="Script" uid="uid://c0kukf3foixir" path="res://script/quest_popup_ui.gd" id="1_syqku"]
-[ext_resource type="Texture2D" uid="uid://cbcopcw2acdh8" path="res://assets/questbox.png" id="2_6qrq0"]
+[ext_resource type="Texture2D" uid="uid://cuyu82pe8sxw5" path="res://assets/item/Quest_notification3.png" id="2_63ye8"]
+[ext_resource type="AudioStream" uid="uid://bk6arplvejnwi" path="res://assets/audio/item found.mp3" id="2_tthja"]
 [ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="3_63ye8"]
+[ext_resource type="AudioStream" uid="uid://cvwiholcnmsr3" path="res://assets/audio/complete.mp3" id="3_bmda4"]
+[ext_resource type="Texture2D" uid="uid://bl6nrk7lhge84" path="res://assets/animation/anak_ayam.png" id="4_bmda4"]
+[ext_resource type="Texture2D" uid="uid://cf5dv8j674pys" path="res://assets/animation/ayam_battle.png" id="5_kk7ei"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_syqku"]
-texture = ExtResource("2_6qrq0")
-texture_margin_left = 8.0
+texture = ExtResource("2_63ye8")
+texture_margin_left = 16.0
 texture_margin_top = 12.0
-texture_margin_right = 20.0
+texture_margin_right = 16.0
 texture_margin_bottom = 12.0
 
 [node name="QuestPopupUI" type="CanvasLayer" unique_id=1289541161]
 layer = 102
 script = ExtResource("1_syqku")
+quest_start_sfx = ExtResource("2_tthja")
+quest_complete_sfx = ExtResource("3_bmda4")
+quest_icons = Dictionary[String, Texture2D]({
+"quest_ayam_1": ExtResource("4_bmda4"),
+"quest_ayam_3": ExtResource("5_kk7ei"),
+"quest_kopi_1": null
+})
 
 [node name="NotificationBox" type="PanelContainer" parent="." unique_id=1334114743]
 texture_filter = 1
@@ -30,11 +41,12 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_syqku")
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="NotificationBox/HBoxContainer" unique_id=11126072]
-custom_minimum_size = Vector2(20, 16)
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("3_63ye8")
 expand_mode = 1
 
 [node name="TitleLabel" type="Label" parent="NotificationBox/HBoxContainer" unique_id=1529895518]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
