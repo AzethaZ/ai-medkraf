@@ -8,11 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cn51qbckn06pm" path="res://scene/Function/rooster_qte_minigame.tscn" id="3_rji8h"]
 [ext_resource type="Texture2D" uid="uid://c3o7lydcmqnmu" path="res://assets/world bg/cina/cina_langit.png" id="4_rxnrv"]
 [ext_resource type="AudioStream" uid="uid://caa7jim0kswum" path="res://assets/audio/chicken/win1.mp3" id="4_y1utw"]
-[ext_resource type="Texture2D" uid="uid://daah5hjjubwud" path="res://assets/world bg/cina/cina_desa_mid_2.png" id="5_2w21o"]
-[ext_resource type="Texture2D" uid="uid://bpwqeto4mjdi3" path="res://assets/animation/Arrow5.png" id="6_aacky"]
+[ext_resource type="Texture2D" uid="uid://dvps2762vrmjj" path="res://assets/world bg/cina/cina_3/3cina_mg1.png" id="6_fo7ls"]
 [ext_resource type="Texture2D" uid="uid://50qbuqucibp1" path="res://assets/world bg/cina/cina_desa_jalan.png" id="6_wr8jm"]
 [ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="6_y1utw"]
 [ext_resource type="Shader" uid="uid://bu4bstd8uufdv" path="res://shader/pixel_mist_fog.gdshader" id="7_fo7ls"]
+[ext_resource type="Texture2D" uid="uid://3e77he4q58j1" path="res://assets/animation/ui/Hati1.png" id="13_y1utw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ividc"]
 shader = ExtResource("6_y1utw")
@@ -25,14 +25,14 @@ shader_parameter/pixel_size = 268.138011216555
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k65ru"]
 shader = ExtResource("7_fo7ls")
-shader_parameter/fog_color = Color(0.85, 0.92, 1, 0.46666667)
-shader_parameter/density = 1.5430000732925
-shader_parameter/wind_speed = Vector2(1, 1)
+shader_parameter/fog_color = Color(0.9792523, 0.8951605, 0.8336247, 0.46666667)
+shader_parameter/density = 1.718000081605
+shader_parameter/wind_speed = Vector2(0, 1)
 shader_parameter/fade_speed = 1.8250000866875
-shader_parameter/fog_scale = 1.050000002375
+shader_parameter/fog_scale = 3.4570001167075
 shader_parameter/top_fade = 1.0
-shader_parameter/bottom_fade = 0.19200000912
-shader_parameter/pixel_size = 512.0
+shader_parameter/bottom_fade = 0.5150000244625
+shader_parameter/pixel_size = 32.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fj7yv"]
 load_path = "res://.godot/imported/tiles_rumput_hitam__border_.png-d3ae16f765de851907f982072745d353.ctex"
@@ -113,8 +113,8 @@ scroll_offset = Vector2(-1145, 93)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Mid" unique_id=1413392646]
 modulate = Color(0.9236192, 0.8232606, 0.9279445, 1)
-position = Vector2(688, -200)
-texture = ExtResource("5_2w21o")
+position = Vector2(1446, -276)
+texture = ExtResource("6_fo7ls")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1520464893]
 layout_mode = 1
@@ -127,18 +127,19 @@ offset_right = 278.0
 offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1523872, 0.13566032, 0.31656587, 0.8509804)
+color = Color(0.15583998, 0.1376, 0.32, 0.6117647)
 
 [node name="SunRayOverlay" type="ColorRect" parent="." unique_id=1493401559]
+visible = false
 material = SubResource("ShaderMaterial_ividc")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 543.4143
-offset_top = 136.0
-offset_right = 2739.8286
-offset_bottom = 549.0847
+offset_left = 550.0
+offset_top = 143.0
+offset_right = 2746.4143
+offset_bottom = 556.0847
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.1415927
@@ -147,10 +148,10 @@ rotation = 3.1415927
 modulate = Color(1.7686467, 1.7686467, 1.7686467, 1)
 material = SubResource("ShaderMaterial_k65ru")
 layout_mode = 0
-offset_left = -150.5857
-offset_top = -196.0
-offset_right = 246.4143
-offset_bottom = 200.99997
+offset_left = -254.0
+offset_top = -290.0
+offset_right = 221.0
+offset_bottom = 106.99997
 mouse_filter = 2
 
 [node name="ParallaxBG_Tanah" type="Parallax2D" parent="." unique_id=79312284]
@@ -210,10 +211,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -27.0
-offset_top = -33.0
-offset_right = -27.0
-offset_bottom = -33.0
+offset_left = -19.0
+offset_top = -54.0
+offset_right = -19.0
+offset_bottom = -54.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
@@ -228,32 +229,32 @@ offset_bottom = 72.0
 
 [node name="TextureRect" type="TextureRect" parent="PlayerHearts" unique_id=1633142014]
 layout_mode = 2
-texture = ExtResource("6_aacky")
+texture = ExtResource("13_y1utw")
 expand_mode = 2
 
 [node name="RoosterHearts" type="HBoxContainer" parent="." unique_id=1973305876]
 layout_mode = 0
-offset_left = -140.0
+offset_left = -126.0
 offset_top = 58.0
-offset_right = -68.0
+offset_right = -54.0
 offset_bottom = 73.0
 
 [node name="TextureRect" type="TextureRect" parent="RoosterHearts" unique_id=1423664048]
 layout_mode = 2
-texture = ExtResource("6_aacky")
+texture = ExtResource("13_y1utw")
 expand_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="RoosterHearts" unique_id=778668001]
 layout_mode = 2
-texture = ExtResource("6_aacky")
+texture = ExtResource("13_y1utw")
 expand_mode = 2
 
 [node name="TextureRect3" type="TextureRect" parent="RoosterHearts" unique_id=1032404304]
 layout_mode = 2
-texture = ExtResource("6_aacky")
+texture = ExtResource("13_y1utw")
 expand_mode = 2
 
 [node name="TextureRect4" type="TextureRect" parent="RoosterHearts" unique_id=1696953646]
 layout_mode = 2
-texture = ExtResource("6_aacky")
+texture = ExtResource("13_y1utw")
 expand_mode = 2

@@ -23,7 +23,7 @@ var player_ref: CharacterBody2D = null
 
 var dialogue_lines: Array[String] = [
 	"Akhirnya ketemu juga ayam jago ini...",
-	"Mukanya galak banget, harus dikalahkan dulu nih!"
+	"Mukanya galak banget kayak orang gendut di tv itu, harus ditangkep dulu nih!"
 ]
 
 func _ready() -> void:
@@ -38,7 +38,7 @@ func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 
 	if cutscene_trigger:
-		if GameState and GameState.get_meta("rooster_cutscene_played", false):
+		if QuestManager.get_quest_status(target_quest_id) == "COMPLETED":
 			cutscene_trigger.queue_free()
 		else:
 			cutscene_trigger.body_entered.connect(_on_cutscene_trigger_entered)
@@ -122,8 +122,6 @@ func _on_cutscene_trigger_entered(body: Node2D) -> void:
 	is_cutscene_playing = true
 	is_in_dialogue = true
 	player_ref = body as CharacterBody2D
-	if GameState:
-		GameState.set_meta("rooster_cutscene_played", true)
 
 	await _play_rooster_cutscene()
 
@@ -170,7 +168,7 @@ func _play_rooster_cutscene() -> void:
 		await return_tween.finished
 
 	# 5. MC membalas dialog pertama
-	var mc_line_1: Array[String] = ["Itu ayamnya pasti... Dia terlihat sangat galak!"]
+	var mc_line_1: Array[String] = ["Itu ayamnya pasti... Mukanya galak banget kayak orang gendut di tv itu"]
 	DialogueManager.start_dialogue(mc_line_1, player_ref)
 	await DialogueManager.dialogue_finished
 
@@ -202,7 +200,7 @@ func _play_rooster_cutscene() -> void:
 	_set_mc_walk_state(false)
 
 	# 7. MC ngomong "Aku harus mengalahkannya!"
-	var mc_line_2: Array[String] = ["Aku harus mengalahkannya!"]
+	var mc_line_2: Array[String] = ["Harus ditangkep dulu nih!"]
 	DialogueManager.start_dialogue(mc_line_2, player_ref)
 	await DialogueManager.dialogue_finished
 

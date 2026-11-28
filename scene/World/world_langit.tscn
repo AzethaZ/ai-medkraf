@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cykbblktyesgl" path="res://script/world_langit.gd" id="2_emiet"]
 [ext_resource type="Texture2D" uid="uid://outsp4kx4udh" path="res://assets/cutscene/A_ HUTAN API LANDSCAPE.png" id="2_lf8n0"]
+[ext_resource type="AudioStream" uid="uid://cefsg6nrxfsrl" path="res://assets/audio/wind_sfx.mp3" id="2_ypvgm"]
 [ext_resource type="Texture2D" uid="uid://c4v2k14rp544e" path="res://assets/cutscene/A awan s.png" id="3_m0tdp"]
+[ext_resource type="AudioStream" uid="uid://cimajl2kct4fa" path="res://assets/audio/chicken/black_kumizhi-dreamy-cinematic-riser-523158.mp3" id="3_odsmf"]
 [ext_resource type="Texture2D" uid="uid://bl1oh76tpbkdj" path="res://assets/cutscene/A_ CINA LANDSCAPE.png" id="3_sx6ko"]
 [ext_resource type="Texture2D" uid="uid://br7ailn2qhj6q" path="res://assets/cutscene/A_ HUTAN API (BURUNG).png" id="3_xq4gc"]
 [ext_resource type="Texture2D" uid="uid://c8vd3sy1c7jta" path="res://assets/cutscene/A_ BURUNG CINA.png" id="6_sx6ko"]
@@ -11,8 +13,12 @@
 
 [node name="world_langit" type="Node2D" unique_id=1697432782]
 script = ExtResource("2_emiet")
-pan_duration = 45.0
+pan_duration = 49.0
 bird_enter_duration = 55.0
+wind_sfx_stream = ExtResource("2_ypvgm")
+wind_sfx_db = 1.0
+bg3_audio_stream = ExtResource("3_odsmf")
+bg3_audio_db = -2.0
 
 [node name="LandscapeParallax" type="Parallax2D" parent="." unique_id=1772724246]
 scroll_offset = Vector2(321, 185)

@@ -1,36 +1,33 @@
 [gd_scene format=3 uid="uid://drdktrlhbigqb"]
 
 [ext_resource type="Script" uid="uid://c0gvyam7bu8cp" path="res://script/npc_peternak.gd" id="1_udvkr"]
-[ext_resource type="Texture2D" uid="uid://da02ks1yrpan2" path="res://assets/cutscene/scene_cina_tes.png" id="2_4nwei"]
+[ext_resource type="Texture2D" uid="uid://ggpvrn8vhjjq" path="res://assets/cutscene/jokowi cina.png" id="2_kkr4e"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_udvkr"]
-[ext_resource type="Texture2D" uid="uid://dfc563iy5elkn" path="res://assets/animation/ayam/cina_peternak.png" id="3_4nwei"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="3_173el"]
+[ext_resource type="Texture2D" uid="uid://bhk2rsdtvr86g" path="res://assets/animation/cina_peternak1.png" id="3_kkr4e"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="5_173el"]
 [ext_resource type="Texture2D" uid="uid://407j8gewuenu" path="res://assets/hantubaik-Sheet.png" id="6_tvcat"]
 [ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="8_kkr4e"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kkr4e"]
-atlas = ExtResource("3_4nwei")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jo67"]
+atlas = ExtResource("3_kkr4e")
 region = Rect2(0, 0, 105, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5jo67"]
-atlas = ExtResource("3_4nwei")
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6j74"]
+atlas = ExtResource("3_kkr4e")
 region = Rect2(105, 0, 105, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t6j74"]
-atlas = ExtResource("3_4nwei")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tmx1"]
+atlas = ExtResource("3_kkr4e")
 region = Rect2(210, 0, 105, 127)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7tmx1"]
-atlas = ExtResource("3_4nwei")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfatm"]
+atlas = ExtResource("3_kkr4e")
 region = Rect2(315, 0, 105, 127)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kkr4e")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5jo67")
 }, {
@@ -39,6 +36,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7tmx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfatm")
 }],
 "loop": 1,
 "name": &"default",
@@ -127,17 +127,17 @@ size = Vector2(199, 24)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1198646282]
 script = ExtResource("1_udvkr")
-farm_cutscene_texture = ExtResource("2_4nwei")
+farm_cutscene_texture = ExtResource("2_kkr4e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=593655250]
-modulate = Color(0.88603395, 0.8366098, 0.94602853, 1)
+modulate = Color(0.80620766, 0.7751584, 0.9555909, 1)
 z_index = 5
 texture_filter = 1
 position = Vector2(3, -21.65625)
 scale = Vector2(1.2723957, 1.2723957)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.6524324
+frame_progress = 0.55688703
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=480670820]
 position = Vector2(2.5, -7)
@@ -206,10 +206,10 @@ frame_progress = 0.9032131
 position = Vector2(0, -78)
 
 [node name="CutscenePivotPeternak" type="Marker2D" parent="." unique_id=2046640032]
-position = Vector2(-16, -112)
+position = Vector2(-67, -14)
 
 [node name="CutscenePivotDanum" type="Marker2D" parent="." unique_id=73801089]
-position = Vector2(-121, 2)
+position = Vector2(-154, -112)
 
 [node name="CutsceneTrigger" type="Area2D" parent="." unique_id=1937331720]
 position = Vector2(-293, 0)

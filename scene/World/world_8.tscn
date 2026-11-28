@@ -1,0 +1,304 @@
+[gd_scene format=3 uid="uid://pqryiyl8yfnh"]
+
+[ext_resource type="PackedScene" uid="uid://ccgfsgubup5on" path="res://scene/world_template.tscn" id="1_hvcaq"]
+[ext_resource type="Script" uid="uid://dr6b1ee8iob5k" path="res://script/world_8.gd" id="2_2j77c"]
+[ext_resource type="Texture2D" uid="uid://coxqs045qj344" path="res://assets/animation/Big_Bird-Sheet.png" id="2_v07hg"]
+[ext_resource type="Shader" uid="uid://bmahh5bffphjk" path="res://shader/fire_radial_glow.gdshader" id="3_2j77c"]
+[ext_resource type="Texture2D" uid="uid://ck1ex3b5qwair" path="res://assets/world bg/akhir/hutan akhir langit3.png" id="3_4jxbn"]
+[ext_resource type="Texture2D" uid="uid://b4bh0g5fbs41" path="res://assets/world bg/akhir/hutan akhir mg2.png" id="4_7sgpj"]
+[ext_resource type="Script" uid="uid://bg6b0ew5o8hr4" path="res://script/cloud_generator.gd" id="4_d5a0o"]
+[ext_resource type="Texture2D" uid="uid://ca48gfh0blead" path="res://assets/world bg/akhir/hutan akhir mg1.png" id="5_8cgal"]
+[ext_resource type="Texture2D" uid="uid://bpnopepoochem" path="res://assets/world bg/akhir/hutan akhir awan1.png" id="5_jqtv7"]
+[ext_resource type="Texture2D" uid="uid://c4r0alrpm4w3n" path="res://assets/world bg/akhir/hutan akhir awan2.png" id="6_2hpep"]
+[ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="6_3w00g"]
+[ext_resource type="Texture2D" uid="uid://fitkihb8kt8d" path="res://assets/world bg/akhir/hutan akhir jalan.png" id="8_3w00g"]
+[ext_resource type="Texture2D" uid="uid://byv3a5i0ftf54" path="res://assets/world bg/akhir/hutan akhir fg.png" id="10_7sgpj"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="10_8cgal"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7sgpj"]
+shader = ExtResource("6_3w00g")
+shader_parameter/ray_color = Color(0.1479, 0.164475, 0.17, 0.5686275)
+shader_parameter/position = -0.22599996323500005
+shader_parameter/spread = 2.0
+shader_parameter/falloff = 1.010000047975
+shader_parameter/speed = 0.86800004123
+shader_parameter/pixel_size = 128.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d5a0o"]
+shader = ExtResource("6_3w00g")
+shader_parameter/ray_color = Color(0.84846336, 0.9689103, 0.99999994, 0.2509804)
+shader_parameter/position = -0.237999963805
+shader_parameter/spread = 1.286000061085
+shader_parameter/falloff = 1.2550000596125
+shader_parameter/speed = 0.450000021375
+shader_parameter/pixel_size = 378.1590164425525
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hpep"]
+shader = ExtResource("3_2j77c")
+shader_parameter/glow_color = Color(0.88, 0.5368, 0.30800003, 0.14117648)
+shader_parameter/radius = 0.45600002003006
+shader_parameter/softness = 1.0
+shader_parameter/flicker_speed = 2.53200012027
+shader_parameter/flicker_amount = 0.3930000186675
+shader_parameter/pixel_size = 69.714002551415
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r275q"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(0, 0, 240, 163)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s36v0"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(240, 0, 240, 163)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_634sc"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(480, 0, 240, 163)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3d8t"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(720, 0, 240, 163)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q714l"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(960, 0, 240, 163)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bs5tn"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(1200, 0, 240, 163)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75ou1"]
+atlas = ExtResource("2_v07hg")
+region = Rect2(1440, 0, 240, 163)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rsp6k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r275q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s36v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_634sc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3d8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q714l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bs5tn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75ou1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vry1"]
+shader = ExtResource("3_2j77c")
+shader_parameter/glow_color = Color(0.9619346, 0.47426963, 0.2490057, 0.4392157)
+shader_parameter/radius = 0.45600002003006
+shader_parameter/softness = 1.0
+shader_parameter/flicker_speed = 0.0
+shader_parameter/flicker_amount = 0.3930000186675
+shader_parameter/pixel_size = 69.714002551415
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d5a0o"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5, 20, 1)
+emission_shape = 3
+emission_box_extents = Vector3(100, 10, 1)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+gravity = Vector3(15, 30, 0)
+
+[node name="world_8" unique_id=1697432782 instance=ExtResource("1_hvcaq")]
+script = ExtResource("2_2j77c")
+
+[node name="ParallaxBG_Far" type="Parallax2D" parent="." index="0" unique_id=1290243824]
+scroll_scale = Vector2(0.3, 1)
+scroll_offset = Vector2(827, 74)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Far" index="0" unique_id=1861649181]
+modulate = Color(0.80442894, 0.90729374, 0.9626826, 1)
+position = Vector2(-491, -225)
+scale = Vector2(1.0975001, 1.0975001)
+texture = ExtResource("3_4jxbn")
+
+[node name="CloudGenerator" type="Node2D" parent="ParallaxBG_Far" index="1" unique_id=239510102]
+position = Vector2(-673, -358)
+script = ExtResource("4_d5a0o")
+spawn_x_right = 900.0
+despawn_x_left = -300.0
+y_jitter = 15.0
+max_active_clouds = 2
+prewarm_count = 2
+pause_when_player_moves = false
+
+[node name="awan_1" type="Sprite2D" parent="ParallaxBG_Far/CloudGenerator" index="0" unique_id=2088343757]
+position = Vector2(-21, 9.655739)
+texture = ExtResource("5_jqtv7")
+
+[node name="awan_2" type="Sprite2D" parent="ParallaxBG_Far/CloudGenerator" index="1" unique_id=162061586]
+position = Vector2(1, 19.658539)
+texture = ExtResource("6_2hpep")
+
+[node name="SunRayOverlay2" type="ColorRect" parent="." index="1" unique_id=1888264004]
+material = SubResource("ShaderMaterial_7sgpj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1913.0
+offset_top = 104.0
+offset_right = 4315.172
+offset_bottom = 1456.7394
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+
+[node name="ParallaxBG_Mid" type="Parallax2D" parent="." index="2" unique_id=1121560270]
+scroll_scale = Vector2(0.6, 1)
+scroll_offset = Vector2(319, -19)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBG_Mid" index="0" unique_id=965779981]
+position = Vector2(26, -101)
+texture = ExtResource("4_7sgpj")
+
+[node name="SunRayOverlay" type="ColorRect" parent="." index="3" unique_id=1990278039]
+material = SubResource("ShaderMaterial_7sgpj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5536.0
+offset_top = 162.0
+offset_right = 12236.239
+offset_bottom = 1514.7394
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+
+[node name="SunRayOverlay3" type="ColorRect" parent="." index="4" unique_id=1962295234]
+z_index = 2
+material = SubResource("ShaderMaterial_d5a0o")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -357.0
+offset_top = -486.0
+offset_right = 3530.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ParallaxBG_Mid2" type="Parallax2D" parent="." index="5" unique_id=1693487826]
+scroll_scale = Vector2(0.6, 1)
+scroll_offset = Vector2(314, -19)
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="ParallaxBG_Mid2" index="0" unique_id=2048305298]
+position = Vector2(0, -90)
+texture = ExtResource("5_8cgal")
+
+[node name="ParallaxBG_Tanah" type="Parallax2D" parent="." index="6" unique_id=919173075]
+scroll_offset = Vector2(314, -19)
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="ParallaxBG_Tanah" index="0" unique_id=1263355391]
+modulate = Color(0.8264849, 0.70830405, 0.6806968, 1)
+position = Vector2(2, -113.00001)
+scale = Vector2(1, 1.0534884)
+texture = ExtResource("8_3w00g")
+
+[node name="FireGlowOverlay" type="ColorRect" parent="." index="7" unique_id=2132701579]
+material = SubResource("ShaderMaterial_2hpep")
+offset_left = 275.0
+offset_top = -42.0
+offset_right = 406.44598
+offset_bottom = 72.0
+metadata/_edit_use_anchors_ = true
+
+[node name="FireGlowOverlay2" type="ColorRect" parent="." index="8" unique_id=1818233896]
+material = SubResource("ShaderMaterial_2hpep")
+offset_left = -38.0
+offset_top = -87.0
+offset_right = 151.09773
+offset_bottom = 77.0
+metadata/_edit_use_anchors_ = true
+
+[node name="FireGlowOverlay3" type="ColorRect" parent="." index="9" unique_id=1485328217]
+material = SubResource("ShaderMaterial_2hpep")
+offset_left = 573.0
+offset_top = -169.0
+offset_right = 762.0977
+offset_bottom = -5.0
+metadata/_edit_use_anchors_ = true
+
+[node name="FireGlowOverlay4" type="ColorRect" parent="." index="10" unique_id=1210325933]
+material = SubResource("ShaderMaterial_2hpep")
+offset_left = -162.0
+offset_top = -235.0
+offset_right = 27.097717
+offset_bottom = -71.0
+metadata/_edit_use_anchors_ = true
+
+[node name="TileMap" parent="." index="11" unique_id=2046423767]
+visible = false
+layer_0/tile_data = PackedInt32Array(131061, 65538, 2, 196597, 65538, 2, 262133, 65538, 2, 327669, 65538, 2, 393205, 65538, 2, 458741, 65538, 2, 524277, 65538, 2, 589813, 65538, 2, 655349, 65538, 2, 131062, 65538, 2, 196598, 65538, 2, 262134, 65538, 2, 327670, 65538, 2, 393206, 65538, 2, 458742, 65538, 2, 524278, 65538, 2, 589814, 65538, 2, 655350, 65538, 2, 131063, 65538, 1, 196599, 65538, 1, 262135, 65538, 2, 327671, 65538, 2, 393207, 65538, 2, 458743, 65538, 2, 524279, 65538, 2, 589815, 65538, 2, 655351, 65538, 2, 131064, 65538, 1, 196600, 65538, 1, 262136, 65538, 2, 327672, 65538, 2, 393208, 65538, 2, 458744, 65538, 2, 524280, 65538, 2, 589816, 65538, 2, 655352, 65538, 2, 131065, 65538, 1, 196601, 65538, 1, 262137, 65538, 2, 327673, 65538, 2, 393209, 65538, 2, 458745, 65538, 2, 524281, 65538, 2, 589817, 65538, 2, 655353, 65538, 2, 131066, 65538, 1, 196602, 65538, 1, 262138, 65538, 2, 327674, 65538, 2, 393210, 65538, 2, 458746, 65538, 2, 524282, 65538, 2, 589818, 65538, 2, 655354, 65538, 2, 131067, 65538, 1, 196603, 65538, 1, 262139, 65538, 2, 327675, 65538, 2, 393211, 65538, 2, 458747, 65538, 2, 524283, 65538, 2, 589819, 65538, 2, 655355, 65538, 2, 131068, 65538, 1, 196604, 65538, 1, 262140, 65538, 2, 327676, 65538, 2, 393212, 65538, 2, 458748, 65538, 2, 524284, 65538, 2, 589820, 65538, 2, 655356, 65538, 2, 131069, 65538, 1, 196605, 65538, 1, 262141, 65538, 2, 327677, 65538, 2, 393213, 65538, 2, 458749, 65538, 2, 524285, 65538, 2, 589821, 65538, 2, 655357, 65538, 2, 131070, 65538, 1, 196606, 65538, 1, 262142, 65538, 2, 327678, 65538, 2, 393214, 65538, 2, 458750, 65538, 2, 524286, 65538, 2, 589822, 65538, 2, 655358, 65538, 2, 131071, 65538, 1, 196607, 65538, 1, 262143, 65538, 2, 327679, 65538, 2, 393215, 65538, 2, 458751, 65538, 2, 524287, 65538, 2, 589823, 65538, 2, 655359, 65538, 2, 65536, 65538, 1, 131072, 65538, 1, 196608, 65538, 2, 262144, 65538, 2, 327680, 65538, 2, 393216, 65538, 2, 458752, 65538, 2, 524288, 65538, 2, 589824, 65538, 2, 65537, 65538, 1, 131073, 65538, 1, 196609, 65538, 2, 262145, 65538, 2, 327681, 65538, 2, 393217, 65538, 2, 458753, 65538, 2, 524289, 65538, 2, 589825, 65538, 2, 65538, 131074, 3, 131074, 131074, 3, 196610, 131074, 1, 262146, 65538, 2, 327682, 65538, 2, 393218, 65538, 2, 458754, 65538, 2, 524290, 65538, 2, 589826, 65538, 2, 131075, 131074, 3, 196611, 131074, 1, 262147, 65538, 2, 327683, 65538, 2, 393219, 65538, 2, 458755, 65538, 2, 524291, 65538, 2, 589827, 65538, 2, 196612, 131074, 1, 262148, 65538, 2, 327684, 65538, 2, 393220, 65538, 2, 458756, 65538, 2, 524292, 65538, 2, 589828, 65538, 2, 262149, 65538, 2, 327685, 65538, 2, 393221, 65538, 2, 458757, 65538, 2, 524293, 65538, 2, 589829, 65538, 2, 262150, 65538, 2, 327686, 65538, 2, 393222, 65538, 2, 458758, 65538, 2, 524294, 65538, 2, 589830, 65538, 2, 262151, 65538, 2, 327687, 65538, 2, 393223, 65538, 2, 458759, 65538, 2, 524295, 65538, 2, 589831, 65538, 2, 262152, 65538, 2, 327688, 65538, 2, 393224, 65538, 2, 458760, 65538, 2, 524296, 65538, 2, 589832, 65538, 2, 262153, 65538, 2, 327689, 65538, 2, 393225, 65538, 2, 458761, 65538, 2, 524297, 65538, 2, 589833, 65538, 2, 262154, 65538, 2, 327690, 65538, 2, 393226, 65538, 2, 458762, 65538, 2, 524298, 65538, 2, 589834, 65538, 2, 196619, 131074, 1, 262155, 65538, 2, 327691, 65538, 2, 393227, 65538, 2, 458763, 65538, 2, 524299, 65538, 2, 589835, 65538, 2, 131084, 131074, 3, 196620, 131074, 1, 262156, 65538, 2, 327692, 65538, 2, 393228, 65538, 2, 458764, 65538, 2, 524300, 65538, 2, 589836, 65538, 2, 131085, 131074, 3, 196621, 131074, 1, 262157, 65538, 2, 327693, 65538, 2, 393229, 65538, 2, 458765, 65538, 2, 524301, 65538, 2, 589837, 65538, 2, 65550, 131074, 3, 131086, 131074, 3, 196622, 131074, 1, 262158, 65538, 2, 327694, 65538, 2, 393230, 65538, 2, 458766, 65538, 2, 524302, 65538, 2, 589838, 65538, 2, 65551, 131074, 3, 131087, 131074, 3, 196623, 65538, 2, 262159, 65538, 2, 327695, 65538, 2, 393231, 65538, 2, 458767, 65538, 2, 524303, 65538, 2, 589839, 65538, 2, 65552, 131074, 3, 131088, 131074, 3, 196624, 65538, 2, 262160, 65538, 2, 327696, 65538, 2, 393232, 65538, 2, 458768, 65538, 2, 524304, 65538, 2, 589840, 65538, 2, 65553, 131074, 3, 131089, 131074, 3, 196625, 65538, 2, 262161, 65538, 2, 327697, 65538, 2, 393233, 65538, 2, 458769, 65538, 2, 524305, 65538, 2, 589841, 65538, 2, 65554, 65538, 1, 131090, 65538, 1, 196626, 65538, 2, 262162, 65538, 2, 327698, 65538, 2, 393234, 65538, 2, 458770, 65538, 2, 524306, 65538, 2, 589842, 65538, 2, 65555, 65538, 1, 131091, 65538, 1, 196627, 65538, 2, 262163, 65538, 2, 327699, 65538, 2, 393235, 65538, 2, 458771, 65538, 2, 524307, 65538, 2, 589843, 65538, 2, 65556, 65538, 1, 131092, 65538, 1, 196628, 65538, 2, 262164, 65538, 2, 327700, 65538, 2, 393236, 65538, 2, 458772, 65538, 2, 524308, 65538, 2, 589844, 65538, 2, 65557, 65538, 1, 131093, 65538, 1, 196629, 65538, 2, 262165, 65538, 2, 327701, 65538, 2, 393237, 65538, 2, 458773, 65538, 2, 524309, 65538, 2, 589845, 65538, 2, 65525, 131074, 3, 196613, 131074, 1, 196614, 131074, 1, 196615, 131074, 1, 196616, 131074, 1, 196617, 131074, 1, 196618, 131074, 1, 65558, 65538, 1, 131094, 65538, 1, 196630, 65538, 2, 262166, 65538, 2, 327702, 65538, 2, 393238, 65538, 2, 458774, 65538, 2, 524310, 65538, 2, 589846, 65538, 2, 65559, 65538, 1, 131095, 65538, 1, 196631, 65538, 2, 262167, 65538, 2, 327703, 65538, 2, 393239, 65538, 2, 458775, 65538, 2, 524311, 65538, 2, 589847, 65538, 2, 65560, 65538, 1, 131096, 65538, 1, 196632, 65538, 2, 262168, 65538, 2, 327704, 65538, 2, 393240, 65538, 2, 458776, 65538, 2, 524312, 65538, 2, 589848, 65538, 2, 65561, 65538, 1, 131097, 65538, 1, 196633, 65538, 2, 262169, 65538, 2, 327705, 65538, 2, 393241, 65538, 2, 458777, 65538, 2, 524313, 65538, 2, 589849, 65538, 2, 26, 131074, 3, 65562, 65538, 1, 131098, 65538, 1, 196634, 65538, 2, 262170, 65538, 2, 327706, 65538, 2, 393242, 65538, 2, 458778, 65538, 2, 524314, 65538, 2, 589850, 65538, 2, 65539, 131074, 3, 65540, 131074, 3, 131076, 131074, 3, 65541, 131074, 3, 131077, 131074, 3, 65542, 131074, 3, 131078, 131074, 3, 65543, 131074, 3, 131079, 131074, 3, 65544, 131074, 3, 131080, 131074, 3, 65545, 131074, 3, 131081, 131074, 3, 65546, 131074, 3, 131082, 131074, 3, 65547, 131074, 3, 131083, 131074, 3, 65548, 131074, 3, 65549, 131074, 3, -589835, 131074, 3, -524299, 131074, 3, -458763, 131074, 3, -393227, 131074, 3, -327691, 131074, 3, -262155, 131074, 3, -196619, 131074, 3, -131083, 131074, 3, -65547, 131074, 3, -11, 131074, 3, -655334, 131074, 3, -589798, 131074, 3, -524262, 131074, 3, -458726, 131074, 3, -393190, 131074, 3, -327654, 131074, 3, -262118, 131074, 3, -196582, 131074, 3, -131046, 131074, 3, -65510, 131074, 3)
+
+[node name="AreaExit" parent="." index="12" unique_id=678330850]
+position = Vector2(314, 195)
+
+[node name="Player" parent="." index="13" unique_id=1312877385]
+modulate = Color(0.8304218, 0.8927162, 0.96409327, 1)
+position = Vector2(405, 0)
+
+[node name="SpawnPoint" parent="." index="14" unique_id=627443350]
+position = Vector2(417, -1)
+
+[node name="NPC_Enggang" type="AnimatedSprite2D" parent="." index="15" unique_id=1515518164]
+modulate = Color(0.8286255, 0.9073679, 0.97483104, 1)
+z_index = 7
+position = Vector2(108, -61.000004)
+scale = Vector2(1.3251532, 1.3251535)
+sprite_frames = SubResource("SpriteFrames_rsp6k")
+autoplay = "default"
+
+[node name="Shadow" type="Sprite2D" parent="NPC_Enggang" index="0" unique_id=955922861]
+modulate = Color(0, 0.1152524, 0.22242358, 0.36078432)
+show_behind_parent = true
+position = Vector2(3.773149, 80.74536)
+scale = Vector2(6.618354, 2.635344)
+texture = ExtResource("10_8cgal")
+
+[node name="DialoguePivot" type="Marker2D" parent="NPC_Enggang" index="1" unique_id=2052766297]
+position = Vector2(59.615746, -41.50463)
+
+[node name="FireGlowOverlay4" type="ColorRect" parent="NPC_Enggang" index="2" unique_id=299856152]
+visible = false
+material = SubResource("ShaderMaterial_4vry1")
+offset_left = -116.96756
+offset_top = -79.23612
+offset_right = 43.719788
+offset_bottom = 168.43982
+rotation = -0.5235988
+metadata/_edit_use_anchors_ = true
+
+[node name="Parallax2D2" type="Parallax2D" parent="." index="16" unique_id=1095750014]
+z_index = 11
+scroll_offset = Vector2(12, 48)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D2" index="0" unique_id=2047007282]
+position = Vector2(342, -170)
+texture = ExtResource("10_7sgpj")
+
+[node name="LeafParticles" type="GPUParticles2D" parent="." index="17" unique_id=1327271901]
+position = Vector2(345, -145)
+rotation = 3.1415927
+amount = 18
+lifetime = 1.48
+preprocess = 3.0
+process_material = SubResource("ParticleProcessMaterial_d5a0o")

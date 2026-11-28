@@ -14,7 +14,7 @@ extends Node2D
 
 # --- VARIABEL STATE ---
 var interacted_count: int = 0
-const TOTAL_REQUIRED: int = 2
+const TOTAL_REQUIRED: int = 1
 var cutscene_triggered: bool = false
 
 
@@ -73,25 +73,37 @@ func play_initial_dialogue() -> void:
 
 
 func _on_objek_interacted() -> void:
+	if cutscene_triggered:
+		return
+
 	interacted_count += 1
-	print("Interaksi berhasil: ", interacted_count, "/", TOTAL_REQUIRED)
-
-	play_interaction_dialogue(interacted_count)
-
-	if interacted_count >= TOTAL_REQUIRED and not cutscene_triggered:
+	if interacted_count >= TOTAL_REQUIRED:
 		cutscene_triggered = true
-		start_cutscene_timer()
+
+		# Matikan kedua area interact
+		if interact_kiri:
+			interact_kiri.set_deferred("monitoring", false)
+		if interact_kanan:
+			interact_kanan.set_deferred("monitoring", false)
+
+		# Jalankan dialog sesak napas & layar menggelap secara bersamaan / otomatis
+		play_interaction_dialogue(interacted_count)
+		await _darken_screen_gradually()
+
+		# Langsung pindah scene otomatis tanpa tunggu input lagi
+		if SceneTransition and SceneTransition.has_method("fade_out"):
+			await SceneTransition.fade_out()
+		get_tree().change_scene_to_file("res://scene/Function/cutscene_hutan_2.tscn")
 
 
-func play_interaction_dialogue(step: int) -> void:
-	var text: String = ""
-	if step == 1:
-		text = "Tolong! Ada orang di sini?! Api semakin membesar!"
-	elif step == 2:
-		text = "Nafasku... terengah-engah... aku tidak tahan lagi..."
+func play_interaction_dialogue(_step: int) -> void:
+	var text: String = "Tolong! Aku sesak di sini! Asap semakin pekat... kepalaku pusing..."
+	trigger_dialogue_manager(text)
 
-	if text != "":
-		trigger_dialogue_manager(text)
+	# Tunggu dialog selesai dibaca pemain sebelum layar menggelap penuh
+	if DialogueManager and "is_active" in DialogueManager:
+		while DialogueManager.is_active:
+			await get_tree().process_frame
 
 
 func trigger_dialogue_manager(text: String) -> void:
@@ -115,3 +127,21 @@ func start_cutscene_timer() -> void:
 	# 2. Pindah ke cutscene_hutan_2.tscn
 	var target_scene = "res://scene/Function/cutscene_hutan_2.tscn"
 	get_tree().change_scene_to_file(target_scene)
+
+func _darken_screen_gradually() -> void:
+	var dark_layer := CanvasLayer.new()
+	dark_layer.layer = 100
+	add_child(dark_layer)
+
+	var dark_rect := ColorRect.new()
+	dark_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dark_rect.color = Color(0.0, 0.0, 0.0, 0.0)
+	dark_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dark_layer.add_child(dark_rect)
+
+	# Bertahap 20%, 40%, 60%, 80%, hingga 100% (2,5 detik per tahap)
+	var steps: Array[float] = [0.2, 0.4, 0.6, 0.8, 1.0]
+	for alpha_target in steps:
+		var tween := create_tween()
+		tween.tween_property(dark_rect, "color:a", alpha_target, 2.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		await tween.finished

@@ -25,6 +25,7 @@ extends CharacterBody2D
 @export var quiz_focus_zoom: Vector2 = Vector2(1.45, 1.45) # Tingkat zoom mendekat ke NPC
 @export var quiz_focus_offset: Vector2 = Vector2(0.0, -60.0) # Geseran posisi kamera ke tubuh NPC
 @export var quiz_fade_duration: float = 0.5
+@export var quiz_player_offset_x: float = 65.0 # Jarak aman Danum di sebelah kanan NPC saat pertanyaan
 
 @export_group("Ending Cutscene Image & Pivots")
 @export var ending_cutscene_image: Texture2D # Drag gambar ilustrasi cutscene ke sini di Inspector!
@@ -498,8 +499,19 @@ func _play_quiz_and_ending(player: Node2D) -> void:
 	if QuestManager and QuestManager.has_method("complete_quest"):
 		QuestManager.complete_quest("quest_kopi_1", true)
 
-	# --- KELUAR CUTSCENE GAMBAR & KEMBALIKAN KAMERA KE PLAYER ---
-	await _exit_ending_cutscene()
+	# Beri jeda singkat setelah dialog perpisahan selesai lalu pindah ke world_langit_3
+	await get_tree().create_timer(0.5).timeout
+
+	var target_scene: String = "res://scene/World/world_langit_3.tscn"
+	if SceneTransition and SceneTransition.has_method("change_scene"):
+		SceneTransition.change_scene(target_scene)
+	elif SceneTransition and SceneTransition.has_method("fade_out"):
+		await SceneTransition.fade_out(0.6)
+		get_tree().change_scene_to_file(target_scene)
+		if SceneTransition.has_method("fade_in"):
+			await SceneTransition.fade_in(0.6)
+	else:
+		get_tree().change_scene_to_file(target_scene)
 
 func _play_post_quest_dialogue() -> void:
 	var target_npc: Node2D = _get_npc_pivot()
@@ -507,6 +519,7 @@ func _play_post_quest_dialogue() -> void:
 		"Terima kasih sudah berkunjung ke kebun kami, Danum.",
 		"Semoga perjalananmu berikutnya menyenangkan!"
 	], target_npc)
+	
 
 func _say(lines: Array[String], pivot: Node2D) -> void:
 	DialogueManager.start_dialogue(lines, pivot)
@@ -565,13 +578,32 @@ func _fade_and_zoom_to_npc() -> void:
 	_orig_cam_zoom = cam.zoom
 	_orig_cam_top_level = cam.top_level
 
-	# 1. Fade layar ke hitam
+	# 1. Fade layar ke hitam penuh (alpha = 1.0)
 	await _run_screen_fade(1.0, quiz_fade_duration)
 
-	# 2. Pindahkan & zoom kamera lebih dekat ke NPC Petani
+	# Pastikan referensi player tidak null (cari via group "player" jika player_ref kosong)
+	var target_player: Node2D = player_ref
+	if not is_instance_valid(target_player):
+		target_player = get_tree().get_first_node_in_group("player") as Node2D
+
+	# 2. Pindahkan Danum INSTAN saat layar 100% hitam pekat (tanpa terlihat bergeser)
+	if is_instance_valid(target_player):
+		target_player.global_position.x = global_position.x + quiz_player_offset_x
+		if target_player is CharacterBody2D:
+			target_player.velocity = Vector2.ZERO
+		var p_sprite := target_player.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		if p_sprite:
+			p_sprite.flip_h = true # Hadapkan Danum ke arah NPC petani
+		if npc_sprite:
+			npc_sprite.flip_h = false # Hadapkan NPC petani ke arah Danum
+
+	# Pindahkan & zoom kamera saat layar masih hitam
 	cam.top_level = true
 	cam.global_position = global_position + quiz_focus_offset
 	cam.zoom = quiz_focus_zoom
+
+	# Tunggu 1 frame agar posisi baru ter-render di balik layar hitam sebelum fade terang
+	await get_tree().process_frame
 
 	# 3. Fade layar kembali terang
 	await _run_screen_fade(0.0, quiz_fade_duration)

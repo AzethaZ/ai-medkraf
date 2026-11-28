@@ -4,9 +4,10 @@ extends Node2D
 @onready var camera_2d: Camera2D = $Player/Camera2D if has_node("Player/Camera2D") else null
 @onready var camera_point: Node2D = $CameraPoint if has_node("CameraPoint") else null
 
-@onready var logo_texture: TextureRect = find_child("TextureRect", true, false) as TextureRect
+@onready var logo_texture: Sprite2D = $StudioSplashUI/SplashContainer/Logo if has_node("StudioSplashUI/SplashContainer/Logo") else (find_child("Logo", true, false) as Sprite2D)
 @onready var center_trigger: Area2D = find_child("CenterTrigger", true, false) as Area2D
 @onready var area_exit: Area2D = find_child("AreaExit", true, false) as Area2D
+@onready var logo_overlay: ColorRect = $StudioSplashUI/Overlay if has_node("StudioSplashUI/Overlay") else null
 
 @export var tutorial_delay: float = 8.0
 
@@ -28,6 +29,12 @@ var is_exiting: bool = false
 
 
 func _ready() -> void:
+	if logo_overlay:
+		logo_overlay.modulate.a = 0.0
+		logo_overlay.visible = false
+	if logo_texture:
+		logo_texture.modulate.a = 0.0
+		logo_texture.visible = false
 	if MusicManager:
 		var nature_sfx = preload("res://assets/audio/nature_ambience.mp3")
 		MusicManager.play_world_audio(nature_sfx, null, 0.0)
@@ -140,19 +147,26 @@ func run_logo_sequence() -> void:
 	await _play_move_tutorial()
 
 
-
 func fade_logo_image(appear: bool) -> void:
 	if not logo_texture:
 		return
-	var tween = create_tween()
+
+	var tween := create_tween().set_parallel(true)
 	if appear:
 		logo_texture.visible = true
+		if logo_overlay:
+			logo_overlay.visible = true
+			tween.tween_property(logo_overlay, "modulate:a", 1.0, 0.8)
 		tween.tween_property(logo_texture, "modulate:a", 1.0, 0.8)
 		await tween.finished
 	else:
+		if logo_overlay:
+			tween.tween_property(logo_overlay, "modulate:a", 0.0, 0.8)
 		tween.tween_property(logo_texture, "modulate:a", 0.0, 0.8)
 		await tween.finished
 		logo_texture.visible = false
+		if logo_overlay:
+			logo_overlay.visible = false
 
 
 func transition_camera_to_normal() -> void:

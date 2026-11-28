@@ -73,7 +73,7 @@ func prepare_dialogue_lines() -> void:
 		current_active_quest = "quest_ayam_1"
 		should_start_quest_on_end = true
 		dialogue_lines = [
-			"Tolong! Anak-anak ayamku lepas sampai ke area sekitar hutan!",
+			"Tolong! Anak-anak ayamku lepas sampai ke area sekitar desa!",
 			"Bisa tolong kumpulkan 3 anak ayam dan bawa kembali ke sini?"
 		]
 		
@@ -82,14 +82,14 @@ func prepare_dialogue_lines() -> void:
 			current_active_quest = "quest_ayam_1"
 			should_complete_quest_on_end = true
 			dialogue_lines = [
-				"Terima kasih banyak atas bantuanmu, Danum! Anak-anak ayam sudah kembali aman.",
-				"Tapi ada masalah lain! Ayam jago galakku kabur sampai ke area sungai di World 1!",
-				"Akses jalan ke area tersebut sudah aku bukakan. Tolong bantu tangkap dia ya!"
+				"Terima kasih banyak atas bantuanmu, nak! Anak-anak ayam sudah kembali aman.",
+				"Tapi ada masalah lain! Ayam jago galakku kabur sampai ke area hutan bambu!",
+				"Pergi ke arah gerbang besar merah, dia suka berlatih disana. Tolong bantu tangkap dia ya!"
 			]
 		else:
 			dialogue_lines = [
 				"Kamu baru menemukan " + str(q1_count) + "/3 anak ayam...",
-				"Coba cari lagi di area sebelah kanan dan map sekitar!"
+				"Coba cari lagi di area sebelah kiri!"
 			]
 			
 	# --- TAHAP 2: QUEST AYAM JAGO GALAK ---
@@ -101,13 +101,13 @@ func prepare_dialogue_lines() -> void:
 			dialogue_lines = []
 		else:
 			dialogue_lines = [
-				"Ayam jago galak itu masih berkeliaran di World 1!",
+				"Ayam jago galak itu masih berkeliaran di hutan bambu!",
 				"Hati-hati ya Danum, patukannya lumayan sakit!"
 			]
 			
 	elif q3_status == "COMPLETED":
 		dialogue_lines = [
-			"Semua ayam sudah aman di kandang. Terima kasih banyak atas bantuanmu, Danum!"
+			"Semua ayam sudah aman di kandang. Terima kasih banyak atas bantuanmu, nak!"
 		]
 
 func start_dialogue() -> void:
@@ -231,12 +231,6 @@ func _play_quest_3_ending_cutscene() -> void:
 	var cs_peternak_pivot: Node2D = cutscene_pivot_peternak if is_instance_valid(cutscene_pivot_peternak) else peternak_pivot
 	var cs_danum_pivot: Node2D = cutscene_pivot_danum if is_instance_valid(cutscene_pivot_danum) else danum_pivot
 	
-	var view_size: Vector2 = get_viewport_rect().size
-	img_rect.pivot_offset = view_size * 0.5
-	var img_tween := create_tween()
-	img_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	img_tween.tween_property(img_rect, "scale", Vector2(1.05, 1.05), 18.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	
 	if SceneTransition and SceneTransition.has_method("fade_in"):
 		await SceneTransition.fade_in()
 		
@@ -244,7 +238,7 @@ func _play_quest_3_ending_cutscene() -> void:
 	var in_cutscene_dialogues = [
 		{"speaker": cs_danum_pivot, "text": "Jadi, kalian bisa memanfaatkan hutan untuk beternak tanpa harus menebang banyak pohon?"},
 		{"speaker": cs_peternak_pivot, "text": "Tentu saja. Selama kita tahu batasnya dan menjaga lingkungan sekitar, hutan bisa memberikan banyak manfaat bagi kehidupan kita."},
-		{"speaker": cs_danum_pivot, "text": "Aku mengerti. Berarti kita juga harus menjaga tempat yang memberi kita kehidupan."},
+		{"speaker": cs_danum_pivot, "text": "Oh! bagus ya, tidak seperti di tempatku! Berarti kita juga harus menjaga tempat yang memberi kita kehidupan."},
 		{"speaker": cs_peternak_pivot, "text": "Betul sekali. Hutan bukan hanya tempat tinggal bagi hewan, tetapi juga sumber kehidupan bagi manusia."}
 	]
 	
@@ -255,8 +249,6 @@ func _play_quest_3_ending_cutscene() -> void:
 	if SceneTransition and SceneTransition.has_method("fade_out"):
 		await SceneTransition.fade_out()
 		
-	if img_tween and img_tween.is_running():
-		img_tween.kill()
 	if is_instance_valid(cutscene_layer):
 		cutscene_layer.queue_free()
 		
@@ -268,7 +260,7 @@ func _play_quest_3_ending_cutscene() -> void:
 		await SceneTransition.fade_in()
 		
 	# --- BAGIAN 5: DANUM BERTERIMA KASIH & LANGSUNG MASUK WORLD_LANGIT_2 ---
-	await _say_line("Terima kasih atas penjelasannya, Pak! Aku akan melanjutkan perjalananku.", danum_pivot)
+	await _say_line("Terima kasih atas penjelasannya, Apui! Aku akan melanjutkan perjalananku.", danum_pivot)
 	
 	if QuestManager:
 		QuestManager.complete_quest("quest_ayam_3", true)
@@ -321,7 +313,15 @@ func end_dialogue() -> void:
 	is_chatting = false
 	if dialogue_ui:
 		dialogue_ui.visible = false
-		
+
+	var player = get_tree().current_scene.find_child("Player", true, false)
+	if player:
+		if player.has_method("set_dialogue_state"):
+			player.set_dialogue_state(false)
+		elif player.has_method("enable_movement"):
+			player.enable_movement()
+		player.set_physics_process(true)
+
 	process_quest_after_dialogue()
 
 func process_quest_after_dialogue() -> void:

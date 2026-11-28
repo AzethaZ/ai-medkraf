@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://doullxrfjbu3c"]
+
+[ext_resource type="Script" uid="uid://uob3igbxuc1n" path="res://script/npc/npc_hotel.gd" id="1_6uu4j"]
+[ext_resource type="Texture2D" uid="uid://djsrxixla5ngt" path="res://assets/cutscene_2.png" id="2_6r444"]
+[ext_resource type="Texture2D" uid="uid://cs3k07ysc8q0q" path="res://assets/animation/thailand_hotel.png" id="2_6uu4j"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_7u4yg"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="3_xnebj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6r444"]
+atlas = ExtResource("2_6uu4j")
+region = Rect2(0, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnebj"]
+atlas = ExtResource("2_6uu4j")
+region = Rect2(70, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mog5"]
+atlas = ExtResource("2_6uu4j")
+region = Rect2(140, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djdyt"]
+atlas = ExtResource("2_6uu4j")
+region = Rect2(210, 0, 70, 127)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6r444")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnebj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mog5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djdyt")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vrlf"]
+size = Vector2(37, 117)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6uu4j"]
+radius = 24.779572
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6r444"]
+size = Vector2(113, 20)
+
+[node name="npc_hotel" type="CharacterBody2D" unique_id=1482363326]
+script = ExtResource("1_6uu4j")
+final_cutscene_image = ExtResource("2_6r444")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1971482744]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(-3.0000002, 64)
+scale = Vector2(1.9886713, 1.9015628)
+texture = ExtResource("3_xnebj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1784468835]
+position = Vector2(-2.3333309, -12.838102)
+scale = Vector2(1.2095239, 1.2095239)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.7342276
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1581208125]
+position = Vector2(-5.5, 1.5)
+shape = SubResource("RectangleShape2D_8vrlf")
+disabled = true
+
+[node name="chat_detection" type="Area2D" parent="." unique_id=456254281]
+position = Vector2(-1.0000019, -9.999998)
+scale = Vector2(1.9375, 1.9375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=1322088656]
+position = Vector2(-1.5483866, 5.1612897)
+shape = SubResource("CircleShape2D_6uu4j")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1036369851]
+texture_filter = 1
+position = Vector2(-2, -105)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("2_7u4yg")
+
+[node name="DialoguePivot" type="Marker2D" parent="." unique_id=1307618035]
+position = Vector2(-2, -83.99999)
+scale = Vector2(0.9375, 0.9375)
+
+[node name="CutsceneTrigger" type="Area2D" parent="." unique_id=708408521]
+position = Vector2(-306, 60)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneTrigger" unique_id=848620650]
+shape = SubResource("RectangleShape2D_6r444")

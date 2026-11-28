@@ -18,8 +18,8 @@
 [ext_resource type="AudioStream" uid="uid://bae6eno6oup4l" path="res://assets/audio/kejar kejaran.mp3" id="14_drss8"]
 [ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="15_rjtth"]
 [ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="16_1a3vh"]
+[ext_resource type="Texture2D" uid="uid://dr0ev3ingcdq7" path="res://assets/ui/tutorial 2.png" id="19_a15hd"]
 [ext_resource type="Texture2D" uid="uid://1ggwaypc7eco" path="res://assets/animation/trenggiling_fix.png" id="19_md4kw"]
-[ext_resource type="Texture2D" uid="uid://bvwvi63t0kocy" path="res://assets/animation/ui/button_1.png" id="19_ues2s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ues2s"]
 shader = ExtResource("15_rjtth")
@@ -44,35 +44,6 @@ fill_to = Vector2(0.5, 1)
 [sub_resource type="Curve" id="Curve_drss8"]
 _data = [Vector2(0.60629916, 0.79591835), 0.0, 0.0, 0, 0, Vector2(0.9973753, 1), 0.0, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_md4kw"]
-atlas = ExtResource("19_ues2s")
-region = Rect2(0, 0, 65, 41)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a15hd"]
-atlas = ExtResource("19_ues2s")
-region = Rect2(65, 0, 65, 41)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vu4yd"]
-atlas = ExtResource("19_ues2s")
-region = Rect2(130, 0, 65, 41)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_md4kw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a15hd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vu4yd")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 6.0
-}]
 
 [node name="world_hutanbakar" unique_id=1697432782 instance=ExtResource("1_eryjc")]
 script = ExtResource("2_a0gq0")
@@ -249,6 +220,7 @@ offset_right = 68.0
 offset_bottom = -73.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 10
 text = "Try again
 "
 
@@ -321,22 +293,28 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5568628)
 
-[node name="TutorialImage" type="TextureRect" parent="JumpTutorialUI" index="1" unique_id=1986368777]
+[node name="TutorialImage2" type="TextureRect" parent="JumpTutorialUI" index="1" unique_id=717835948]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 35.0
+offset_right = -99.55554
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_a15hd")
+
+[node name="GambarObstacle" type="TextureRect" parent="JumpTutorialUI" index="2" unique_id=1986368777]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -42.0
-offset_right = -70.405426
-offset_bottom = 43.0
+offset_left = -156.0
+offset_top = -79.0
+offset_right = -49.540558
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("19_md4kw")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="JumpTutorialUI" index="2" unique_id=755663975]
-position = Vector2(435.00003, 163)
-scale = Vector2(2.1585364, 2.1585367)
-sprite_frames = SubResource("SpriteFrames_1vivr")
-frame_progress = 0.8359849

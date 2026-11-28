@@ -1,91 +1,113 @@
 extends Node2D
 
-# Masukkan 3 gambar awan di Inspector (awan1.png, awan2.png, awan3.png)
-@export var cloud_textures: Array[Texture2D] = []
+@export var spawn_x_right: float = 200.0 # Titik X muncul di kanan map world_4
+@export var despawn_x_left: float = -1800.0 # Titik X hapus di kiri map world_4
+@export var y_jitter: float = 0.0 # Variasi naik-turun tipis dari posisi Y sprite di Editor (0 = persis seperti di Editor)
 
-# Ketinggian Y awan (angka lebih minus = lebih ke atas langit)
-@export var min_y: float = -175.0
-@export var max_y: float = -115.0
+@export var speed_min: float = 18.0 # Kecepatan gerak paling pelan (kanan ke kiri)
+@export var speed_max: float = 42.0 # Kecepatan gerak paling cepat
 
-# Kecepatan gerak awan dari kanan ke kiri (pixel per detik)
-@export var min_speed: float = 16.0
-@export var max_speed: float = 30.0
-@export var spawn_interval: float = 6.5
-@export var max_clouds: int = 3
+@export var scale_multiplier_min: float = 0.85
+@export var scale_multiplier_max: float = 1.2
 
-@onready var spawn_timer: Timer = $Timer
+@export var spawn_interval_min: float = 3.5 # Jeda antar awan muncul (detik)
+@export var spawn_interval_max: float = 7.0
+@export var max_active_clouds: int = 8
+@export var prewarm_count: int = 4 # Jumlah awan yang langsung ada saat scene dibuka
 
-var active_clouds: Array[Dictionary] = []
+@export var pause_when_player_moves: bool = true # Awan diam saat Danum bergerak, mengalir lagi saat Danum diam
+
+var _cloud_templates: Array[Sprite2D] = []
+var _active_clouds: Array[Dictionary] = []
+var _player: Node2D = null
 
 func _ready() -> void:
-	position = Vector2.ZERO
-	await get_tree().process_frame
-	
-	var half_width := _get_screen_half_width()
-	# Hanya munculkan 2 awan di awal agar langit tidak penuh
-	for i in range(2):
-		var start_offset = randf_range(-half_width * 0.6, half_width * 0.8)
-		_spawn_cloud(start_offset)
-		
-	if spawn_timer:
-		spawn_timer.wait_time = spawn_interval
-		spawn_timer.one_shot = false
-		if not spawn_timer.timeout.is_connected(_on_spawn_timer_timeout):
-			spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-		spawn_timer.start()
+	_player = _find_player()
+
+	# Ambil semua child Sprite2D (awan_1, awan_2, awan_3) sebagai template
+	for child in get_children():
+		if child is Sprite2D:
+			child.visible = false
+			_cloud_templates.append(child)
+
+	if _cloud_templates.is_empty():
+		return
+
+	# Langsung isi langit dengan beberapa awan saat scene baru dibuka
+	for i in range(prewarm_count):
+		var random_start_x := randf_range(despawn_x_left + 300.0, spawn_x_right)
+		_spawn_cloud(random_start_x)
+
+	_schedule_next_spawn()
+
+func _find_player() -> Node2D:
+	var p := get_tree().get_first_node_in_group("player") as Node2D
+	if is_instance_valid(p):
+		return p
+	if get_tree().current_scene:
+		p = get_tree().current_scene.find_child("Player", true, false) as Node2D
+	return p
+
+func _is_player_moving() -> bool:
+	if not is_instance_valid(_player):
+		_player = _find_player()
+	if is_instance_valid(_player) and _player is CharacterBody2D:
+		return abs(_player.velocity.x) > 5.0
+	return false
 
 func _process(delta: float) -> void:
-	var cam := get_viewport().get_camera_2d()
-	var cam_center_x: float = cam.get_screen_center_position().x if cam else 0.0
-	var half_width := _get_screen_half_width()
-	var margin := 120.0
-	
-	for i in range(active_clouds.size() - 1, -1, -1):
-		var data = active_clouds[i]
-		var sprite: Sprite2D = data["node"]
-		
-		if is_instance_valid(sprite):
-			data["offset_x"] -= data["speed"] * delta
-			sprite.global_position = Vector2(cam_center_x + data["offset_x"], data["y"])
-			
-			# Hapus awan jika sudah lewat tepi kiri layar (biarkan Timer yang mengatur spawn berikutnya)
-			if data["offset_x"] < -(half_width + margin):
-				sprite.queue_free()
-				active_clouds.remove_at(i)
-		else:
-			active_clouds.remove_at(i)
-
-func _on_spawn_timer_timeout() -> void:
-	if active_clouds.size() < max_clouds:
-		var half_width := _get_screen_half_width()
-		_spawn_cloud(half_width + 120.0)
-
-func _spawn_cloud(initial_offset_x: float) -> void:
-	if cloud_textures.is_empty():
+	if pause_when_player_moves and _is_player_moving():
 		return
-		
-	var cloud := Sprite2D.new()
-	cloud.texture = cloud_textures.pick_random()
-	
-	var pos_y := randf_range(min_y, max_y)
-	var random_scale := randf_range(0.85, 1.1)
-	cloud.scale = Vector2(random_scale, random_scale)
-	cloud.modulate.a = randf_range(0.8, 0.95)
-	
-	var cam := get_viewport().get_camera_2d()
-	var cam_center_x: float = cam.get_screen_center_position().x if cam else 0.0
-	cloud.global_position = Vector2(cam_center_x + initial_offset_x, pos_y)
-	
-	add_child(cloud)
-	
-	active_clouds.append({
-		"node": cloud,
-		"offset_x": initial_offset_x,
-		"y": pos_y,
-		"speed": randf_range(min_speed, max_speed)
-	})
 
-func _get_screen_half_width() -> float:
-	var cam := get_viewport().get_camera_2d()
-	var zoom_x: float = cam.zoom.x if cam else 1.0
-	return (get_viewport_rect().size.x / zoom_x) * 0.5
+	for i in range(_active_clouds.size() - 1, -1, -1):
+		var data: Dictionary = _active_clouds[i]
+		var sprite: Sprite2D = data["node"]
+		var spd: float = data["speed"]
+
+		if not is_instance_valid(sprite):
+			_active_clouds.remove_at(i)
+			continue
+
+		# Gerakkan awan dari kanan ke kiri
+		sprite.position.x -= spd * delta
+
+		# Hapus setelah melewati batas kiri layar
+		if sprite.position.x < despawn_x_left:
+			sprite.queue_free()
+			_active_clouds.remove_at(i)
+
+func _schedule_next_spawn() -> void:
+	if not is_inside_tree():
+		return
+	var wait_time := randf_range(spawn_interval_min, spawn_interval_max)
+	await get_tree().create_timer(wait_time).timeout
+	if not is_inside_tree():
+		return
+
+	# Jangan spawn awan baru jika Danum sedang bergerak
+	if not (pause_when_player_moves and _is_player_moving()):
+		if _active_clouds.size() < max_active_clouds:
+			_spawn_cloud(spawn_x_right)
+
+	_schedule_next_spawn()
+
+func _spawn_cloud(start_x: float) -> void:
+	if _cloud_templates.is_empty():
+		return
+
+	var template: Sprite2D = _cloud_templates.pick_random()
+	var cloud := template.duplicate() as Sprite2D
+	cloud.visible = true
+
+	# Gunakan posisi Y sesuai yang diatur pada masing-masing sprite di Editor
+	var spawn_y: float = template.position.y + randf_range(-y_jitter, y_jitter)
+	cloud.position = Vector2(start_x, spawn_y)
+
+	var mult := randf_range(scale_multiplier_min, scale_multiplier_max)
+	cloud.scale = template.scale * mult
+
+	add_child(cloud)
+	_active_clouds.append({
+		"node": cloud,
+		"speed": randf_range(speed_min, speed_max)
+	})

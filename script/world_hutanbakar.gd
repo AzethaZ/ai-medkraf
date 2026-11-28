@@ -34,8 +34,8 @@ extends Node2D
 @onready var chase_particles: GPUParticles2D = find_child("GPUParticles2D", true, false) as GPUParticles2D
 
 # UI Game Over
-@onready var game_over_panel: Control = $ChaseUI/GameOverPanel if has_node("ChaseUI/GameOverPanel") else null
-@onready var retry_button: Button = find_child("RetryButton", true, false) as Button
+@onready var game_over_panel: Control = $ChaseUI/GameOverPanel
+@onready var retry_button: Button = $ChaseUI/GameOverPanel/RetryButton
 
 
 @onready var speed_lines: CPUParticles2D = find_child("CPUParticles2D", true, false) as CPUParticles2D
@@ -52,11 +52,13 @@ var current_miss_count: int = 0
 var is_chasing: bool = false
 var is_scene_initialized: bool = false
 
-@onready var jump_tutorial_ui: CanvasLayer = get_node_or_null("JumpTutorialUI")
-@onready var dark_overlay: ColorRect = get_node_or_null("JumpTutorialUI/DarkOverlay")
-@onready var tutorial_image: TextureRect = get_node_or_null("JumpTutorialUI/TutorialImage")
-@onready var tutorial_anim: AnimatedSprite2D = get_node_or_null("JumpTutorialUI/AnimatedSprite2D")
+@onready var jump_tutorial_ui = $JumpTutorialUI
+@onready var dark_overlay = $JumpTutorialUI/DarkOverlay
+@onready var tutorial_image = $JumpTutorialUI/TutorialImage2
+@onready var gambar_obstacle = $JumpTutorialUI/GambarObstacle
 @export var tutorial_delay: float = 7.0
+
+
 
 var first_obstacle: Node2D = null
 var jump_tutorial_shown: bool = false
@@ -134,10 +136,10 @@ func _process(delta: float) -> void:
 	if get_tree().paused:
 		return
 
-# Putar gambar trenggiling di tutorial selama UI tutorial terlihat
-	if jump_tutorial_ui and jump_tutorial_ui.visible and tutorial_image:
-		tutorial_image.pivot_offset = tutorial_image.size / 2.0
-		tutorial_image.rotation -= 6.0 * delta # Gunakan '+=' jika ingin berputar searah jarum jam
+# Putar gambar tenggiling di tutorial selama UI tutorial terlihat
+	if jump_tutorial_ui and jump_tutorial_ui.visible and gambar_obstacle:
+		gambar_obstacle.pivot_offset = gambar_obstacle.size / 2.0
+		gambar_obstacle.rotation -= 4.0 * delta # Arah rotasi berlawanan jarum jam (ke kiri) seperti menggelinding
 
 	# 1. Background Parallax OTOMATIS BERGERAK (Auto-Run)
 	if parallax_2d:
@@ -518,49 +520,59 @@ func _play_fullrect_tutorial() -> void:
 
 	jump_tutorial_ui.visible = true
 
-	var fade_duration: float = 0.6
+	var fade_duration: float = 0.5
 	var hold_duration: float = max(0.0, tutorial_delay - (fade_duration * 2.0))
-	if tutorial_image:
-		tutorial_image.visible = true
-		tutorial_image.modulate.a = 0.0
-		tutorial_image.pivot_offset = tutorial_image.size / 2.0
-		tutorial_image.rotation = 0.0
 
+	# 1. Reset posisi/rotasi jika perlu & set transparan (alpha = 0) di awal
 	if dark_overlay:
 		dark_overlay.visible = true
 		dark_overlay.modulate.a = 0.0
 	if tutorial_image:
 		tutorial_image.visible = true
 		tutorial_image.modulate.a = 0.0
-	if tutorial_anim:
-		tutorial_anim.visible = true
-		tutorial_anim.modulate.a = 0.0
-		tutorial_anim.play()
+		tutorial_image.pivot_offset = tutorial_image.size / 2.0
+		tutorial_image.rotation = 0.0
+	if gambar_obstacle:
+		gambar_obstacle.visible = true
+		gambar_obstacle.modulate.a = 0.0
+		gambar_obstacle.pivot_offset = gambar_obstacle.size / 2.0
+		gambar_obstacle.rotation = 0.0
 
-	# Fade In overlay gelap + 2 gambar tutorial bersamaan
+	# 2. Fade In overlay gelap + 2 gambar tutorial bersamaan
 	var fade_in := create_tween().set_parallel(true)
 	if dark_overlay:
 		fade_in.tween_property(dark_overlay, "modulate:a", 1.0, fade_duration)
 	if tutorial_image:
 		fade_in.tween_property(tutorial_image, "modulate:a", 1.0, fade_duration)
-	if tutorial_anim:
-		fade_in.tween_property(tutorial_anim, "modulate:a", 1.0, fade_duration)
+	if gambar_obstacle:
+		fade_in.tween_property(gambar_obstacle, "modulate:a", 1.0, fade_duration)
 	await fade_in.finished
 
-	# Tahan di layar selama tutorial berlangsung
+	# 3. Tahan di layar selama tutorial berlangsung
 	await get_tree().create_timer(hold_duration).timeout
 
-	# Fade Out semuanya sebelum obstacle pertama muncul
+	# 4. Fade Out semuanya bersamaan sebelum obstacle pertama muncul
 	var fade_out := create_tween().set_parallel(true)
 	if dark_overlay:
 		fade_out.tween_property(dark_overlay, "modulate:a", 0.0, fade_duration)
 	if tutorial_image:
 		fade_out.tween_property(tutorial_image, "modulate:a", 0.0, fade_duration)
-	if tutorial_anim:
-		fade_out.tween_property(tutorial_anim, "modulate:a", 0.0, fade_duration)
+	if gambar_obstacle:
+		fade_out.tween_property(gambar_obstacle, "modulate:a", 0.0, fade_duration)
 	await fade_out.finished
 
-	if tutorial_anim:
-		tutorial_anim.stop()
-		tutorial_anim.visible = false
+	# 5. Sembunyikan setelah selesai memudar
+	if tutorial_image:
+		tutorial_image.visible = false
+	if gambar_obstacle:
+		gambar_obstacle.visible = false
 	jump_tutorial_ui.visible = false
+
+func _input(event: InputEvent) -> void:
+	if is_instance_valid(game_over_panel) and game_over_panel.visible:
+		if event is InputEventKey and event.pressed and not event.echo:
+			if event.keycode == KEY_E or (InputMap.has_action("interact") and event.is_action_pressed("interact")):
+				if is_instance_valid(retry_button):
+					retry_button.emit_signal("pressed")
+				get_viewport().set_input_as_handled()
+		return

@@ -7,11 +7,17 @@ extends Node2D
 @onready var player: Node2D = $Player
 
 func _ready() -> void:
+	# Ubah warna hanya pada AnimatedSprite2D milik Player khusus di world_2
+	var player_node := get_node_or_null("Player")
+	if player_node and player_node.has_node("AnimatedSprite2D"):
+		var player_sprite: AnimatedSprite2D = player_node.get_node("AnimatedSprite2D")
+		player_sprite.modulate = Color(0.92, 0.84, 1.0, 1.0) # Sesuaikan tint ungu/senja world_2
 	# 1. Atur batas kamera
 	var player_cam := $Player.get_node_or_null("Camera2D") as Camera2D
 	if player_cam:
-		player_cam.limit_left = -576
-		player_cam.limit_right = 576
+		player_cam.limit_left = -480
+		player_cam.limit_right = 480
+		player_cam.limit_top = -290
 		player_cam.limit_smoothed = true
 
 	# 2. Sembunyikan FadeOverlay lokal jika ada
@@ -75,7 +81,7 @@ func _ready() -> void:
 		if rooster_node and DialogueManager:
 			var lines: Array[String] = [
 				"Kukuruyuk...!!",
-				"(Baiklah, kali ini kau menang... aku akan pergi!)"
+				"(Suaraku tidak pernah didengar, padahal kita ingin hidup bebas!)"
 			]
 			DialogueManager.start_dialogue(lines, rooster_node)
 
@@ -124,6 +130,6 @@ func _ready() -> void:
 
 func _play_world_audio() -> void:
 	var ambience_file = preload("res://assets/audio/chinese_ambience.mp3")
-	var bgm_file = preload("res://assets/audio/chinese_music2.mp3")
+	var bgm_file = preload("res://assets/audio/chicken/chinese_music_1.mp3")
 	if MusicManager:
 		MusicManager.play_world_audio(ambience_file, bgm_file, 6, -12.0)

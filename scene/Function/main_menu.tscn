@@ -10,6 +10,8 @@
 [ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="6_vr1eo"]
 [ext_resource type="Texture2D" uid="uid://vbhyx8lbxraw" path="res://assets/world bg/hutan_awal/fg_1.png" id="7_fygqj"]
 [ext_resource type="AudioStream" uid="uid://b5xmo2yiosk72" path="res://assets/audio/nature_ambience.mp3" id="8_spe7l"]
+[ext_resource type="Texture2D" uid="uid://bf2v11p0bptq" path="res://assets/animation/ui/Logo-05.png" id="10_tvqfd"]
+[ext_resource type="Texture2D" uid="uid://y8kfont7pyaf" path="res://assets/animation/ui/Logo-03.png" id="11_avt0j"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vr1eo"]
 particle_flag_disable_z = true
@@ -113,9 +115,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -158.0
-offset_top = -96.0
+offset_top = -83.0
 offset_right = 158.0
-offset_bottom = 70.0
+offset_bottom = 83.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 100
@@ -128,9 +130,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=12879213]
-layout_mode = 2
-text = "MEDKRAF"
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/VBoxContainer" unique_id=791946429]
+position = Vector2(38.999996, -21.999998)
+scale = Vector2(0.01782607, 0.017826075)
+texture = ExtResource("10_tvqfd")
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer" unique_id=962477409]
 custom_minimum_size = Vector2(20, 60)
@@ -165,6 +168,12 @@ theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 8
 text = "exit"
 flat = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="MarginContainer/VBoxContainer" unique_id=141371828]
+z_index = 13
+position = Vector2(306, 187)
+scale = Vector2(0.0044846395, 0.0044846395)
+texture = ExtResource("11_avt0j")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1118891703]
 stream = ExtResource("8_spe7l")

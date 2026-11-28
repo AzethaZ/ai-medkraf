@@ -4,10 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://dbo5jtf3frcm5" path="res://scene/semak.tscn" id="2_7nn3p"]
 [ext_resource type="Script" uid="uid://ecxu7o4l8qjb" path="res://script/world_hutanawal.gd" id="2_n5dsr"]
 [ext_resource type="Texture2D" uid="uid://ddy8u2m2tai88" path="res://assets/world bg/hutan_awal_fix/ha_sky_1.png" id="3_6ubnf"]
-[ext_resource type="Texture2D" uid="uid://blqiin6nwei4s" path="res://assets/Logo_Dev_Team.png" id="4_5qbcg"]
 [ext_resource type="Texture2D" uid="uid://bwreiu7negceg" path="res://assets/world bg/hutan_awal_fix/ha_bg_1.png" id="4_lppv1"]
 [ext_resource type="Texture2D" uid="uid://b2welns7qnrww" path="res://assets/world bg/hutan_awal_fix/ha_mg_2.png" id="5_7voy7"]
 [ext_resource type="Texture2D" uid="uid://df5ni5bnpcb2w" path="res://assets/world bg/hutan_awal_fix/ha_mg_1.png" id="6_geg3f"]
+[ext_resource type="Texture2D" uid="uid://y8kfont7pyaf" path="res://assets/animation/ui/Logo-03.png" id="8_7voy7"]
+[ext_resource type="Texture2D" uid="uid://h3bj4j03luyk" path="res://assets/ui/cahya.png" id="10_7voy7"]
 [ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="10_7xr34"]
 [ext_resource type="Texture2D" uid="uid://pmu74njlwx56" path="res://assets/world bg/hutan_awal_fix/ha_fg_1.png" id="10_p57pa"]
 [ext_resource type="PackedScene" uid="uid://bhorer1v5v7rk" path="res://scene/Function/CutsceneBurung.tscn" id="12_yfusj"]
@@ -16,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cwxfo5xjqjpnh" path="res://assets/animation/Bulu.png" id="14_xk1sb"]
 [ext_resource type="AudioStream" uid="uid://b5xmo2yiosk72" path="res://assets/audio/nature_ambience.mp3" id="15_7vu10"]
 [ext_resource type="AudioStream" uid="uid://bqyt5sny7gh2u" path="res://assets/audio/music_hutan_awal.mp3" id="16_6ubnf"]
-[ext_resource type="Texture2D" uid="uid://bvwvi63t0kocy" path="res://assets/animation/ui/button_1.png" id="17_lppv1"]
+[ext_resource type="Texture2D" uid="uid://w3bm534ko64f" path="res://assets/ui/tutorial 3.png" id="18_7voy7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vivr"]
 size = Vector2(20, 89)
@@ -30,6 +31,12 @@ shader_parameter/falloff = 0.8
 shader_parameter/speed = 1.0
 shader_parameter/pixel_size = 128.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_v5gy4"]
+polygon = PackedVector2Array(242, -139, 241, -147, 250, -157, 261, -143, 278, -156, 285, -148, 278, -142, 269, -136, 277, -136, 282, -125, 283, -115, 282, -96, 277, -99, 277, -106, 281, -109, 279, -114, 271, -114, 268, -118, 269, -121, 264, -124, 249, -135, 247, -145)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8vrlf"]
+polygon = PackedVector2Array(-28.343914, -0.74921036, -21.240505, -0.86387444, -4.109665, 0.7442856, -2.1621094, 1.5399418, -3.188179, 2.0480156, -6.141674, 2.1024704, -12.799793, 1.4099712, -22.076096, 0.4885559)
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6ubnf"]
 particle_flag_disable_z = true
 emission_shape_scale = Vector3(30, 20, 1)
@@ -38,35 +45,6 @@ emission_box_extents = Vector3(100, 10, 1)
 initial_velocity_min = 10.0
 initial_velocity_max = 30.0
 gravity = Vector3(15, 30, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_md4kw"]
-atlas = ExtResource("17_lppv1")
-region = Rect2(0, 0, 65, 41)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a15hd"]
-atlas = ExtResource("17_lppv1")
-region = Rect2(65, 0, 65, 41)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vu4yd"]
-atlas = ExtResource("17_lppv1")
-region = Rect2(130, 0, 65, 41)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_7voy7"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_md4kw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a15hd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vu4yd")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 6.0
-}]
 
 [node name="world_hutanawal" unique_id=1697432782 instance=ExtResource("1_41e60")]
 script = ExtResource("2_n5dsr")
@@ -148,7 +126,15 @@ shape = SubResource("RectangleShape2D_1vivr")
 
 [node name="StudioSplashUI" type="CanvasLayer" parent="." index="11" unique_id=1925008664]
 
-[node name="SplashContainer" type="Control" parent="StudioSplashUI" index="0" unique_id=1159449488]
+[node name="Overlay" type="ColorRect" parent="StudioSplashUI" index="0" unique_id=1128722658]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5764706)
+
+[node name="SplashContainer" type="Control" parent="StudioSplashUI" index="1" unique_id=1159449488]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
@@ -157,22 +143,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="StudioSplashUI" index="1" unique_id=2096980716]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -89.0
-offset_top = -131.0
-offset_right = 263.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_5qbcg")
+[node name="Logo" type="Sprite2D" parent="StudioSplashUI" index="2" unique_id=554065122]
+position = Vector2(316, 176)
+scale = Vector2(0.022674436, 0.022674436)
+texture = ExtResource("8_7voy7")
 
 [node name="SunRayOverlay" type="ColorRect" parent="." index="12" unique_id=1533748654]
+visible = false
 z_index = 2
 material = SubResource("ShaderMaterial_1vivr")
 anchors_preset = 15
@@ -186,6 +163,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SunRayOverlay2" type="ColorRect" parent="." index="13" unique_id=1635322733]
+visible = false
 z_index = 2
 material = SubResource("ShaderMaterial_1vivr")
 anchors_preset = 15
@@ -198,8 +176,27 @@ offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Parallax2D2" type="Parallax2D" parent="." index="14" unique_id=1934918824]
-z_index = 3
+[node name="Node2D" type="Node2D" parent="." index="14" unique_id=965434562]
+visible = false
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Node2D" index="0" unique_id=1555692814]
+occluder = SubResource("OccluderPolygon2D_v5gy4")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Node2D" index="1" unique_id=424684833]
+position = Vector2(264, -179)
+rotation = 0.2617994
+scale = Vector2(3.4457145, 12.0528345)
+occluder = SubResource("OccluderPolygon2D_8vrlf")
+
+[node name="PointLight2D" type="PointLight2D" parent="Node2D" index="2" unique_id=1429592911]
+position = Vector2(373.00003, -294)
+rotation = 0.2617994
+scale = Vector2(0.5090721, 1.0117427)
+shadow_enabled = true
+texture = ExtResource("10_7voy7")
+
+[node name="Parallax2D2" type="Parallax2D" parent="." index="15" unique_id=1934918824]
+z_index = 5
 repeat_size = Vector2(2048, 0)
 repeat_times = 3
 
@@ -207,67 +204,67 @@ repeat_times = 3
 position = Vector2(155, -109)
 texture = ExtResource("10_p57pa")
 
-[node name="burung" parent="." index="15" unique_id=1883263315 instance=ExtResource("12_yfusj")]
+[node name="burung" parent="." index="16" unique_id=1883263315 instance=ExtResource("12_yfusj")]
 modulate = Color(0.93103534, 0.9515348, 0.96029955, 1)
 z_index = 1
 position = Vector2(2173, 21)
 
-[node name="CinematicUI" type="CanvasLayer" parent="." index="16" unique_id=264656098]
+[node name="CinematicUI" type="CanvasLayer" parent="." index="17" unique_id=264656098]
 
-[node name="NPC_IbuPenjual" parent="." index="17" unique_id=1396833978 instance=ExtResource("13_2eooj")]
+[node name="NPC_IbuPenjual" parent="." index="18" unique_id=1396833978 instance=ExtResource("13_2eooj")]
 modulate = Color(0.75953335, 0.85085183, 0.892111, 1)
 position = Vector2(1191, -25)
 
-[node name="CutsceneBurung2" parent="." index="18" unique_id=750326465 instance=ExtResource("13_xk1sb")]
+[node name="CutsceneBurung2" parent="." index="19" unique_id=750326465 instance=ExtResource("13_xk1sb")]
 visible = false
 position = Vector2(3664, 21)
 
-[node name="Bulu" type="Sprite2D" parent="." index="19" unique_id=1999544773]
+[node name="Bulu" type="Sprite2D" parent="." index="20" unique_id=1999544773]
 z_index = 1
 position = Vector2(3380, 61)
 texture = ExtResource("14_xk1sb")
 
-[node name="Bulu2" type="Sprite2D" parent="." index="20" unique_id=2013963722]
+[node name="Bulu2" type="Sprite2D" parent="." index="21" unique_id=2013963722]
 z_index = 1
 position = Vector2(3630, 53.000122)
 rotation = 0.6370452
 texture = ExtResource("14_xk1sb")
 
-[node name="Bulu3" type="Sprite2D" parent="." index="21" unique_id=1134815790]
+[node name="Bulu3" type="Sprite2D" parent="." index="22" unique_id=1134815790]
 z_index = 1
 position = Vector2(3713, 52.999878)
 rotation = -0.8290314
 texture = ExtResource("14_xk1sb")
 flip_h = true
 
-[node name="Bulu4" type="Sprite2D" parent="." index="22" unique_id=1326053903]
+[node name="Bulu4" type="Sprite2D" parent="." index="23" unique_id=1326053903]
 z_index = 1
 position = Vector2(2661, 51)
 texture = ExtResource("14_xk1sb")
 
-[node name="Bulu5" type="Sprite2D" parent="." index="23" unique_id=544283590]
+[node name="Bulu5" type="Sprite2D" parent="." index="24" unique_id=544283590]
 z_index = 1
 position = Vector2(2767, 53)
 texture = ExtResource("14_xk1sb")
 
-[node name="Bulu6" type="Sprite2D" parent="." index="24" unique_id=515408118]
+[node name="Bulu6" type="Sprite2D" parent="." index="25" unique_id=515408118]
 z_index = 1
 position = Vector2(2809, 53.00006)
 rotation = -0.726057
 texture = ExtResource("14_xk1sb")
 flip_h = true
 
-[node name="ForestAmbience" type="AudioStreamPlayer" parent="." index="25" unique_id=1192387176]
+[node name="ForestAmbience" type="AudioStreamPlayer" parent="." index="26" unique_id=1192387176]
 stream = ExtResource("15_7vu10")
 volume_db = 10.0
 autoplay = true
 
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." index="26" unique_id=1410938282]
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." index="27" unique_id=1410938282]
 stream = ExtResource("16_6ubnf")
 volume_db = -58.0
 autoplay = true
 
-[node name="LeafParticles" type="GPUParticles2D" parent="." index="27" unique_id=1929577122]
+[node name="LeafParticles" type="GPUParticles2D" parent="." index="28" unique_id=1929577122]
 position = Vector2(62, -52)
 amount = 60
 lifetime = 1.48
@@ -275,7 +272,7 @@ preprocess = 3.0
 visibility_rect = Rect2(-100, -100, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_6ubnf")
 
-[node name="LeafParticles2" type="GPUParticles2D" parent="." index="28" unique_id=487767944]
+[node name="LeafParticles2" type="GPUParticles2D" parent="." index="29" unique_id=487767944]
 position = Vector2(2188, -75)
 amount = 60
 lifetime = 1.48
@@ -283,7 +280,7 @@ preprocess = 3.0
 visibility_rect = Rect2(-100, -100, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_6ubnf")
 
-[node name="LeafParticles3" type="GPUParticles2D" parent="." index="29" unique_id=1316642093]
+[node name="LeafParticles3" type="GPUParticles2D" parent="." index="30" unique_id=1316642093]
 position = Vector2(3650, -55)
 amount = 60
 lifetime = 1.48
@@ -291,7 +288,7 @@ preprocess = 3.0
 visibility_rect = Rect2(-100, -100, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_6ubnf")
 
-[node name="MoveTutorialUI" type="CanvasLayer" parent="." index="30" unique_id=1886172250]
+[node name="MoveTutorialUI" type="CanvasLayer" parent="." index="31" unique_id=1886172250]
 visible = false
 
 [node name="DarkOverlay" type="ColorRect" parent="MoveTutorialUI" index="0" unique_id=1131215099]
@@ -303,19 +300,13 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.5568628)
 
 [node name="TutorialImage" type="TextureRect" parent="MoveTutorialUI" index="1" unique_id=1903224760]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -42.0
-offset_right = -70.405426
-offset_bottom = 43.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 94.0
+offset_top = 56.0
+offset_right = -84.056274
+offset_bottom = -71.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MoveTutorialUI" index="2" unique_id=1597414268]
-position = Vector2(325, 176)
-scale = Vector2(2.1585364, 2.1585367)
-sprite_frames = SubResource("SpriteFrames_7voy7")
+texture = ExtResource("18_7voy7")

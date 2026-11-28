@@ -1,11 +1,30 @@
 [gd_scene format=3 uid="uid://6cjhudrhixcu"]
 
 [ext_resource type="Script" uid="uid://ccwqqfux0t0yq" path="res://script/cutscene_pohon.gd" id="1_v67v1"]
-[ext_resource type="Texture2D" uid="uid://dbqqprjgofdtl" path="res://assets/cutscene_9.png" id="2_7nmqx"]
-[ext_resource type="Texture2D" uid="uid://cks7pavl2qdv3" path="res://assets/cutscene_10.png" id="3_u2hgd"]
-[ext_resource type="Texture2D" uid="uid://bocy0xrh3yrso" path="res://assets/cutscene_11.png" id="4_5dq8x"]
-[ext_resource type="Texture2D" uid="uid://cnn4l8mjqba4w" path="res://assets/cutscene_12.png" id="5_x6h63"]
+[ext_resource type="Texture2D" uid="uid://cije8urhr8qr6" path="res://assets/cutscene/scene_9(2).png" id="2_v67v1"]
+[ext_resource type="Texture2D" uid="uid://dkd3p64nixhyb" path="res://assets/cutscene/scene_10.png" id="3_v67v1"]
+[ext_resource type="Texture2D" uid="uid://dns7i2f67nxb4" path="res://assets/cutscene/scene_11.png" id="4_v67v1"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="6_7nmqx"]
+
+[sub_resource type="Curve" id="Curve_v67v1"]
+_data = [Vector2(0.31722054, 0.22754484), 0.0, 0.0, 0, 0, Vector2(0.68882173, 0.9281436), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v5gy4"]
+curve = SubResource("Curve_v67v1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7nmqx"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1000, 280, 1)
+use_rotation_3d = true
+initial_velocity_max = 132.28
+gravity = Vector3(30, -50, 0)
+scale_max = 2.0
+color = Color(0.98835915, 0.68764263, 0.4146976, 1)
+emission_curve = SubResource("CurveTexture_v5gy4")
+hue_variation_min = -0.06000002
+hue_variation_max = -2.2351742e-08
 
 [node name="CutscenePohon" type="Control" unique_id=250983348]
 layout_mode = 3
@@ -15,10 +34,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v67v1")
-image_1 = ExtResource("2_7nmqx")
-image_2 = ExtResource("3_u2hgd")
-image_3 = ExtResource("4_5dq8x")
-image_4 = ExtResource("5_x6h63")
+image_1 = ExtResource("2_v67v1")
+image_2 = ExtResource("3_v67v1")
+image_3 = ExtResource("4_v67v1")
 
 [node name="DisplayImage" type="TextureRect" parent="." unique_id=418023248]
 layout_mode = 1
@@ -44,3 +62,12 @@ visible = false
 texture_filter = 1
 position = Vector2(572, 305)
 texture = ExtResource("6_7nmqx")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1980642803]
+position = Vector2(127, 273)
+rotation = -0.46949357
+amount = 60
+speed_scale = 2.24
+explosiveness = 0.05
+randomness = 0.44
+process_material = SubResource("ParticleProcessMaterial_7nmqx")

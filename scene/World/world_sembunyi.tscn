@@ -15,12 +15,13 @@
 [ext_resource type="Shader" uid="uid://shr3o0jlee4" path="res://shader/world_hutanawal.gdshader" id="13_1qo3h"]
 [ext_resource type="AudioStream" uid="uid://b5xmo2yiosk72" path="res://assets/audio/nature_ambience.mp3" id="14_ve6xw"]
 [ext_resource type="AudioStream" uid="uid://cw4yn1yfox7rn" path="res://assets/audio/woodtrunk3.MP3" id="15_k2mpa"]
+[ext_resource type="Texture2D" uid="uid://dnfjd8fsbmwsa" path="res://assets/ui/cahyo.png" id="16_8hqrm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ve6xw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve6xw"]
 shader = ExtResource("13_1qo3h")
-shader_parameter/ray_color = Color(1, 0.95, 0.7, 0.25)
+shader_parameter/ray_color = Color(1, 0.95, 0.7, 0.21568628)
 shader_parameter/position = -0.26899996527750003
 shader_parameter/spread = 0.950000045125
 shader_parameter/falloff = 1.858000088255
@@ -35,6 +36,15 @@ emission_box_extents = Vector3(100, 10, 1)
 initial_velocity_min = 10.0
 initial_velocity_max = 30.0
 gravity = Vector3(15, 30, 0)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5xty6"]
+polygon = PackedVector2Array(242, -139, 241, -147, 250, -157, 261, -143, 278, -156, 285, -148, 278, -142, 269, -136, 277, -136, 282, -125, 283, -115, 282, -96, 277, -99, 277, -106, 281, -109, 279, -114, 271, -114, 268, -118, 269, -121, 264, -124, 249, -135, 247, -145)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_j4eqn"]
+polygon = PackedVector2Array(-28.343914, -0.74921036, -21.240505, -0.86387444, -4.109665, 0.7442856, -2.1621094, 1.5399418, -3.188179, 2.0480156, -6.141674, 2.1024704, -12.799793, 1.4099712, -22.076096, 0.4885559)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_odcf6"]
+polygon = PackedVector2Array(276, -177, 314, -198, 340, -200, 346, -194, 341, -191, 337, -195, 334, -188, 314, -188, 305, -175, 298, -178, 299, -172, 295, -166, 275, -174)
 
 [node name="world_sembunyi" unique_id=1697432782 instance=ExtResource("1_h371d")]
 script = ExtResource("2_2yqhe")
@@ -159,3 +169,29 @@ process_material = SubResource("ParticleProcessMaterial_ve6xw")
 stream = ExtResource("15_k2mpa")
 
 [node name="SnoreSFXPlayer" type="AudioStreamPlayer" parent="." index="19" unique_id=1898588047]
+
+[node name="Node2D" type="Node2D" parent="." index="20" unique_id=894810468]
+visible = false
+position = Vector2(99, 0)
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Node2D" index="0" unique_id=523315324]
+occluder = SubResource("OccluderPolygon2D_5xty6")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Node2D" index="1" unique_id=897703806]
+position = Vector2(264, -179)
+rotation = 0.2617994
+scale = Vector2(3.4457145, 12.0528345)
+occluder = SubResource("OccluderPolygon2D_j4eqn")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Node2D" index="2" unique_id=2056859130]
+occluder = SubResource("OccluderPolygon2D_odcf6")
+
+[node name="PointLight2D" type="PointLight2D" parent="Node2D" index="3" unique_id=357796817]
+position = Vector2(296.6129, -852.87317)
+rotation = -0.0037184954
+scale = Vector2(1.1475265, 1.2307392)
+color = Color(0.8802388, 0.60661936, 0.43579796, 1)
+energy = 0.92
+shadow_enabled = true
+texture = ExtResource("16_8hqrm")
+offset = Vector2(13.56427, 398.0814)

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://fgcvqi43gvei"]
+
+[ext_resource type="Script" uid="uid://bwnmqi823jhkt" path="res://script/npc/npc_cina_2.gd" id="1_8shrk"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="1_mfjdb"]
+[ext_resource type="Texture2D" uid="uid://c28v1qm1eyumn" path="res://assets/animation/cina_npc_2.png" id="2_mfjdb"]
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_kg8ow"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8shrk"]
+atlas = ExtResource("2_mfjdb")
+region = Rect2(0, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kg8ow"]
+atlas = ExtResource("2_mfjdb")
+region = Rect2(70, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj7qo"]
+atlas = ExtResource("2_mfjdb")
+region = Rect2(140, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksfd5"]
+atlas = ExtResource("2_mfjdb")
+region = Rect2(210, 0, 70, 127)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8shrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kg8ow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj7qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksfd5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o704i"]
+size = Vector2(40, 115)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u42cm"]
+radius = 30.972046
+
+[node name="npc_cina_2" type="CharacterBody2D" unique_id=701264377]
+script = ExtResource("1_8shrk")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1880435459]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(-5.416485, 57.6803)
+scale = Vector2(1.531001, 1.4639395)
+texture = ExtResource("1_mfjdb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=75511145]
+position = Vector2(-7, -13.000001)
+scale = Vector2(1.1154763, 1.1154764)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.32355395
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=464189950]
+position = Vector2(-4, 1.5)
+shape = SubResource("RectangleShape2D_o704i")
+disabled = true
+
+[node name="chat_detection" type="Area2D" parent="." unique_id=2076956456]
+position = Vector2(-1.0000019, -9.999998)
+scale = Vector2(1.9375, 1.9375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection" unique_id=431619293]
+position = Vector2(-1.5483866, 5.1612897)
+shape = SubResource("CircleShape2D_u42cm")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=526671800]
+texture_filter = 1
+position = Vector2(-10, -97)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("3_kg8ow")
+
+[node name="DialoguePivot" type="Marker2D" parent="." unique_id=118618362]
+position = Vector2(-10, -75.99999)
+scale = Vector2(0.9375, 0.9375)

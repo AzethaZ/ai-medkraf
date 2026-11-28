@@ -72,7 +72,7 @@ position = Vector2(191, 86)
 position = Vector2(293, 118)
 
 [node name="PivotSlide4" type="Marker2D" parent="Node2D" unique_id=1923322429]
-position = Vector2(350, 119)
+position = Vector2(320, 254)
 
 [node name="CutsceneDialogBox" type="Control" parent="." unique_id=1587112148]
 z_index = 20

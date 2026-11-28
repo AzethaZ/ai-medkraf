@@ -18,13 +18,14 @@ extends Node2D
 
 # Pengaturan fade-out BGM dari world sebelumnya
 @export var bgm_fade_out_duration: float = 2.5
+var _vietnam_bgm_started: bool = false
 
 @onready var camera_2d: Camera2D = $Camera2D if has_node("Camera2D") else null
 @onready var landscape_1: Parallax2D = $LandscapeParallax if has_node("LandscapeParallax") else null
 @onready var landscape_2: Parallax2D = $LandscapeParallax2 if has_node("LandscapeParallax2") else null
 @onready var landscape_3: Parallax2D = $LandscapeParallax3 if has_node("LandscapeParallax3") else null
 @onready var burung_sprite: Sprite2D = $BurungSprite if has_node("BurungSprite") else null
-@onready var burung_sprite_2: Sprite2D = $BurungSprite2 if has_node("BurungSprite2") else null
+@onready var burung_sprite_2: Sprite2D = $BurungSprite/BurungSprite2 if has_node("BurungSprite/BurungSprite2") else null
 @onready var pivot_danum: Marker2D = $BurungSprite/PivotDanum if has_node("BurungSprite/PivotDanum") else null
 @onready var pivot_enggang: Marker2D = $BurungSprite/PivotEnggang if has_node("BurungSprite/PivotEnggang") else null
 @onready var wing_flap_sfx: AudioStreamPlayer = $WingFlapSFX if has_node("WingFlapSFX") else null
@@ -32,24 +33,35 @@ extends Node2D
 
 @export var vietnam_bgm: AudioStream
 @export var vietnam_bgm_db: float = -12.0
-const VIETNAM_BGM := preload("res://assets/audio/viatnamese_bgm.mp3")
+const VIETNAM_BGM = preload("res://assets/audio/viatnamese_bgm.mp3")
 @export var vietnam_bgm_delay: float = 1.5 # Atur lama delay dalam detik sesuai selera
 var bg2_fade_tween: Tween
 var is_flapping: bool = false
 
+@export var wind_target_db: float = -6.0
+@onready var wind_sfx: AudioStreamPlayer = get_node_or_null("WindSFX")
+
 # --- NASKAH DIALOG CUTSCENE DENGAN PENANDA TRANSISI ---
 var cutscene_dialogues: Array[Dictionary] = [
 	{"speaker": "danum", "text": "Kita mau ke mana lagi sekarang, Enggang?"},
-	{"speaker": "enggang", "text": "Kita menuju kawasan Dataran Tinggi Tengah Vietnam, Danum. Salah satu wilayah penghasil kopi.", "trigger_bg2": true},
-	{"speaker": "danum", "text": "Perkebunan kopi? Apakah di sana hanya ditanami satu jenis tanaman kopi saja?"},
+	{"speaker": "enggang", "text": "Kita menuju kawasan Dataran Tinggi Tengah Vietnam, Danum. Salah satu wilayah penghasil kopi."},
+	{"speaker": "danum", "text": "Perkebunan kopi? Emangnya di sana hanya ditanami kopi? apa bedanya sama tempat kita?","trigger_bg2": true},
 	{"speaker": "enggang", "text": "Berbeda dengan perkebunan biasa yang hanya ditanami satu jenis tanaman, perkebunan ini menggunakan sistem agroforestri."},
+	{"speaker": "danum", "text": "Agrro..? Fresti..? Memangnya apa itu?"},
 	{"speaker": "enggang", "text": "Mereka menggabungkan tanaman kopi dengan pepohonan dan tanaman lain, seperti alpukat, durian, atau lada."},
-	{"speaker": "danum", "text": "Lalu apa fungsi pepohonan lain yang ditanam bersama kopi itu?", "trigger_bg3": true},
+	{"speaker": "danum", "text": "Lalu buat apa pohon lain yang ditanam bersama kopi itu?", "trigger_bg3": true},
 	{"speaker": "enggang", "text": "Pepohonan tersebut memberikan naungan bagi tanaman kopi, sementara hasil buah-buahan dapat menjadi sumber penghasilan tambahan bagi petani."},
-	{"speaker": "danum", "text": "Wah, saling melengkapi sekali! Ayo kita turun melihat kebunnya secara langsung!"}
+	{"speaker": "danum", "text": "Wah, melengkapi banget dong! Ayo kita langsung turun!"}
 ]
 
 func _ready() -> void:
+	if is_instance_valid(wind_sfx) and wind_sfx.stream:
+		wind_sfx.volume_db = -40.0
+		if not wind_sfx.playing:
+			wind_sfx.play()
+		var wind_in := create_tween()
+		wind_in.tween_property(wind_sfx, "volume_db", wind_target_db, 1.2)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	get_tree().paused = false
 
 	# Mulai fade-out BGM dari world sebelumnya (setelah quest peternak beres)
@@ -71,6 +83,13 @@ func _ready() -> void:
 	if landscape_3:
 		landscape_3.visible = true
 		landscape_3.modulate.a = 0.0
+
+	if burung_sprite:
+		burung_sprite.visible = true
+		burung_sprite.self_modulate.a = 1.0
+	if burung_sprite_2:
+		burung_sprite_2.visible = false
+		burung_sprite_2.modulate.a = 0.0
 
 	_start_wing_flap_loop()
 	_prepare_bird_entrance()
@@ -160,18 +179,19 @@ func _prepare_diagonal_pan() -> void:
 func _play_diagonal_pan() -> void:
 	if landscape_1:
 		var start_1: Vector2 = landscape_1.get_meta("start_offset", landscape_1.scroll_offset)
-		var pan_1 := create_tween()
-		pan_1.tween_property(landscape_1, "scroll_offset", start_1 + pan_offset, pan_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	if landscape_2:
-		var start_2: Vector2 = landscape_2.get_meta("start_offset", landscape_2.scroll_offset)
-		var pan_2 := create_tween()
-		pan_2.tween_property(landscape_2, "scroll_offset", start_2 + pan_offset, pan_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		var pan_1_tween := create_tween()
+		pan_1_tween.tween_property(landscape_1, "scroll_offset", start_1 + pan_offset, pan_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func _fade_in_landscape_2() -> void:
 	if not landscape_2:
 		return
-	bg2_fade_tween = create_tween()
-	bg2_fade_tween.tween_property(landscape_2, "modulate:a", 1.0, bg_2_fade_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	var start_2: Vector2 = landscape_2.get_meta("start_offset", landscape_2.scroll_offset)
+	bg2_fade_tween = create_tween().set_parallel(true)
+	bg2_fade_tween.tween_property(landscape_2, "modulate:a", 1.0, bg_2_fade_duration)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Pakai TRANS_LINEAR agar langsung bergerak konstan begitu mulai fade-in (tidak diam/pelan dulu di awal)
+	bg2_fade_tween.tween_property(landscape_2, "scroll_offset", start_2 + pan_offset, pan_duration)\
+		.set_trans(Tween.TRANS_LINEAR)
 
 func _transition_to_landscape_3() -> void:
 	if not landscape_3:
@@ -186,24 +206,51 @@ func _transition_to_landscape_3() -> void:
 	var start_offset_3: Vector2 = landscape_3.scroll_offset
 	var target_offset_3: Vector2 = start_offset_3 + Vector2(550.0, 300.0)
 
-	# Jalankan tween parallel HANYA untuk landscape (burung tetap diam di posisinya)
+	# 3. Jalankan tween paralel untuk landscape3 (Burung tetap diam di posisi)
 	var t := create_tween().set_parallel(true)
-	# Munculkan Landscape 3
+	# Munculkan landscape_3
 	t.tween_property(landscape_3, "modulate:a", 1.0, bg_3_reveal_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	# Geser gambar Landscape-nya saja
+	# Geser perlahan landscape-nya saja
 	t.tween_property(landscape_3, "scroll_offset", target_offset_3, bg_3_pan_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
+	# Tukar sprite burung dengan cara ditimpa di atasnya (tanpa jadi bening)
+	if burung_sprite and burung_sprite_2:
+		burung_sprite.self_modulate.a = 1.0 # Tetap solid penuh di belakang
+		burung_sprite_2.visible = true
+		burung_sprite_2.modulate.a = 0.0
+		t.tween_property(burung_sprite_2, "modulate:a", 1.0, bg_3_reveal_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		# Setelah BurungSprite2 100% menutupi, baru hilangkan BurungSprite di belakangnya
+		t.chain().tween_callback(func():
+			if is_instance_valid(burung_sprite):
+				burung_sprite.self_modulate.a = 0.0
+		)
 	# Mulai fade-in BGM di 65% perjalanan pan (pas sebelum ease-out melambat di ujung)
-	t.tween_callback(_play_vietnam_bgm).set_delay(bg_3_pan_duration * 0.65)
+	t.tween_callback(_play_vietnam_bgm).set_delay(bg_3_pan_duration * 0.5)
 
 	# Putar BGM Vietnam TEPAT saat pergeseran Landscape 3 selesai (enggang sampai di ujung)
 	t.finished.connect(_play_vietnam_bgm)
+	# Putar BGM Vietnam setelah jeda vietnam_bgm_delay (bisa diatur di Inspector)
+	t.tween_callback(_play_vietnam_bgm).set_delay(vietnam_bgm_delay)
 
 func _play_vietnam_bgm() -> void:
-	if not is_inside_tree():
+	if _vietnam_bgm_started or not is_inside_tree():
 		return
-	if MusicManager and MusicManager.has_method("play_world_audio"):
-		MusicManager.play_world_audio(null, VIETNAM_BGM, -8.0, -12.0)
+	_vietnam_bgm_started = true
+
+	var stream_to_play: AudioStream = vietnam_bgm if vietnam_bgm else VIETNAM_BGM
+	if not stream_to_play:
+		return
+
+	if MusicManager:
+		if MusicManager.has_method("play_world_audio"):
+			MusicManager.play_world_audio(null, stream_to_play, -0.5, vietnam_bgm_db)
+		# Paksa volume & playback tetap jalan meski fade_out_audio sebelumnya masih berjalan
+		if MusicManager.bgm_player:
+			MusicManager.bgm_player.stream = stream_to_play
+			MusicManager.bgm_player.volume_db = vietnam_bgm_db
+			if not MusicManager.bgm_player.playing:
+				MusicManager.bgm_player.play()
 
 func _start_vietnam_bgm_now() -> void:
 	if not is_inside_tree():

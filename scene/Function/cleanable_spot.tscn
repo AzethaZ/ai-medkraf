@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c4qo1qcrp4jfj"]
+
+[ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="1_hh7g4"]
+[ext_resource type="Script" uid="uid://chasb68cntw1" path="res://script/cleanable_spot.gd" id="1_qigx4"]
+[ext_resource type="Texture2D" uid="uid://b80jlv671ipo7" path="res://assets/map button on.png" id="2_m4ter"]
+[ext_resource type="Texture2D" uid="uid://djwhp6t87m7kr" path="res://assets/map button.png" id="3_s6yta"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cebru"]
+radius = 70.178345
+
+[node name="CleanableSpot" type="Area2D" unique_id=1954499536]
+script = ExtResource("1_qigx4")
+
+[node name="DirtySprite" type="Sprite2D" parent="." unique_id=880478527]
+texture = ExtResource("2_m4ter")
+
+[node name="CleanSprite" type="Sprite2D" parent="." unique_id=509804349]
+visible = false
+texture = ExtResource("3_s6yta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1390187764]
+shape = SubResource("CircleShape2D_cebru")
+
+[node name="InteractIcon" type="Sprite2D" parent="." unique_id=1675301581]
+texture_filter = 1
+position = Vector2(-2, -91)
+scale = Vector2(0.9375, 0.9375)
+texture = ExtResource("1_hh7g4")

@@ -1,50 +1,29 @@
 [gd_scene format=3 uid="uid://dwtq6sl70nt4t"]
 
 [ext_resource type="Script" uid="uid://b6lrcgsf73b1u" path="res://script/npc_cina_1.gd" id="1_k2fku"]
-[ext_resource type="Texture2D" uid="uid://b55725qjta4b8" path="res://assets/animation/hotel.png" id="1_u42cm"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_26bdn"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_26bdn"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(0, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k2fku"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(60, 0, 60, 120)
+[ext_resource type="Texture2D" uid="uid://cwd1homtka8ou" path="res://assets/animation/cina_npc_1.png" id="2_k2fku"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="2_n5nwp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n5nwp"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(120, 0, 60, 120)
+atlas = ExtResource("2_k2fku")
+region = Rect2(0, 0, 70, 127)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d5eik"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(180, 0, 60, 120)
+atlas = ExtResource("2_k2fku")
+region = Rect2(70, 0, 70, 127)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bfnly"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(240, 0, 60, 120)
+atlas = ExtResource("2_k2fku")
+region = Rect2(140, 0, 70, 127)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_axmb7"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(300, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kelsd"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(360, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hvwwj"]
-atlas = ExtResource("1_u42cm")
-region = Rect2(420, 0, 60, 120)
+atlas = ExtResource("2_k2fku")
+region = Rect2(210, 0, 70, 127)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_26bdn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k2fku")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n5nwp")
 }, {
@@ -56,16 +35,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_axmb7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kelsd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hvwwj")
 }],
 "loop": 1,
 "name": &"default",
-"speed": 6.0
+"speed": 4.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o704i"]
@@ -80,12 +53,18 @@ size = Vector2(199, 24)
 [node name="npc_cina_1" type="CharacterBody2D" unique_id=701264377]
 script = ExtResource("1_k2fku")
 
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1880435459]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(-4, 59)
+scale = Vector2(1.8070313, 1.727879)
+texture = ExtResource("2_n5nwp")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=75511145]
-position = Vector2(4, -16)
+position = Vector2(-4, -21)
 scale = Vector2(1.2666667, 1.2666667)
 sprite_frames = SubResource("SpriteFrames_1vivr")
 autoplay = "default"
-frame_progress = 0.4352842
+frame_progress = 0.28394666
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=464189950]
 position = Vector2(-4, 1.5)

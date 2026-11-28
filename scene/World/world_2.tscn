@@ -11,10 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://debs5swvyci4p" path="res://scene/Function/area_exit.tscn" id="7_ytcnd"]
 [ext_resource type="Texture2D" uid="uid://ddcr1agwiwkw6" path="res://assets/world bg/cina fix/cina_tanah.png" id="8_h03nf"]
 [ext_resource type="Texture2D" uid="uid://coxqs045qj344" path="res://assets/animation/Big_Bird-Sheet.png" id="8_r8kpu"]
-[ext_resource type="Texture2D" uid="uid://bi8whltvh1kgx" path="res://assets/duri.png" id="9_r275q"]
 [ext_resource type="PackedScene" uid="uid://bmmg1yjffdl04" path="res://scene/item_pickup.tscn" id="9_t88nh"]
 [ext_resource type="PackedScene" uid="uid://bw51j5bwix5ke" path="res://scene/chick.tscn" id="10_r8kpu"]
 [ext_resource type="PackedScene" uid="uid://bxplm11baemsx" path="res://scene/Function/rhythm_minigame.tscn" id="11_r8kpu"]
+[ext_resource type="Texture2D" uid="uid://cmy2o6htbstm5" path="res://assets/animation/ui/enter_kanan.png" id="13_wvi1n"]
 [ext_resource type="PackedScene" uid="uid://cth7pqghyp26c" path="res://scene/npc/ayam_1.tscn" id="15_bs5tn"]
 [ext_resource type="PackedScene" uid="uid://ba24ifegd34uf" path="res://scene/npc/ayam_2.tscn" id="16_75ou1"]
 [ext_resource type="Texture2D" uid="uid://crhbbk3s3jm6p" path="res://assets/world bg/cina fix/cina_fg1.png" id="16_o4wyi"]
@@ -22,6 +22,7 @@
 [ext_resource type="Shader" uid="uid://bu4bstd8uufdv" path="res://shader/pixel_mist_fog.gdshader" id="19_xrwy7"]
 [ext_resource type="Shader" uid="uid://bmahh5bffphjk" path="res://shader/fire_radial_glow.gdshader" id="20_h03nf"]
 [ext_resource type="AudioStream" uid="uid://c8r0v5115v5do" path="res://assets/audio/chicken/chicken_ambient.mp3" id="22_wvi1n"]
+[ext_resource type="PackedScene" uid="uid://fgcvqi43gvei" path="res://scene/npc/npc_cina_2.tscn" id="23_rcxtc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xrwy7"]
 shader = ExtResource("6_75ou1")
@@ -224,7 +225,7 @@ layer_0/tile_data = PackedInt32Array(131061, 65538, 2, 196597, 65538, 2, 262133,
 
 [node name="AreaExit" parent="." index="11" unique_id=678330850]
 z_index = 7
-position = Vector2(-348, -1)
+position = Vector2(-343, -29)
 walk_exit_texture = ExtResource("6_r8kpu")
 required_quest_id = "quest_ayam_1"
 
@@ -233,21 +234,23 @@ z_index = 3
 position = Vector2(-758, 4)
 
 [node name="RhythmMinigame" parent="Player" index="8" unique_id=184376380 instance=ExtResource("11_r8kpu")]
+position = Vector2(1, -5)
 
 [node name="SpawnPoint" parent="." index="13" unique_id=627443350]
 position = Vector2(-758, 4)
 
 [node name="AreaExit2" parent="." index="14" unique_id=1000238523 instance=ExtResource("7_ytcnd")]
-position = Vector2(798, -17)
+position = Vector2(784, -47)
 target_scene_path = "uid://b7wpa6ffnem3w"
 requires_interaction = false
-walk_exit_texture = ExtResource("9_r275q")
+walk_exit_texture = ExtResource("13_wvi1n")
 
 [node name="SpawnFromWorld3" type="Marker2D" parent="." index="15" unique_id=1997883830]
 position = Vector2(695, 10)
 
 [node name="NPC_Enggang" type="AnimatedSprite2D" parent="." index="16" unique_id=90888327]
-modulate = Color(0.83743984, 0.8564424, 0.94366723, 1)
+modulate = Color(0.6268402, 0.6564768, 0.8570739, 1)
+clip_children = 2
 z_index = 7
 position = Vector2(-535.00006, -54.999992)
 scale = Vector2(1.3251532, 1.3251535)
@@ -259,11 +262,19 @@ flip_h = true
 [node name="DialoguePivot" type="Marker2D" parent="NPC_Enggang" index="0" unique_id=1464932036]
 position = Vector2(-47.724464, -41.50463)
 
+[node name="FireGlowOverlay4" type="ColorRect" parent="NPC_Enggang" index="1" unique_id=1502774312]
+material = SubResource("ShaderMaterial_o4wyi")
+offset_left = -116.96756
+offset_top = -79.23612
+offset_right = 43.719788
+offset_bottom = 168.43982
+rotation = -0.5235988
+
 [node name="SpawnFromWorld1" type="Marker2D" parent="." index="17" unique_id=1546382172]
 position = Vector2(-346, 0)
 
 [node name="Anak Ayam Kedua" parent="." index="18" unique_id=574157516 instance=ExtResource("9_t88nh")]
-position = Vector2(-540, -43)
+position = Vector2(-534, -51)
 chick_scene = ExtResource("10_r8kpu")
 item_id = "ayam_2"
 
@@ -317,7 +328,6 @@ offset_bottom = 47.0
 [node name="LeafParticles" type="GPUParticles2D" parent="." index="28" unique_id=404323005]
 position = Vector2(-597, -145)
 rotation = 3.1415927
-amount = 5
 lifetime = 1.48
 preprocess = 3.0
 process_material = SubResource("ParticleProcessMaterial_h03nf")
@@ -325,7 +335,6 @@ process_material = SubResource("ParticleProcessMaterial_h03nf")
 [node name="LeafParticles2" type="GPUParticles2D" parent="." index="29" unique_id=558403019]
 position = Vector2(353, -148)
 rotation = 3.1415927
-amount = 5
 lifetime = 1.48
 preprocess = 3.0
 process_material = SubResource("ParticleProcessMaterial_h03nf")
@@ -334,3 +343,8 @@ process_material = SubResource("ParticleProcessMaterial_h03nf")
 stream = ExtResource("22_wvi1n")
 volume_db = -28.0
 autoplay = true
+
+[node name="npc_cina_2" parent="." index="31" unique_id=701264377 instance=ExtResource("23_rcxtc")]
+modulate = Color(0.8715965, 0.80248874, 0.8921045, 1)
+z_index = 1
+position = Vector2(77, -27)

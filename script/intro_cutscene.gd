@@ -26,8 +26,8 @@ extends CanvasLayer
 
 # Path slide gambar cutscene
 var slide_paths: Array[String] = [
-	"res://assets/cutscene_1.png",
-	"res://assets/cutscene_2.png",
+	"res://assets/cutscene/scene_1.png",
+	"res://assets/cutscene/scene_2.png",
 	"res://assets/cutscene/scene_3.png",
 	"res://assets/cutscene/scene_4.png"
 ]
@@ -57,22 +57,23 @@ func _ready() -> void:
 	# --- PENGATURAN DIALOG & SFX PER BARIS/PERISTIWA ---
 	dialogues_per_slide = {
 		# Slide 0 / Scene 1 (Contoh: SFX Api Unggun)
+		# Slide 1 / Scene 1 (Hanya SFX Api)
 		0: {
 			"pivot": pivot_slide_1,
 			"lines": [
 				{
-					"text": "Lihat api unggun itu... terlalu besar!",
-					"sfx": "res://assets/audio/soundreality-fire-crackling-campfire-sound-575667.mp3" # <-- SFX API
+					"text": "",
+					"sfx": "res://assets/audio/soundreality-fire-crackling-campfire-sound-373647.mp3"
 				}
 			]
 		},
-		# Slide 1 / Scene 2 (Contoh: SFX Menyiram Air)
+		# Slide 2 / Scene 2 (Hanya SFX Menyiram Air)
 		1: {
 			"pivot": pivot_slide_3,
 			"lines": [
 				{
-					"text": "Danum menyiramkan air untuk memadamkan apinya!",
-					"sfx": "res://assets/audio/universfield-water-splash-199583.mp3" # <-- SFX AIR
+					"text": "",
+					"sfx": "res://assets/audio/universfield-water-splash-199583.mp3"
 				}
 			]
 		},
@@ -97,8 +98,11 @@ func _ready() -> void:
 			]
 		}
 	}
-	
 	show_slide(0)
+	if dialogues_per_slide.has(0):
+		play_slide_dialogue(0)
+	elif interact_icon:
+		interact_icon.visible = true
 	fade_in_screen()
 
 func load_slides() -> void:
@@ -207,6 +211,12 @@ func play_slide_dialogue(slide_index: int) -> void:
 		if sfx_path != "" and ResourceLoader.exists(sfx_path) and event_sfx:
 			event_sfx.stream = load(sfx_path)
 			event_sfx.play()
+
+		# Jika teks kosong (slide tanpa dialog), lewati kotak dialog dan langsung lanjut
+		if line_text.strip_edges() == "":
+			if cutscene_dialog_box:
+				cutscene_dialog_box.visible = false
+			continue
 
 		var active_panel: Control = cutscene_dialog_panel
 		var active_label: Label = cutscene_dialog_label

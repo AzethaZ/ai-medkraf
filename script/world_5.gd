@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var camera_limit_left: int = -480
-@export var camera_limit_right: int = 1344
+@export var camera_limit_right: int = 1290
 
 func _ready() -> void:
 	var cam: Camera2D = _find_camera(self)

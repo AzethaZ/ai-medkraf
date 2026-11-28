@@ -10,13 +10,15 @@ extends Node2D
 
 # Array percakapan cutscene intro world_2
 var intro_dialogues = [
-	{"speaker_name": "Enggang", "text": "Selamat datang di pedalaman hutan Tiongkok, Danum. Dari sini lah kamu akan mulai pelajaran pertama."},
-	{"speaker_name": "Danum", "text": "Woaahh...banyak sekali pohon aku hampir tidak bisa melihat hal lain selain hutan yang lebat."},
-	{"speaker_name": "Enggang", "text": "Hahaha, di sini masih terdapat hal lain yang akan membuatmu lebih terkesan Danum."},
-	{"speaker_name": "Danum", "text": "Apa itu Enggang? aku penasaran sekali!"},
-	{"speaker_name": "Enggang", "text": "Nanti kamu akan segera mengetahuinya begitu menjejakkan kaki di sana."},
-	{"speaker_name": "Danum", "text": "Baiklah Enggang, aku sudah tidak sabar."},
-	{"speaker_name": "Enggang", "text": "Hahaha, aku suka semangatmu Danum. Yasudah mulai dari sini aku akan mengawasimu dari jauh."}
+	{"speaker_name": "Enggang", "text": "Selamat datang di pedalaman gunung Tiongkok, Danum. Dari sini kamu akan mulai pelajaran pertama."},
+	{"speaker_name": "Danum", "text": "Woaahh... udaranya dingin dan sejuk! Walaupun padat penduduk, alamnya tetap indah ya!"},
+	{"speaker_name": "Enggang", "text": "Hahaha, benar sekali. Di sini alam dan penduduknya saling menjaga dengan baik."},
+	{"speaker_name": "Enggang", "text": "Tidak dibabat habis demi kepentingan segelintir pihak seperti yang sering kamu lihat."},
+	{"speaker_name": "Danum", "text": "Oh kayak orang gendut tadi ya? Oiya, gimana cara aku ngobrol sama mereka?"},
+	{"speaker_name": "Enggang", "text": "Nanti kamu akan segera mengetahuinya begitu menjejakkan kaki lebih jauh ke desa di depan."},
+	{"speaker_name": "Danum", "text": "Ehh... Baiklah Enggang, aku sudah tidak sabar!"},
+	{"speaker_name": "Enggang", "text": "Hahaha, aku suka semangatmu Danum. Mele' ke', aku akan mengawasimu dari jauh."},
+	{"speaker_name": "Danum", "text": "Mele' ke', Enggang! Sampai jumpa nanti!"}
 ]
 
 var default_zoom: Vector2 = Vector2(1.0, 1.0)
@@ -33,7 +35,7 @@ func _ready() -> void:
 		player_sprite.modulate = Color(0.92, 0.84, 1.0, 1.0) # Sesuaikan tint ungu/senja world_2
 	# 0. MEMUTAR AUDIO DUNIA
 	var ambience_file = preload("res://assets/audio/chinese_ambience.mp3")
-	var bgm_file = preload("res://assets/audio/chinese_music2.mp3")
+	var bgm_file = preload("res://assets/audio/chicken/chinese_music_1.mp3")
 	
 	if MusicManager:
 		MusicManager.play_world_audio(ambience_file, bgm_file, 6.0, -12.0)

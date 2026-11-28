@@ -8,41 +8,38 @@
 [ext_resource type="AudioStream" uid="uid://cxon3svfeblp5" path="res://assets/audio/battle.mp3" id="4_b58xk"]
 [ext_resource type="AudioStream" uid="uid://bavhgevhrvqow" path="res://assets/audio/combo.mp3" id="5_6oe0k"]
 [ext_resource type="AudioStream" uid="uid://46gl8k8al1if" path="res://assets/audio/game over.mp3" id="6_qix5s"]
-[ext_resource type="Texture2D" uid="uid://bc1daf8mkofjo" path="res://assets/animation/ui/button_4.png" id="7_aekut"]
 [ext_resource type="AudioStream" uid="uid://dthljbx5j787u" path="res://assets/audio/wrong.mp3" id="7_tthho"]
+[ext_resource type="Texture2D" uid="uid://dliwxq7rhv7jb" path="res://assets/animation/ui/spam.png" id="8_tthho"]
 [ext_resource type="Texture2D" uid="uid://l1pgsvujhrb2" path="res://assets/animation/ui/chatbox1.png" id="11_tthho"]
 [ext_resource type="Texture2D" uid="uid://obn5efnboefy" path="res://assets/animation/ui/chatbox2.png" id="12_hpd4b"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tthho"]
-atlas = ExtResource("7_aekut")
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpd4b"]
+atlas = ExtResource("8_tthho")
 region = Rect2(0, 0, 65, 41)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hpd4b"]
-atlas = ExtResource("7_aekut")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dolvq"]
+atlas = ExtResource("8_tthho")
 region = Rect2(65, 0, 65, 41)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dolvq"]
-atlas = ExtResource("7_aekut")
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7wm2"]
+atlas = ExtResource("8_tthho")
 region = Rect2(130, 0, 65, 41)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g7wm2"]
-atlas = ExtResource("7_aekut")
+[sub_resource type="AtlasTexture" id="AtlasTexture_md5ey"]
+atlas = ExtResource("8_tthho")
 region = Rect2(195, 0, 65, 41)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_md5ey"]
-atlas = ExtResource("7_aekut")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bhko"]
+atlas = ExtResource("8_tthho")
 region = Rect2(260, 0, 65, 41)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5bhko"]
-atlas = ExtResource("7_aekut")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqooe"]
+atlas = ExtResource("8_tthho")
 region = Rect2(325, 0, 65, 41)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qix5s"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tthho")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hpd4b")
 }, {
@@ -57,6 +54,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5bhko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqooe")
 }],
 "loop": 1,
 "name": &"default",

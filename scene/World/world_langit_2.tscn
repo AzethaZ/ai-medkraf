@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b0njsx4ld7vbs"]
 
 [ext_resource type="Script" uid="uid://vh3xhayfgqng" path="res://script/world_langit_2.gd" id="1_gh621"]
+[ext_resource type="AudioStream" uid="uid://25xsa5044n3y" path="res://assets/audio/viatnamese_bgm.mp3" id="2_67krc"]
 [ext_resource type="Texture2D" uid="uid://bl1oh76tpbkdj" path="res://assets/cutscene/A_ CINA LANDSCAPE.png" id="2_gh621"]
 [ext_resource type="Texture2D" uid="uid://wgu2iel2qnrb" path="res://assets/cutscene/A_ VIETNAM LANDSCAPE.png" id="3_qa1xx"]
 [ext_resource type="Texture2D" uid="uid://c4v2k14rp544e" path="res://assets/cutscene/A awan s.png" id="4_b3325"]
@@ -8,16 +9,24 @@
 [ext_resource type="Texture2D" uid="uid://bv6uau4k4mxcc" path="res://assets/cutscene/A_ VIETNAM BURUNG.png" id="6_sbpec"]
 [ext_resource type="AudioStream" uid="uid://drjlegapecqch" path="res://assets/audio/wing_sound_2.mp3" id="7_cynih"]
 [ext_resource type="AudioStream" uid="uid://dg2in2q7tqqi7" path="res://assets/audio/kebakaran_ambience.mp3" id="8_3p8wl"]
+[ext_resource type="AudioStream" uid="uid://cefsg6nrxfsrl" path="res://assets/audio/wind_sfx.mp3" id="10_qa1xx"]
 
 [node name="world_langit" type="Node2D" unique_id=1697432782]
 script = ExtResource("1_gh621")
+pan_duration = 16.0
+bg_2_fade_duration = 1.0
+cloud_hold_duration = 0.0
+bg_3_reveal_duration = 1.0
 bg_3_pan_duration = 10.0
+vietnam_bgm = ExtResource("2_67krc")
+vietnam_bgm_db = -5.0
+vietnam_bgm_delay = 0.0
 
 [node name="LandscapeParallax" type="Parallax2D" parent="." unique_id=1772724246]
 scroll_offset = Vector2(321, 185)
 
 [node name="Sprite2D" type="Sprite2D" parent="LandscapeParallax" unique_id=2140366099]
-position = Vector2(-236, -127)
+position = Vector2(-497, -302)
 scale = Vector2(1.791667, 1.7916667)
 texture = ExtResource("2_gh621")
 
@@ -25,6 +34,7 @@ texture = ExtResource("2_gh621")
 scroll_offset = Vector2(321, 185)
 
 [node name="Sprite2D" type="Sprite2D" parent="LandscapeParallax3" unique_id=66074656]
+modulate = Color(0.9482295, 0.9807382, 0.8928595, 1)
 position = Vector2(-555.00006, -288.00003)
 scale = Vector2(2.0354166, 2.0354166)
 texture = ExtResource("3_qa1xx")
@@ -33,7 +43,7 @@ texture = ExtResource("3_qa1xx")
 scroll_offset = Vector2(321, 185)
 
 [node name="Sprite2D" type="Sprite2D" parent="LandscapeParallax2" unique_id=408547232]
-position = Vector2(-835.7777, -475.125)
+position = Vector2(-775, -436)
 scale = Vector2(2.404861, 2.404861)
 texture = ExtResource("4_b3325")
 
@@ -63,3 +73,8 @@ stream = ExtResource("7_cynih")
 [node name="FireAmbienceSFX" type="AudioStreamPlayer" parent="." unique_id=221080538]
 stream = ExtResource("8_3p8wl")
 volume_db = -12.0
+
+[node name="WindSFX" type="AudioStreamPlayer" parent="." unique_id=773880386]
+stream = ExtResource("10_qa1xx")
+volume_db = 1.0
+autoplay = true

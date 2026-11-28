@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://oio7ifkrxd52"]
+
+[ext_resource type="Script" uid="uid://d0ocrdy0637eq" path="res://script/leaf_generator.gd" id="1_hokbi"]
+
+[node name="LeafGenerator" type="Node2D" unique_id=1514640109]
+script = ExtResource("1_hokbi")

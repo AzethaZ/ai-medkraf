@@ -107,7 +107,7 @@ func _physics_process(delta: float) -> void:
 				animated_sprite_2d.play("walk")
 				animated_sprite_2d.speed_scale = 0.5 if is_limping else 1.0
 			else:
-				animated_sprite_2d.play("default")
+				animated_sprite_2d.play("asep" if is_limping else "default")
 				animated_sprite_2d.speed_scale = 1.0
 
 		handle_footstep_sound(delta, active_cutscene_speed)
@@ -118,7 +118,7 @@ func _physics_process(delta: float) -> void:
 	if not can_move and not is_chasing_mode and not is_auto_walking:
 		velocity.x = move_toward(velocity.x, 0, WALK_SPEED)
 		if is_on_floor():
-			animated_sprite_2d.play("default")
+			animated_sprite_2d.play("asep" if is_limping else "default")
 			animated_sprite_2d.speed_scale = 1.0
 		handle_footstep_sound(delta, 0.0)
 		move_and_slide()
@@ -180,7 +180,7 @@ func _physics_process(delta: float) -> void:
 				animated_sprite_2d.play("walk")
 			animated_sprite_2d.speed_scale = 1.0
 		elif velocity.x == 0:
-			animated_sprite_2d.play("default")
+			animated_sprite_2d.play("asep" if is_limping else "default")
 			animated_sprite_2d.speed_scale = 1.0
 		else:
 			if is_limping:
@@ -272,8 +272,8 @@ func stop_auto_walk() -> void:
 		animated_sprite_2d.speed_scale = 1.0
 		
 		# Paksa putar animasi diam (default / idle / limp_idle)
-		if is_limping and animated_sprite_2d.sprite_frames.has_animation("limp_idle"):
-			animated_sprite_2d.play("limp_idle")
+		if is_limping and animated_sprite_2d.sprite_frames.has_animation("asep"):
+			animated_sprite_2d.play("asep")
 		elif animated_sprite_2d.sprite_frames.has_animation("default"):
 			animated_sprite_2d.play("default")
 
@@ -284,6 +284,11 @@ func disable_movement() -> void:
 
 func enable_movement() -> void:
 	can_move = true
+	is_in_cutscene = false
+	is_in_cutscene_anim = false
+	is_auto_walking = false
+	is_chasing_mode = false
+	set_physics_process(true)
 
 
 func show_dialogue(text: String, duration: float = 2.5) -> void:
@@ -352,13 +357,14 @@ func clear_followers() -> void:
 func set_dialogue_state(is_talking: bool) -> void:
 	if is_talking:
 		velocity = Vector2.ZERO
+		var target_anim := "asep" if is_limping else "default"
 		if has_node("AnimatedSprite2D"):
-			$AnimatedSprite2D.play("default")
+			$AnimatedSprite2D.play(target_anim)
 			$AnimatedSprite2D.speed_scale = 1.0
 		elif has_node("AnimationPlayer"):
 			var anim_player = $AnimationPlayer
-			if anim_player.has_animation("default"):
-				anim_player.play("default")
+			if anim_player.has_animation(target_anim):
+				anim_player.play(target_anim)
 
 		set_physics_process(false)
 	else:
@@ -395,8 +401,22 @@ func play_cutscene_walk() -> void:
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("walk"):
 		sprite.play("walk")
 
-func play_cutscene_idle() -> void:
-	is_in_cutscene_anim = false
+func stop_cutscene_idle() -> void:
+	is_in_cutscene = false
 	var sprite = find_child("AnimatedSprite2D", true, false) as AnimatedSprite2D
-	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("default"):
-		sprite.play("default")
+	var target_anim := "asep" if is_limping else "default"
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(target_anim):
+		sprite.play(target_anim)
+
+func can_interact() -> bool:
+	return is_on_floor() and can_move
+	
+
+func _input(event: InputEvent) -> void:
+	# Jika dialog sedang terbuka, biarkan pemain menekan E untuk lanjut/skip teks
+	if DialogueManager and DialogueManager.is_active:
+		return
+
+	# Jika Danum melompat/di udara, telan input "interact" agar semua NPC/item mengabaikannya
+	if event.is_action_pressed("interact") and not is_on_floor():
+		get_viewport().set_input_as_handled()

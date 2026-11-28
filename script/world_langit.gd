@@ -35,6 +35,14 @@ extends Node2D
 @onready var fire_ambience_sfx: AudioStreamPlayer = get_node_or_null("FireAmbienceSFX")
 @export var initial_black_delay: float = 3.0
 
+@export var wind_sfx_stream: AudioStream # Masukkan file audio angin di Inspector jika pakai node baru/existing
+@export var wind_sfx_db: float = -6.0
+@onready var wind_sfx: AudioStreamPlayer = $WindSFX if has_node("WindSFX") else null
+@export var bg3_audio_stream: AudioStream # Masukkan file audio landscape 3 di Inspector
+@export var bg3_audio_db: float = -6.0
+var bg3_audio_player: AudioStreamPlayer
+@export var bg3_audio_fade_out_duration: float = 1.2
+
 var bg2_fade_tween: Tween
 var is_flapping: bool = false
 
@@ -47,7 +55,7 @@ var cutscene_dialogues: Array[Dictionary] = [
 	{"speaker": "danum", "text": "Lalu kenapa kamu menyelamatkanku?"},
 	{"speaker": "enggang", "text": "Karena aku melihat keberanianmu menjaga hutan dari dua perusak tadi."},
 	{"speaker": "enggang", "text": "Tapi lihatlah ke bawah, Danum... hutan yang kamu lindungi telah dilahap api."},
-	{"speaker": "danum", "text": "Tidaaak... hutan ini... Bagaimana bisa sampai seperti ini?"},
+	{"speaker": "danum", "text": "Tidaaak... hutan ini... Kok bisa sampai seperti ini?"},
 	{"speaker": "enggang", "text": "Ini hanyalah permulaan jika manusia terus merusak alam tanpa memikirkan akibatnya."},
 	{"speaker": "enggang", "text": "Karena itu aku memilihmu menjadi penjaga hutan ini."},
 	{"speaker": "danum", "text": "HAH? Kenapa harus aku? Aku kan cuma anak kecil."},
@@ -110,6 +118,26 @@ func _ready() -> void:
 	# 4. Jalankan rangkaian dialog
 	await get_tree().create_timer(0.5, true).timeout
 	await _play_cutscene_dialogues()
+	# Fade-out audio BG3 dan suara angin secara paralel sebelum pindah ke world_2
+	var has_bg3_playing: bool = is_instance_valid(bg3_audio_player) and bg3_audio_player.playing
+	var has_wind_playing: bool = is_instance_valid(wind_sfx) and wind_sfx.playing
+
+	if has_bg3_playing or has_wind_playing:
+		var audio_out := create_tween().set_parallel(true)
+		audio_out.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		if has_bg3_playing:
+			audio_out.tween_property(bg3_audio_player, "volume_db", -40.0, bg3_audio_fade_out_duration)\
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		if has_wind_playing:
+			audio_out.tween_property(wind_sfx, "volume_db", -40.0, bg3_audio_fade_out_duration)\
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+		await audio_out.finished
+
+		if has_bg3_playing:
+			bg3_audio_player.stop()
+		if has_wind_playing:
+			wind_sfx.stop()
 
 func _start_wing_flap_loop() -> void:
 	if not wing_flap_sfx:
@@ -198,47 +226,87 @@ func _fade_in_landscape_2() -> void:
 	bg2_fade_tween = create_tween()
 	bg2_fade_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	bg2_fade_tween.tween_property(landscape_sprite_2, "modulate:a", 1.0, bg2_fade_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Nyalakan SFX angin saat masuk ke awan (landscape_2)
+	if wind_sfx_stream:
+		if not wind_sfx:
+			wind_sfx = AudioStreamPlayer.new()
+			wind_sfx.name = "WindSFX"
+			add_child(wind_sfx)
+		wind_sfx.stream = wind_sfx_stream
+		wind_sfx.volume_db = -35.0
+		wind_sfx.play()
+		var wind_in_tween := create_tween()
+		wind_in_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		wind_in_tween.tween_property(wind_sfx, "volume_db", wind_sfx_db, bg2_fade_duration)\
+			.set_trans(Tween.TRANS_SINE)
 
 func _transition_to_landscape_3() -> void:
-	var bg3_pan_tween: Tween
-	
+	# Nyalakan audio khusus Landscape 3 dengan fade-in halus (suara angin tetap berjalan)
+	if bg3_audio_stream:
+		if not bg3_audio_player:
+			bg3_audio_player = AudioStreamPlayer.new()
+			bg3_audio_player.name = "Bg3AudioSFX"
+			add_child(bg3_audio_player)
+		bg3_audio_player.stream = bg3_audio_stream
+		bg3_audio_player.volume_db = -35.0
+		bg3_audio_player.play()
+		var bg3_audio_in := create_tween()
+		bg3_audio_in.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		bg3_audio_in.tween_property(bg3_audio_player, "volume_db", bg3_audio_db, bg3_reveal_duration)\
+			.set_trans(Tween.TRANS_SINE)
+
+	var bg3_pos_tween: Tween
+	# ... (lanjutkan sisa kode posisi & reveal Landscape 3 di bawahnya)
+
 	if landscape_sprite_3 and landscape_sprite_3.texture:
-		landscape_sprite_3.modulate.a = 1.0
-		
 		var tex_size: Vector2 = landscape_sprite_3.texture.get_size()
 		var view_size: Vector2 = get_viewport_rect().size / (camera_2d.zoom if camera_2d else Vector2.ONE)
 		var cam_center: Vector2 = camera_2d.global_position if camera_2d else Vector2.ZERO
-		
+
 		if landscape_sprite_3.scale.x < 1.3:
 			landscape_sprite_3.scale = Vector2(1.3, 1.3)
-			
-		var scaled_half: Vector2 = (tex_size * landscape_sprite_3.scale) * 0.5
+
+		var final_scale: Vector2 = landscape_sprite_3.scale
+		var scalar_half: Vector2 = (tex_size * final_scale) * 0.5
 		var view_half: Vector2 = view_size * 0.5
-		
+
 		var cam_bottom_right: Vector2 = cam_center + view_half
-		var start_pos: Vector2 = cam_bottom_right - scaled_half
-		
+		var start_pos: Vector2 = cam_bottom_right - scalar_half
+
 		var cam_top_left: Vector2 = cam_center - view_half
-		var end_pos: Vector2 = cam_top_left + scaled_half
-		
+		var end_pos: Vector2 = cam_top_left + scalar_half
+
+		# Mulai dari transparan & skala lebih kecil sebelum membesar ke ukuran target
+		landscape_sprite_3.modulate.a = 0.0
+		landscape_sprite_3.scale = final_scale * 0.85
 		landscape_sprite_3.global_position = start_pos
-		
-		bg3_pan_tween = create_tween()
-		bg3_pan_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-		bg3_pan_tween.tween_property(landscape_sprite_3, "global_position", end_pos, bg3_pan_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
+
+		bg3_pos_tween = create_tween()
+		bg3_pos_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		bg3_pos_tween.tween_property(landscape_sprite_3, "global_position", end_pos, bg3_pan_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
 	var reveal_tween := create_tween().set_parallel(true)
 	reveal_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	
+
+	if landscape_sprite_3 and landscape_sprite_3.texture:
+		var target_scale: Vector2 = Vector2(1.3, 1.3) if landscape_sprite_3.scale.x / 0.85 < 1.3 else landscape_sprite_3.scale / 0.85
+		reveal_tween.tween_property(landscape_sprite_3, "modulate:a", 1.0, bg3_reveal_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		reveal_tween.tween_property(landscape_sprite_3, "scale", target_scale, bg3_reveal_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 	if landscape_sprite_2:
-		reveal_tween.tween_property(landscape_sprite_2, "modulate:a", 0.0, bg3_reveal_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		reveal_tween.tween_property(landscape_sprite_2, "modulate:a", 0.0, bg3_reveal_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	if burung_sprite_2:
-		reveal_tween.tween_property(burung_sprite_2, "modulate:a", 1.0, bg3_reveal_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		
+		reveal_tween.tween_property(burung_sprite_2, "modulate:a", 1.0, bg3_reveal_duration)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 	await reveal_tween.finished
-	
-	if bg3_pan_tween and bg3_pan_tween.is_running():
-		await bg3_pan_tween.finished
+
+	if bg3_pos_tween and bg3_pos_tween.is_running():
+		await bg3_pos_tween.finished
 
 func _play_cutscene_dialogues() -> void:
 	for entry in cutscene_dialogues:

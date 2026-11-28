@@ -3,7 +3,7 @@ extends Area2D
 # Atur lama waktu layar tetap hitam saat mengambil barang (dalam detik)
 @export var black_hold_duration: float = 1.2
 
-@onready var sprite: Sprite2D = $Sprite2D if has_node("Sprite2D") else null
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
 @onready var interact_icon: Node2D = $InteractIcon if has_node("InteractIcon") else null
 @onready var pickup_sfx: AudioStreamPlayer = $PickupSFX if has_node("PickupSFX") else null
 
@@ -126,6 +126,7 @@ func _pickup_fork() -> void:
 	if pickup_sfx:
 		pickup_sfx.play()
 	if sprite:
+		sprite.stop()
 		sprite.visible = false
 
 	# Tahan layar hitam lebih lama (bisa diatur di Inspector lewat Black Hold Duration)

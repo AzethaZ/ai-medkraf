@@ -34,7 +34,7 @@ var slides: Array[Texture2D] = [
 	preload("res://assets/cutscene/scene_5.png"),
 	preload("res://assets/cutscene/scene_6.png"),
 	preload("res://assets/cutscene/scene_7.png"),
-	preload("res://assets/cutscene_8.png")
+	preload("res://assets/cutscene/scene_8.png")
 ]
 
 var current_slide: int = 0

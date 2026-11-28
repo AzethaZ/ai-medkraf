@@ -1,75 +1,12 @@
 [gd_scene format=3 uid="uid://cbecc2utmoxhb"]
 
-[ext_resource type="Texture2D" uid="uid://dh0iipjof4otj" path="res://assets/idel_template_cowok-Sheet.png" id="1_55kig"]
 [ext_resource type="Script" uid="uid://daxjn2wgpgmy8" path="res://script/npc/npc_petani.gd" id="1_achr8"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_t7cgu"]
 [ext_resource type="Texture2D" uid="uid://044e37a1yp66" path="res://assets/cutscene_1.png" id="2_t8mgr"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="3_s5s0b"]
 [ext_resource type="Texture2D" uid="uid://bq0xttirgejhp" path="res://assets/animation/Text_Box.png" id="4_klqwf"]
 [ext_resource type="Texture2D" uid="uid://cbgvk4nyfltj1" path="res://assets/animation/Text_Box_Indicator.png" id="5_1jhuo"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t7cgu"]
-atlas = ExtResource("1_55kig")
-region = Rect2(0, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_achr8"]
-atlas = ExtResource("1_55kig")
-region = Rect2(60, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_klqwf"]
-atlas = ExtResource("1_55kig")
-region = Rect2(120, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1jhuo"]
-atlas = ExtResource("1_55kig")
-region = Rect2(180, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t8mgr"]
-atlas = ExtResource("1_55kig")
-region = Rect2(240, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s5s0b"]
-atlas = ExtResource("1_55kig")
-region = Rect2(300, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_em1xc"]
-atlas = ExtResource("1_55kig")
-region = Rect2(360, 0, 60, 120)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l6g4a"]
-atlas = ExtResource("1_55kig")
-region = Rect2(420, 0, 60, 120)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t7cgu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_achr8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_klqwf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1jhuo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t8mgr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s5s0b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_em1xc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l6g4a")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://c426w8qpj2lou" path="res://assets/animation/vietnam_petani1.png" id="6_t8mgr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vrlf"]
 size = Vector2(40, 124)
@@ -91,18 +28,54 @@ texture_margin_right = 8.0
 texture_margin_bottom = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v5gy4"]
-size = Vector2(113, 20)
+size = Vector2(134.5, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5s0b"]
+atlas = ExtResource("6_t8mgr")
+region = Rect2(0, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_em1xc"]
+atlas = ExtResource("6_t8mgr")
+region = Rect2(70, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6g4a"]
+atlas = ExtResource("6_t8mgr")
+region = Rect2(140, 0, 70, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6snf"]
+atlas = ExtResource("6_t8mgr")
+region = Rect2(210, 0, 70, 127)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5s0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_em1xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6g4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6snf")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="npc_petani" type="CharacterBody2D" unique_id=1890421115]
 script = ExtResource("1_achr8")
 camera_pan_duration = 2.0
 ending_cutscene_image = ExtResource("2_t8mgr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=691090760]
-position = Vector2(0, -12)
-scale = Vector2(1.2, 1.2)
-sprite_frames = SubResource("SpriteFrames_1vivr")
-autoplay = "default"
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1602180453]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(3, 64.00001)
+scale = Vector2(1.9886713, 1.9015628)
+texture = ExtResource("3_s5s0b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=334861177]
 position = Vector2(0, -2)
@@ -119,7 +92,7 @@ shape = SubResource("CircleShape2D_achr8")
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=1892289812]
 texture_filter = 1
-position = Vector2(0, -108.00001)
+position = Vector2(0, -112.00001)
 scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("2_t7cgu")
 
@@ -199,5 +172,12 @@ texture = ExtResource("5_1jhuo")
 position = Vector2(155, 60)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneTrigger" unique_id=1422770167]
-position = Vector2(66.5, 0)
+position = Vector2(104, 0)
 shape = SubResource("RectangleShape2D_v5gy4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=691090760]
+position = Vector2(2.3841858e-07, -17.442856)
+scale = Vector2(1.2857143, 1.2857143)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.067011334

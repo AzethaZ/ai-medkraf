@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="1_j2s52"]
 [ext_resource type="Script" uid="uid://bgk18rw4of4uc" path="res://script/intro_narrative.gd" id="1_xwqpb"]
 [ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="3_0arat"]
+[ext_resource type="Texture2D" uid="uid://cpxfwyjoh76q5" path="res://assets/animation/ui/tutorial 1 (2).png" id="4_ndrqo"]
 
 [node name="intro_narrative" type="Control" unique_id=1064818021]
 layout_mode = 3
@@ -49,3 +50,16 @@ texture = ExtResource("1_j2s52")
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=142367607]
 stream = ExtResource("3_0arat")
 volume_db = -11.0
+
+[node name="TutorialImage" type="TextureRect" parent="." unique_id=467998325]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 114.0
+offset_top = 56.0
+offset_right = -118.888916
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ndrqo")

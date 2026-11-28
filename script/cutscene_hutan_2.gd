@@ -10,10 +10,10 @@ extends CanvasLayer
 @onready var cutscene_dialog_box: Node = $CutsceneDialogBox if has_node("CutsceneDialogBox") else null
 
 # --- PRELOAD GAMBAR CUTSCENE ---
-var cutscene_texture: Texture2D = preload("res://assets/cutscene/scene_13.png")
+var cutscene_texture: Texture2D = preload("res://assets/cutscene/scene_12.png")
 
 # --- DIALOGUE ---
-var dialogue_text: String = "Danum pingsan dan tersungkur di antara pepohonan yang mengepul asap..."
+var dialogue_text: String = "Tolong... Aku... Uhukk.. Uhuk.. "
 
 # Tween untuk animasi hover
 var hover_tween: Tween

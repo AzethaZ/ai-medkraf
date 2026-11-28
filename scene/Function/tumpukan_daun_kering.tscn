@@ -1,36 +1,94 @@
 [gd_scene format=3 uid="uid://dogyudexyj2jw"]
 
 [ext_resource type="Script" uid="uid://cwrt540txysbh" path="res://script/tumpukan_daun_kering.gd" id="1_3g000"]
-[ext_resource type="Texture2D" uid="uid://byys437osstoi" path="res://assets/daun.png" id="1_n0m30"]
-[ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="2_3g000"]
+[ext_resource type="Texture2D" uid="uid://dl855xywejpdc" path="res://assets/animation/ui/daun_daunan.png" id="2_nu7n0"]
+[ext_resource type="AudioStream" uid="uid://b0eta04cvlptl" path="res://assets/audio/walk_on_leaf_sfx.MP3" id="2_uxo1k"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="3_nksiv"]
-[ext_resource type="Texture2D" uid="uid://cym8xo0bv4nn1" path="res://assets/item/kertas_-_Copy.png" id="5_nu7n0"]
-[ext_resource type="AudioStream" uid="uid://bgxd06hsgqneh" path="res://assets/audio/paper.mp3" id="6_iwesl"]
+[ext_resource type="Texture2D" uid="uid://bfopuyd3tf2au" path="res://assets/animation/ui/kertas_1.png" id="3_nu7n0"]
+[ext_resource type="Texture2D" uid="uid://blv7vgljjxt6m" path="res://assets/animation/ui/kertas.png" id="5_nu7n0"]
 [ext_resource type="AudioStream" uid="uid://xj3a0ephumh" path="res://assets/audio/broom sweeping.mp3" id="7_k7lgk"]
+[ext_resource type="AudioStream" uid="uid://cvx3rkfuroigb" path="res://assets/audio/paper_1.MP3" id="7_uxo1k"]
 [ext_resource type="AudioStream" uid="uid://bk6arplvejnwi" path="res://assets/audio/item found.mp3" id="8_nu7n0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nu7n0"]
+atlas = ExtResource("3_nu7n0")
+region = Rect2(0, 0, 45, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxo1k"]
+atlas = ExtResource("3_nu7n0")
+region = Rect2(45, 0, 45, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o68q"]
+atlas = ExtResource("3_nu7n0")
+region = Rect2(90, 0, 45, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w0or"]
+atlas = ExtResource("3_nu7n0")
+region = Rect2(135, 0, 45, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lpng"]
+atlas = ExtResource("3_nu7n0")
+region = Rect2(180, 0, 45, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wauh0"]
+atlas = ExtResource("3_nu7n0")
+region = Rect2(225, 0, 45, 29)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu7n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxo1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o68q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w0or")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lpng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wauh0")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 6.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
 radius = 42.0
 
 [node name="TumpukanDaunKering" type="Area2D" unique_id=71378282]
 script = ExtResource("1_3g000")
+leaf_step_sfx = ExtResource("2_uxo1k")
 
 [node name="SpriteDaun" type="Sprite2D" parent="." unique_id=1820996529]
-texture = ExtResource("1_n0m30")
+position = Vector2(0, 33)
+texture = ExtResource("2_nu7n0")
 
-[node name="SpriteCatatan" type="Sprite2D" parent="." unique_id=2007183357]
-texture = ExtResource("2_3g000")
+[node name="SpriteCatatan" type="AnimatedSprite2D" parent="." unique_id=1444428641]
+position = Vector2(0, 38)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+autoplay = "default"
+frame_progress = 0.16242738
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=922512844]
+position = Vector2(-2, 4)
 shape = SubResource("CircleShape2D_1vivr")
 
 [node name="InteractIcon" type="Sprite2D" parent="." unique_id=259895123]
 texture_filter = 1
-position = Vector2(0, -108.00001)
+position = Vector2(0, -77.00001)
 scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("3_nksiv")
 
 [node name="IllustrationUI" type="CanvasLayer" parent="." unique_id=1683938877]
+visible = false
 
 [node name="DimBackground" type="ColorRect" parent="IllustrationUI" unique_id=1079254743]
 anchors_preset = 15
@@ -52,7 +110,7 @@ size_flags_vertical = 4
 texture = ExtResource("5_nu7n0")
 
 [node name="PaperSFX" type="AudioStreamPlayer" parent="IllustrationUI" unique_id=832941708]
-stream = ExtResource("6_iwesl")
+stream = ExtResource("7_uxo1k")
 
 [node name="SweepSFX" type="AudioStreamPlayer" parent="." unique_id=1812268330]
 stream = ExtResource("7_k7lgk")

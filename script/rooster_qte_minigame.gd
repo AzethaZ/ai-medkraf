@@ -77,11 +77,11 @@ func _ready() -> void:
 
 func load_textures() -> void:
 	key_textures = {
-		"w": load("res://assets/ui/arrow_up.png") if ResourceLoader.exists("res://assets/ui/arrow_up.png") else null,
-		"a": load("res://assets/ui/arrow_left.png") if ResourceLoader.exists("res://assets/ui/arrow_left.png") else null,
-		"s": load("res://assets/ui/arrow_down.png") if ResourceLoader.exists("res://assets/ui/arrow_down.png") else null,
-		"d": load("res://assets/ui/arrow_right.png") if ResourceLoader.exists("res://assets/ui/arrow_right.png") else null,
-		"interact": load("res://assets/ui/button_e.png") if ResourceLoader.exists("res://assets/ui/button_e.png") else null
+		"w": load("res://assets/animation/ui/Atas.png") if ResourceLoader.exists("res://assets/animation/ui/Atas.png") else null,
+		"a": load("res://assets/animation/ui/kiri.png") if ResourceLoader.exists("res://assets/animation/ui/kiri.png") else null,
+		"s": load("res://assets/animation/ui/Bawah.png") if ResourceLoader.exists("res://assets/animation/ui/Bawah.png") else null,
+		"d": load("res://assets/animation/ui/Kanan.png") if ResourceLoader.exists("res://assets/animation/ui/Kanan.png") else null,
+		"interact": load("res://assets/animation/ui/button1.png") if ResourceLoader.exists("res://assets/animation/ui/button1.png") else null
 	}
 
 

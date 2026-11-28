@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bwljyl23erdvg"]
+
+[ext_resource type="Script" uid="uid://dxvhaeo4vitka" path="res://script/pause_menu.gd" id="1_ta4y2"]
+[ext_resource type="AudioStream" uid="uid://c8i7eyxxjqkh8" path="res://assets/audio/vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3" id="2_8lufo"]
+[ext_resource type="AudioStream" uid="uid://bk6arplvejnwi" path="res://assets/audio/item found.mp3" id="3_t2r2q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5gy4"]
+bg_color = Color(0, 0, 0, 0.61960787)
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=896939207]
+process_mode = 3
+layer = 100
+script = ExtResource("1_ta4y2")
+nav_sfx = ExtResource("2_8lufo")
+confirm_sfx = ExtResource("3_t2r2q")
+
+[node name="Control" type="Control" parent="." unique_id=1295467388]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control" unique_id=1842318087]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v5gy4")
+
+[node name="ResumeButton" type="Button" parent="Control/Panel" unique_id=1744445920]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -13.0
+offset_right = 40.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "resume"
+flat = true
+
+[node name="MainMenuButton" type="Button" parent="Control/Panel" unique_id=298134515]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = 11.0
+offset_right = 38.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "exit"
+flat = true
+
+[node name="NavSFX" type="AudioStreamPlayer" parent="." unique_id=1353789182]
+stream = ExtResource("2_8lufo")
+
+[node name="ConfirmSFX" type="AudioStreamPlayer" parent="." unique_id=814957792]
+stream = ExtResource("3_t2r2q")

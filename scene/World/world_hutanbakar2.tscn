@@ -275,11 +275,11 @@ position = Vector2(-3, 10)
 
 [node name="InteractKiri" parent="." index="10" unique_id=124726533 instance=ExtResource("4_y71ae")]
 z_index = 20
-position = Vector2(-295, 2)
+position = Vector2(-266, 2)
 
 [node name="InteractKanan" parent="." index="11" unique_id=1919224078 instance=ExtResource("4_y71ae")]
 z_index = 20
-position = Vector2(317, 6)
+position = Vector2(301, 6)
 
 [node name="Parallax2D2" type="Parallax2D" parent="." index="12" unique_id=1801532134]
 z_index = 11

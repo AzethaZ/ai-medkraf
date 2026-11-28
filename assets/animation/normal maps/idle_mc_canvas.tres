@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" format=3 uid="uid://dxmhnj0hbjdbe"]
+
+[ext_resource type="Texture2D" uid="uid://cgr2x6c35a2k7" path="res://assets/animation/Idle_Mc-Sheet.png" id="1_fia8l"]
+[ext_resource type="Texture2D" uid="uid://je38de3xeyli" path="res://assets/animation/Idle_Mc-Sheet_normalmaps.png" id="2_vlptk"]
+
+[resource]
+diffuse_texture = ExtResource("1_fia8l")
+normal_texture = ExtResource("2_vlptk")

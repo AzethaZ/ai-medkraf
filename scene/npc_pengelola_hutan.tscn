@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bpvmdgxffcuib" path="res://script/npc_pengelola_hutan.gd" id="1_p8llq"]
 [ext_resource type="Texture2D" uid="uid://dlae20x0654s2" path="res://assets/icon mark.png" id="2_dr12i"]
 [ext_resource type="Texture2D" uid="uid://cdeiyd38bq62m" path="res://assets/animation/npc_paman_Sheet.png" id="2_p8llq"]
+[ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="2_xx3uy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xx3uy"]
 atlas = ExtResource("2_p8llq")
@@ -73,6 +74,12 @@ size = Vector2(101, 115)
 
 [node name="npc_pengelola_hutan" type="Area2D" unique_id=1396833978]
 script = ExtResource("1_p8llq")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1847723038]
+modulate = Color(0.14655007, 0.0029999972, 0.3, 0.36078432)
+position = Vector2(1.1920929e-07, 71)
+scale = Vector2(2.4007812, 2.2956214)
+texture = ExtResource("2_xx3uy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1543290031]
 position = Vector2(-2.6791646, -11.908031)

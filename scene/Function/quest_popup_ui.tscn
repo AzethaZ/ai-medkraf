@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cvwiholcnmsr3" path="res://assets/audio/complete.mp3" id="3_bmda4"]
 [ext_resource type="Texture2D" uid="uid://bl6nrk7lhge84" path="res://assets/animation/anak_ayam.png" id="4_bmda4"]
 [ext_resource type="Texture2D" uid="uid://cf5dv8j674pys" path="res://assets/animation/ayam_battle.png" id="5_kk7ei"]
+[ext_resource type="Texture2D" uid="uid://dxehvqpry3phi" path="res://assets/animation/ui/kertas_3.png" id="6_qhiig"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_syqku"]
 texture = ExtResource("2_63ye8")
@@ -23,7 +24,7 @@ quest_complete_sfx = ExtResource("3_bmda4")
 quest_icons = Dictionary[String, Texture2D]({
 "quest_ayam_1": ExtResource("4_bmda4"),
 "quest_ayam_3": ExtResource("5_kk7ei"),
-"quest_kopi_1": null
+"quest_kopi_1": ExtResource("6_qhiig")
 })
 
 [node name="NotificationBox" type="PanelContainer" parent="." unique_id=1334114743]

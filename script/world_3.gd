@@ -6,24 +6,29 @@ extends Node2D
 
 # Percakapan cutscene peternakan di world_3
 var farm_dialogues = [
-	{"speaker_name": "Danum", "text": "Wah, banyak sekali ayam di sini! Apa mereka semua tinggal di tengah hutan?"}, # Line 0
+	{"speaker_name": "Danum", "text": "Wah, banyak sekali ayam di sini! Apa mereka semua tinggal di gunung ini?"}, # Line 0
 	{"speaker_name": "Peternak", "text": "Haha, benar. Kami membiarkan ayam-ayam ini berkeliaran di area peternakan untuk mencari makanan alami."}, # Line 1
-	{"speaker_name": "Danum", "text": "Huaaa, siapa kamu?"}, # Line 2
-	{"speaker_name": "Peternak", "text": "Hoho, jangan terkejut begitu seperti melihat hantu saja. Aku adalah peternak ayam di hutan ini."}, # Line 3
-	{"speaker_name": "Danum", "text": "Wah, anda beternak ayam di sini paman?"}, # Line 4
+	{"speaker_name": "Danum", "text": "Huaaa, kok kamu bisa bahasa ku?"}, # Line 2
+	{"speaker_name": "Peternak", "text": "Hoho, jangan terkejut begitu, kamu pasti anak yang dibicarakan Enggang. Aku adalah peternak ayam di hutan ini."}, # Line 3
+	{"speaker_name": "Danum", "text": "Wah, kok bisa kalian beternak di sini Apui?"}, # Line 4
 	{"speaker_name": "Peternak", "text": "Tentu saja, kami memanfaatkan hutan ini sebagai kandang ayam raksasa."}, # Line 5
 	{"speaker_name": "Danum", "text": "Memangnya tidak takut ayamnya hilang atau pergi terlalu jauh?"}, # Line 6
-	{"speaker_name": "Peternak", "text": "Kami sudah membuat pagar pembatas untuk itu…..Tapi sebenarnya, beberapa ayam kami baru saja terlepas karena pagar pembatas rusak terkena hujan deras."}, # Line 7
+	{"speaker_name": "Peternak", "text": "Kami sudah membuat pagar pembatas…..Tapi sebenarnya, beberapa ayam baru saja terlepas karena pagar pembatasnya rusak."}, # Line 7
 	{"speaker_name": "Danum", "text": "Terus, bagaimana sekarang?"}, # Line 8
-	{"speaker_name": "Peternak", "text": "Ada beberapa ayam yang belum kembali. Kalau dibiarkan, mereka bisa tersesat lebih jauh ke dalam hutan. Aku juga belum sempat memperbaiki pagarnya."}, # Line 9
-	{"speaker_name": "Danum", "text": "Hmmm, tenang saja paman aku bisa membantu mencari ayam-ayam itu!"}, # Line 10
-	{"speaker_name": "Peternak", "text": "Benarkah? Wah, terima kasih! Tolong cari ayam-ayam yang terlepas itu. Setelah itu, kita perlu memperbaiki pagar agar kejadian seperti ini tidak terulang."} # Line 11
+	{"speaker_name": "Peternak", "text": "Ada beberapa ayam yang belum kembali. Kalau dibiarkan, mereka bisa tersesat ke dalam hutan."}, # Line 9
+	{"speaker_name": "Danum", "text": "Hmmm, tenang saja Apui aku bisa membantu mencari ayam-ayam itu!"}, # Line 10
+	{"speaker_name": "Peternak", "text": "Benarkah? Wah, terima kasih! Tolong cari ayam-ayam yang terlepas itu. Setelah itu, kita kumpulkan ayam-ayam itu."} # Line 11
 ]
 
 var default_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
+	# Ubah warna hanya pada AnimatedSprite2D milik Player khusus di world_2
+	var player_node := get_node_or_null("Player")
+	if player_node and player_node.has_node("AnimatedSprite2D"):
+		var player_sprite: AnimatedSprite2D = player_node.get_node("AnimatedSprite2D")
+		player_sprite.modulate = Color(0.92, 0.84, 1.0, 1.0) # Sesuaikan tint ungu/senja world_2
 	# ... kode _ready() world_3 milikmu yang sudah ada ...
 
 	# Cek apakah quest ayam sudah selesai / ayam sudah dikalahkan
@@ -49,7 +54,7 @@ func _ready() -> void:
 					rooster_sprite.play("default")
 	# 0. MEMUTAR AUDIO DUNIA
 	var ambience_file = preload("res://assets/audio/chinese_ambience.mp3")
-	var bgm_file = preload("res://assets/audio/chinese_music2.mp3")
+	var bgm_file = preload("res://assets/audio/chicken/chinese_music_1.mp3")
 
 	if MusicManager:
 		MusicManager.play_world_audio(ambience_file, bgm_file, 6.0, -12.0)
@@ -76,8 +81,9 @@ func _ready() -> void:
 	if camera_2d:
 		camera_2d.enabled = true
 		camera_2d.make_current()
-		camera_2d.limit_left = -900
-		camera_2d.limit_right = 880
+		camera_2d.limit_left = -816
+		camera_2d.limit_right = 575
+		camera_2d.limit_top = -290
 		default_offset = camera_2d.offset
 
 	# 5. Fade In layar
@@ -184,8 +190,15 @@ func run_farm_cutscene() -> void:
 	if QuestManager and QuestManager.has_method("start_quest"):
 		QuestManager.start_quest("quest_ayam_1")
 
-	if player and player.has_method("enable_movement"):
-		player.enable_movement()
+	# 9. Kembalikan kontrol pemain sepenuhnya
+	if DialogueManager and "is_active" in DialogueManager:
+		DialogueManager.is_active = false
+	if player:
+		if player.has_method("set_dialogue_state"):
+			player.set_dialogue_state(false)
+		if player.has_method("enable_movement"):
+			player.enable_movement()
+		player.set_physics_process(true)
 
 
 # --- HELPER DANUM BERJALAN DENGAN KAMERA TETAP DIAM DI NPC ---

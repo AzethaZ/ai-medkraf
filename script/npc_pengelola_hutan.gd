@@ -17,23 +17,23 @@ var main_dialogue_data: Array[Dictionary] = [
 	},
 	{
 		"speaker": "mc",
-		"text": "Orang-orang desa tidak ada yang mau dengar, Paman. Mereka meyalakan api padahal hutan ini kan lagi kering sekali."
+		"text": "Orang-orang desa enggak ada yang mau dengar aku, Amai. Mereka meyalakan api padahal kan hutan bisa kebakar."
 	},
 	{
 		"speaker": "npc",
-		"text": "Sebenarnya kamu tidak sepenuhnya salah, Danum. Paman juga lagi khawatir..."
+		"text": "Sebenarnya kamu tidak sepenuhnya salah, Danum. Saya juga lagi khawatir..."
 	},
 	{
 		"speaker": "npc",
-		"text": "Tadi Paman lihat ada dua orang asing masuk ke arah hutan dalam. Katanya mau survei lahan, tapi mereka merokok sembarangan."
+		"text": "Tadi saya lihat ada dua orang asing masuk ke arah hutan dalam. Katanya mau survei lahan, tapi mereka merokok sembarangan."
 	},
 	{
 		"speaker": "mc",
-		"text": "Dua orang asing? Bawa rokok?!"
+		"text": "Dua orang asing? Mereka mau ngapain?!"
 	},
 	{
 		"speaker": "npc",
-		"text": "Iya. Paman mau susul mereka tapi masih ada urusan. Kamu jangan ke arah hutan dalam ya, bahaya kalau ketemu orang luar yang tidak kita kenal."
+		"text": "Iya. Saya mau susul mereka tapi masih ada urusan. Kamu jangan ke arah hutan dalam ya, bahaya kalau ketemu orang luar yang tidak kita kenal."
 	}
 ]
 

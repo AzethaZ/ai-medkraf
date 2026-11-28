@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ct7equwuxek53" path="res://script/player.gd" id="1_hjaqi"]
 [ext_resource type="Texture2D" uid="uid://bqvydyku48wtj" path="res://assets/animation/punch.png" id="2_bup7g"]
-[ext_resource type="Texture2D" uid="uid://cgr2x6c35a2k7" path="res://assets/animation/Idle_Mc-Sheet.png" id="2_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://1pgaid73t1jh" path="res://assets/animation/ui/Mc_idles.png" id="2_j4wxg"]
 [ext_resource type="Texture2D" uid="uid://dl73aqjqxg8ur" path="res://assets/animation/block.png" id="3_4ja17"]
+[ext_resource type="Texture2D" uid="uid://bpb6erjb4ps0l" path="res://assets/animation/asep_mc.png" id="3_bup7g"]
 [ext_resource type="Texture2D" uid="uid://crqk0t2gid0h2" path="res://assets/animation/fall_mc2.png" id="3_dk1vr"]
 [ext_resource type="Texture2D" uid="uid://f130u6uj6123" path="res://assets/animation/fighting_default.png" id="3_u7b46"]
 [ext_resource type="Texture2D" uid="uid://b8tdhs7i1acjq" path="res://assets/animation/mid_mc2.png" id="4_34jf3"]
@@ -12,9 +12,38 @@
 [ext_resource type="Texture2D" uid="uid://qme82ro6cpee" path="res://assets/animation/Walk_anim.png" id="5_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://du2l4h1e6mcjo" path="res://assets/chatbox.png" id="5_oh5ij"]
 [ext_resource type="Texture2D" uid="uid://b0it3rrllhciw" path="res://assets/animation/bakar_animation.png" id="6_34jf3"]
+[ext_resource type="Texture2D" uid="uid://dxmhnj0hbjdbe" path="res://assets/animation/normal maps/idle_mc_canvas.tres" id="6_bup7g"]
 [ext_resource type="FontFile" uid="uid://et6uankrpx2j" path="res://assets/dogicapixelbold.otf" id="6_hp4bs"]
 [ext_resource type="Texture2D" uid="uid://cptyuj8nbfuln" path="res://assets/animation/Run_MC-Sheet.png" id="7_34jf3"]
 [ext_resource type="AudioStream" uid="uid://dag541r2875r7" path="res://assets/audio/walk_sound.mp3" id="11_ihjo1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8aaj"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(0, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_op5kk"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(80, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32gv3"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(160, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_081ml"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(240, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7u3n"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(320, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymct0"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(400, 0, 80, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hm66"]
+atlas = ExtResource("3_bup7g")
+region = Rect2(480, 0, 80, 95)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtno0"]
 atlas = ExtResource("2_bup7g")
@@ -32,32 +61,32 @@ region = Rect2(160, 0, 80, 95)
 atlas = ExtResource("3_4ja17")
 region = Rect2(0, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dk1vr"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ja17"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(0, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_34jf3"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4iqv"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(80, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ja17"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_42h83"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(160, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v4iqv"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_iuf2t"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(240, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_42h83"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrjdb"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(320, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iuf2t"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_rf2qa"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(400, 0, 80, 95)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jrjdb"]
-atlas = ExtResource("2_hp4bs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ko5ao"]
+atlas = ExtResource("6_bup7g")
 region = Rect2(480, 0, 80, 95)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fmxba"]
@@ -204,6 +233,32 @@ region = Rect2(80, 190, 80, 95)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_c8aaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_op5kk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32gv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_081ml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7u3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymct0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hm66")
+}],
+"loop": 1,
+"name": &"asep",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_rtno0")
 }, {
 "duration": 1.0,
@@ -226,12 +281,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dk1vr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_34jf3")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_4ja17")
 }, {
 "duration": 1.0,
@@ -245,6 +294,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jrjdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rf2qa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ko5ao")
 }],
 "loop": 1,
 "name": &"default",
@@ -416,7 +471,8 @@ texture_filter = 1
 position = Vector2(6, -7)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-frame_progress = 0.95949596
+frame = 1
+frame_progress = 0.16226701
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=380073661]
 visible = false

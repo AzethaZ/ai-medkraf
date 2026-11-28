@@ -23,8 +23,22 @@ var quests: Dictionary = {
 		"collected_count": 0,
 		"target_count": 2,
 		"require_submit": true,
-	}
-}
+	},
+		"quest_hotel_1": {
+		"title": "Bersihkan Penginapan 1",
+		"status": "NOT_STARTED",
+		"collected_count": 0,
+		"target_count": 2,
+		"require_submit": true
+	},
+	"quest_hotel_2": {
+		"title": "Bersihkan Penginapan 2",
+		"status": "NOT_STARTED",
+		"collected_count": 0,
+		"target_count": 2,
+		"require_submit": true
+	},
+} # <-- Kurung tutup dictionary var quests (baris 40)
 
 # Menyimpan ID ayam spesifik yang sudah ditangkap agar tidak respawn saat pindah scene
 var collected_chick_ids: Dictionary = {}
@@ -77,7 +91,7 @@ func add_quest_progress(quest_id: String, amount: int = 1) -> void:
 				if DialogueManager:
 					DialogueManager.start_dialogue([
 						{"speaker": "mc", "text": "Aku sudah menemukan semuanya!"},
-						{"speaker": "mc", "text": "Saatnya kembali ke Paman."}
+						{"speaker": "mc", "text": "Saatnya kembali ke Apui."}
 					])
 		else:
 			# Tetap emit sinyal ACTIVE agar UI pop-up ter-update menjadi 1/3, 2/3
